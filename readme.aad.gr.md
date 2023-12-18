@@ -94,7 +94,6 @@ curl --location 'https://staging-api.invoicing.oxinus.net/signing-devices' \
     "deviceSerial": "98594583434",
     "devicePublicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAvR97AJTKyGNAjOYROXGk+H367Ix1kOAMNKQwpTuvOfU=\n-----END PUBLIC KEY-----",
     "devicePublicKeySignature": "afe1b64b12ba3105f8da112905abf2bb0bc9b7b1bcc9406dd2989fee7332df8e9ce48c2b5b2549ffdbecfd7112a40aed99362ae39dda393f7d8bc96b439b1101",
-    "networkTxnId": "123243323",
     "country": "GR",
     "authority": "AAD",
     "entity": 1 
