@@ -81,19 +81,37 @@ The application will in turn return a device specific signature that the device 
 Alternatively, it can be done using curl with the following command, replacing the necessary fields.
 
 ```shell
-curl --location 'https://staging-api.invoicing.oxinus.net/signing-devices' \
+curl --location 'https://api.invoicing.oxinus.net/signing-devices' \
 --header 'Content-Type: application/json' \
---header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImtqZG5nZTg0NTQwOTgiLCJmaXJzdE5hbWUiOiJSaWNreSIsImxhc3ROYW1lIjoiTWFydGluIiwiZW1haWwiOiJtLnNpZGRpcXVpQG94aW51cy5pbyIsImFwaUtleSI6ImhoaGpqamRkZGtrayIsInNlY3JldCI6InNlY3JldCIsImFjY2Vzc1R5cGUiOiJTMlMiLCJjcmVhdGVkQXQiOiIyMDIzLTEyLTE0VDA3OjA3OjE0LjgzMloiLCJ1cGRhdGVkQXQiOiIyMDIzLTEyLTE0VDA3OjA3OjE0LjgzMloiLCJpYXQiOjE3MDI1NDE3OTZ9.a3XfDBcXVJ5mZFkKR7u5Er_zT9L06SaIUzi9biYD6gU' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc2YjM1ZDdlLWVkODQtNGI0ZS1hODhiLWQ2Y2RlOWRiY2Q3YiIsImZpcnN0TmFtZSI6Ik94aW51cyIsImxhc3ROYW1lIjoiSG9sZGluZ3MiLCJlbWFpbCI6InNwQG94aW51cy5ob2xkaW5ncyIsImFjY2Vzc1R5cGUiOiJqd3QiLCJpYXQiOjE3MDI4Nzg3MTB9.ZLZGFse5RJMFkgziYs-nH8qYTveztOzmhApbXN0poPA' \
 --data '{
     "deviceName": "device 1",
     "deviceType": "virtual",
     "deviceSerial": "98594583434",
-    "devicePublicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAvR97AJTKyGNAjOYROXGk+H367Ix1kOAMNKQwpTuvOfU=\n-----END PUBLIC KEY-----",
-    "devicePublicKeySignature": "afe1b64b12ba3105f8da112905abf2bb0bc9b7b1bcc9406dd2989fee7332df8e9ce48c2b5b2549ffdbecfd7112a40aed99362ae39dda393f7d8bc96b439b1101",
+    "devicePublicKey": "0e6c1b121a9ce7f9593fb6f1a3794090885a93de2812fafaf6b6f5c0867477f4",
+    "devicePublicKeySignature": "b92653730c2ebcacb367a2e4bf608a2c7751322fd835915a640b95ffa37208775d6b5d56d6c1f01b2df7f20b4fd31749cce8f6c950b10f202d09cc331664ef07",
+    "networkTxnId": "123243323",
     "country": "GR",
     "authority": "AAD",
-    "entity": 1 
+    "entity": 1
 }'
+```
+
+#### Revoking a device
+If the signing device needs to be revoked from use, a delete request can be sent to disable the device from signing anymore invoices. 
+
+```shell
+curl --location --request DELETE 'https://api.invoicing.oxinus.net/signing-devices/1' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImtqZG5nZTg0NTQwOTgiLCJmaXJzdE5hbWUiOiJSaWNreSIsImxhc3ROYW1lIjoiTWFydGluIiwiZW1haWwiOiJtLnNpZGRpcXVpQG94aW51cy5pbyIsImFwaUtleSI6ImhoaGpqamRkZGtrayIsInNlY3JldCI6InNlY3JldCIsImFjY2Vzc1R5cGUiOiJTMlMiLCJjcmVhdGVkQXQiOiIyMDIzLTEyLTE0VDA3OjA3OjE0LjgzMloiLCJ1cGRhdGVkQXQiOiIyMDIzLTEyLTE0VDA3OjA3OjE0LjgzMloiLCJpYXQiOjE3MDI1NDE3OTZ9.a3XfDBcXVJ5mZFkKR7u5Er_zT9L06SaIUzi9biYD6gU' \
+--data ''
+```
+
+#### Retrieving an Invoice
+A successfully submitted invoice can be retrieved with the Uid from the response of the successfully submitted invoice.
+
+```shell
+curl --location 'https://api.invoicing.oxinus.net/invoice/DC9555A9F4786C0605698D7DA5EDED4EBCB87A73' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImtqZG5nZTg0NTQwOTgiLCJmaXJzdE5hbWUiOiJSaWNreSIsImxhc3ROYW1lIjoiTWFydGluIiwiZW1haWwiOiJtLnNpZGRpcXVpQG94aW51cy5pbyIsImFwaUtleSI6ImhoaGpqamRkZGtrayIsInNlY3JldCI6InNlY3JldCIsImFjY2Vzc1R5cGUiOiJTMlMiLCJjcmVhdGVkQXQiOiIyMDIzLTEyLTE0VDA3OjA3OjE0LjgzMloiLCJ1cGRhdGVkQXQiOiIyMDIzLTEyLTE0VDA3OjA3OjE0LjgzMloiLCJpYXQiOjE3MDI1NDE3OTZ9.a3XfDBcXVJ5mZFkKR7u5Er_zT9L06SaIUzi9biYD6gU'
 ```
 
 ### Request Headers:
