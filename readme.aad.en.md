@@ -2,11 +2,12 @@
 
 ## Version History
 
-| Version | Date       | Description                        |
-|---------|------------|------------------------------------|
-| 1.0     | 2023-10-01 | Initial release                    |
-| 1.1     | 2023-11-15 | Addition of crypto headers         |
-| 1.2     | 2023-12-15 | Addition of Greek version AADE/B2G |
+| Version | Date       | Description                                                     |
+|---------|------------|-----------------------------------------------------------------|
+| 1.0     | 2023-10-01 | Initial release                                                 |
+| 1.1     | 2023-11-15 | Addition of crypto headers                                      |
+| 1.2     | 2023-12-15 | Addition of Greek version AADE/B2G                              |
+| 1.3     | 2023-12-20 | Added endpoints, sample payloads, responses, postman collection |
 
 ## Introduction
 
