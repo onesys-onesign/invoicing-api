@@ -35,7 +35,7 @@ of the caller, the agreed-upon API key must be present.
 
 ```
 x-api-key:
-hmac:
+x-signature:
 ```
 
 ## 1. Invoice Submission
