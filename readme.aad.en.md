@@ -225,7 +225,7 @@ its validity.
 ##### Signature
 - Description: Signature with the device's public key (previously authenticated) of the concatenation of the two (2) 
 - previous hashes.
-  e.g., sign((FiscalHeaderHash+FiscalHeaderHash), myPrivateKey)
+  e.g., sign((FiscalHeaderHash+ InvoicePayloadHash),myPrivateKey)
 - Example Value: "0D64FD1B9B95790E473489D6964B4D1A76811BC3A63407118B3CCCB3BC6F789A384F2EF80BD8A70347ACD89E0C342F1DA300C85A5830254011543A3B64EB9206"
 
 ##### Previous Invoice Fiscal Header SHA256 Hash
@@ -234,7 +234,7 @@ its validity.
 
 ##### Public Key of Signatory Device
 - Description: The public key of the device.
-- Example Value: "-----BEGIN PUBLIC KEY-----\nMCowBQYDK3VwAyEAvR97AJTKyGNAjOYROXGk+H367Ix1kOAMNKQwpTuvOfU=\n-----END PUBLIC KEY-----"
+- Example Value: "MCowBQYDK3VwAyEAvR97AJTKyGNAjOYROXGk+H367Ix1kOAMNKQwpTuvOfU="
 
 ##### Signature of Signatory Device Public Key
 - Description: Signature of the device's public key (similarly to the device's enrollment).
