@@ -2,17 +2,17 @@
 
 ## Αριθμός έκδοσης
 
-| Έκδοση  | Ημερομηνία | Περιγραφή                           |
-|---------|------------|-------------------------------------|
-| 1.0     | 2023-10-01 | Αρχική έκδοση                       |
-| 1.1     | 2023-11-15 | Προσθήκη crypto headers             |
-| 1.2     | 2023-12-15 | Προσθήκη Ελληνικής έκδοσης ΑΑΔΕ/B2G | 
+| Έκδοση  | Ημερομηνία | Περιγραφή                                                       |
+|---------|------------|-----------------------------------------------------------------|
+| 1.0     | 2023-10-01 | Αρχική έκδοση                                                   |
+| 1.1     | 2023-11-15 | Προσθήκη crypto headers                                         |
+| 1.2     | 2023-12-15 | Προσθήκη Ελληνικής έκδοσης ΑΑΔΕ/B2G                             | 
+| 1.3     | 2023-12-22 | Προσθήκη endpoints, δείγματα payloads, response, postman collection |
 
 ## Εισαγωγή
 
 Καλώς ήρθατε στο e-invoicing API, ένα REST API σχεδιασμένο για τη διαχείριση λειτουργιών που σχετίζονται με την 
-ηλεκτρονική τιμολόγηση της OXINUS και την υποβολή μέσω παρόχου προς την ΑΑΔΕ και στη συνέχεια προς το ΚΕΔ (ΓΓΠΣ) 
-εφόσον αυτό απαιτείται. 
+ηλεκτρονική τιμολόγηση της OXINUS και την υποβολή μέσω παρόχου προς την ΑΑΔΕ και στη συνέχεια προς το ΚΕΔ (ΓΓΠΣ) εφόσον αυτό απαιτείται. 
 Αυτό το έγγραφο παρέχει λεπτομέρειες σχετικά με τον τρόπο αλληλεπίδρασης με το API, συμπεριλαμβανομένων των HTTP 
 κεφαλίδων, δομών αιτήσεων και απαντήσεων, καθώς και της κρυπτογραφικής πιστοποίησης.
 
@@ -21,7 +21,7 @@
 Το δοκιμαστικό περιβάλλον, για όλες τις κλήσεις του API είναι:
 
 ```
-https://staging-api.invoicing.oxinus.net/
+https://api.invoicing.oxinus.net/
 ```
 
 ## Αυθεντικοποίηση (Authentication)
@@ -35,14 +35,13 @@ https://staging-api.invoicing.oxinus.net/
 
 ```
 x-api-key:
-hmac:
+x-signature:
 ```
 
 ## 1. Υποβολή Τιμολογίου
-Για την υποβολή ενός τιμολογίου, απαιτείται να υποβληθεί μαζί με την κλήση και το κρυπτογραφικό header 
-το οποίο περιλαμβάνει την υπογραφή της συσκευής, το hashing των βασικών στοιχείων του τιμολογίου, 
-τα στοιχεία καθώς και το payload το οποίο θα πρέπει να είναι συμβατό με τις προδιαγραφές της ΑΑΔΕ 
-για την υποβολή παραστατικού.
+Για την υποβολή ενός τιμολογίου, απαιτείται να υποβληθεί μαζί με την κλήση και το κρυπτογραφικό header το οποίο 
+περιλαμβάνει την υπογραφή της συσκευής, το hashing των βασικών στοιχείων του τιμολογίου, τα στοιχεία καθώς και το 
+payload το οποίο θα πρέπει να είναι συμβατό με τις προδιαγραφές της ΑΑΔΕ για την υποβολή παραστατικού.
 
 ### Εκδοση Κλειδιών και Πιστοποίηση συσκευής στην εφαρμογή.
 Για την υπογραφή του εκάστοτε παραστατικού, απαιτείται η πιστοποίηση της συσκευής στην εφαρμογή.
@@ -66,8 +65,8 @@ $ openssl pkey -in private_key.pem -pubout -out public_key.pem
 Για περισσότερες πληροφορίες μπορείτε να ανατρέξτε στον ακόλουθο σύνδεσμο [How To Generate ed25519 SSH Key]
 
 ##### Windows
-Από ένα σύστημα Windows (Windows 10+, Windows Server 2016+) μπορούν να εκδοθούν κλειδιά με την παρακάτω εντολή, με τη χρήση του OpenSSL μέσω του Windows 
-Powershell.
+Από ένα σύστημα Windows (Windows 10+, Windows Server 2016+) μπορούν να εκδοθούν κλειδιά με την παρακάτω εντολή, με τη 
+χρήση του OpenSSL μέσω του Windows Powershell.
 
 ```shell
 ssh-keygen -t ed25519
@@ -85,21 +84,29 @@ signing-devices στην εφαρμογή, από όπου θα ληφθεί η 
 Εναλλακτικά, μπορεί να γίνει μέσω curl χρησιμοποιώντας την παρακάτω εντολή, αντικαθιστώντας τα απαραίτητα πεδία.
 
 ```shell
-curl --location 'https://staging-api.invoicing.oxinus.net/signing-devices' \
+curl --location 'https://api.invoicing.oxinus.net/signing-devices' \
 --header 'Content-Type: application/json' \
---header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImtqZG5nZTg0NTQwOTgiLCJmaXJzdE5hbWUiOiJSaWNreSIsImxhc3ROYW1lIjoiTWFydGluIiwiZW1haWwiOiJtLnNpZGRpcXVpQG94aW51cy5pbyIsImFwaUtleSI6ImhoaGpqamRkZGtrayIsInNlY3JldCI6InNlY3JldCIsImFjY2Vzc1R5cGUiOiJTMlMiLCJjcmVhdGVkQXQiOiIyMDIzLTEyLTE0VDA3OjA3OjE0LjgzMloiLCJ1cGRhdGVkQXQiOiIyMDIzLTEyLTE0VDA3OjA3OjE0LjgzMloiLCJpYXQiOjE3MDI1NDE3OTZ9.a3XfDBcXVJ5mZFkKR7u5Er_zT9L06SaIUzi9biYD6gU' \
+--header 'Authorization: Bearer eyJhbGciOiJUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc2YjM1ZDdlLWVkODQtNGI0ZS1hODhiLWQ2Y2RlOWRiY2Q3YiIsImZpcnN0TmFtZSI6Ik94aW51cyIsImxhc3ROYW1lIjoiSG9sZGluZ3MiLCJlbWFpbCI6InNwQG94aW51cy5ob2xkaW5ncyIsImFjY2Vzc1R5cGUiOiJqd3QiLCJpYXQiOjE3MDI4Nzg3MTB9.ZLZGFse5RJMFkgziYs-nH8qYTveztOzmhApbXN0poPA' \
 --data '{
     "deviceName": "device 1",
     "deviceType": "virtual",
     "deviceSerial": "98594583434",
-    "devicePublicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAvR97AJTKyGNAjOYROXGk+H367Ix1kOAMNKQwpTuvOfU=\n-----END PUBLIC KEY-----",
-    "devicePublicKeySignature": "afe1b64b12ba3105f8da112905abf2bb0bc9b7b1bcc9406dd2989fee7332df8e9ce48c2b5b2549ffdbecfd7112a40aed99362ae39dda393f7d8bc96b439b1101",
+    "devicePublicKey": "0e6c1b121a9ce7f593fb6f1a3794090885a93de2812fafaf6b6f5c0867477f4",
+    "devicePublicKeySignature": "b926537302ebcacb367a2e4bf608a2c7751322fd835915a640b95ffa37208775d6b5d56d6c1f01b2df7f20b4fd31749cce8f6c950b10f202d09cc331664ef07",
+    "networkTxnId": "123243323",
     "country": "GR",
     "authority": "AAD",
-    "entity": 1 
+    "entity": 1
 }'
 ```
 
+#### Λήψη ενός παραστατικού
+Παραστατικό το οποίο έχει υποβληθεί επιτυχώς, μπορεί να γίνει λήφη, χρησιμοποιοώντας τον κωδικού UID ο οποίος περιλαμβάνεται στην απάντηση (response) κατά την υποβολή του.
+
+```shell
+curl --location 'https://api.invoicing.oxinus.net/invoice/DC9555A9F4786C0605698D7DA5EDED4EBCB87A73' \
+--header 'Authorization: Bearer eyJhbGciOJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImtqZG5nZTg0NTQwOTgiLCJmaXJzdE5hbWUiOiJSaWNreSIsImxhc3ROYW1lIjoiTWFydGluIiwiZW1haWwiOiJtLnNpZGRpcXVpQG94aW51cy5pbyIsImFwaUtleSI6ImhoaGpqamRkZGtrayIsInNlY3JldCI6InNlY3JldCIsImFjY2Vzc1R5cGUiOiJTMlMiLCJjcmVhdGVkQXQiOiIyMDIzLTEyLTE0VDA3OjA3OjE0LjgzMloiLCJ1cGRhdGVkQXQiOiIyMDIzLTEyLTE0VDA3OjA3OjE0LjgzMloiLCJpYXQiOjE3MDI1NDE3OTZ9.a3XfDBcXVJ5mZFkKR7u5Er_zT9L06SaIUzi9biYD6gU'
+```
 
 ### Κεφαλίδες Αίτησης:
 Παρακάτω ακολουθεί η λίστα των headers του κάθε αιτήματος και στη συνέχεια αναλύονται διεξοδικά.
@@ -122,7 +129,7 @@ curl --location 'https://staging-api.invoicing.oxinus.net/signing-devices' \
 | Crypto-Header-Invoice-Payload-SHA256-Hash        | SHA256 Hash του περιεχομένου του τιμολογίου                     | "31481f96c1677e8f0e1cd81d941561824f19b344476612c69a3dd18db1a47277"                                     |
 | Crypto-Header-Signature                          | Υπογραφή του (Fiscal Header και Invoice Payload Hash) με το Ιδιωτικό Κλειδί της Συσκευής | "0D64FD1B9B95790E473489D6964B4D1A76811BC3A63407118B3CCCB3BC6F789A384F2EF80BD8A70347ACD89E0C342F1DA300C85A5830254011543A3B64EB9206"                                          |
 | Crypto-Header-Previous-Invoice-Fiscal-Header     | SHA256 hash της προηγούμενης φορολογικής επικεφαλίδας           | "aa3a677e8f0e19a3dd1876612c69a3dd18d98afa76612c69a3dd18df888daea5a"                 |
-| Crypto-Header-Public-Key-of-Signatory-Device     | Δημόσιο Κλειδί της Συσκευής Υπογραφής                           | "-----BEGIN PUBLIC KEY-----\nMCowBQYDK3VwAyEAvR97AJTKyGNAjOYROXGk+H367Ix1kOAMNKQwpTuvOfU=\n-----END PUBLIC KEY-----"                                |
+| Crypto-Header-Public-Key-of-Signatory-Device     | Δημόσιο Κλειδί της Συσκευής Υπογραφής (Base64)                  | "MCowBQYDK3VwAyEAvR97AJTKyGNAjOYROXGk+H367Ix1kOAMNKQwpTuvOfU="                                |
 | Crypto-Header-Signature-of-Signatory-Device-Public-Key | Υπογραφή του Δημοσίου Κλειδιού της Συσκευής Υπογραφής     | "E473489D6964B4D1A76811BC3A634070D64FD15830254011B9B95790118B3CCCB3BC6F789A384F2EFF1DA300C85A543A3B64EB920680BD8A70347ACD89E0C342"                        |
 
 Όπως φαίνεται στον παραπάνω πίνακα, οι κεφαλίδες που απαιτούνται για την ασφαλή και επιτυχημένη υποβολή ενός 
@@ -204,6 +211,19 @@ To οικονομικό τμήμα του Header περιλαμβάνει τις
 - Περιγραφή: Hash SHA256 όλων των κεφαλίδων του Οικονομικού τμήματος των headers (fiscal-header fields) ενωμένα σε ένα 
 πεδίο διαχωρισμένο με τον χαρακτήρα "|" pipe.
 π.χ: "fd4bdc10-b0f3-4f3b-beb1-14fc4f42dc2b|987654321|123456789|1702140669|380|1000.00|240.00|EUR|EUR"
+
+Η σειρά εμφάνισης είναι η παρακάτω:
+- Fiscal-Header-Invoice-ID
+- Fiscal-Header-Issuer-TaxID
+- Fiscal-Header-Recipient-TaxID
+- Fiscal-Header-TimeStamp-Epoch
+- Fiscal-Header-Document-Type
+- Fiscal-Header-Document-Value
+- Fiscal-Header-Document-Tax-Value
+- Fiscal-Header-Currency
+- Fiscal-Header-Tax-Currency
+- Example Value: "ba2a7576612c69a3dd18da20b3c47c598afabe1c1aec9fa98a1f888daecf5a5d"
+
 - Ενδεικτική τιμή παραδείγματος: "ba2a7576612c69a3dd18da20b3c47c598afabe1c1aec9fa98a1f888daecf5a5d"
 
 ##### Invoice Payload SHA256 Hash
@@ -212,7 +232,7 @@ To οικονομικό τμήμα του Header περιλαμβάνει τις
 
 ##### Signature
 - Περιγραφή: Υπογραφή με το δημόσιο κλειδί της συσκευής (το οποίο έχει πιστοποιηθεί σε προγενέστερο βήμα) της ένωσης των
- δύο (2) προηγούμενων hashes (π.χ: sign((FiscalHeaderHash+FiscalHeaderHash), myPrivateKey)
+ δύο (2) προηγούμενων hashes (π.χ: sign((FiscalHeaderHash+InvoicePayloadHash), myPrivateKey)
 - Ενδεικτική τιμή: "0D64FD1B9B95790E473489D6964B4D1A76811BC3A63407118B3CCCB3BC6F789A384F2EF80BD8A70347ACD89E0C342F1DA300C85A5830254011543A3B64EB9206"
 
 ##### Previous Invoice Fiscal Header SHA256 Hash
@@ -220,8 +240,8 @@ To οικονομικό τμήμα του Header περιλαμβάνει τις
 - Ενδεικτική τιμή: "aa3a677e8f0e19a3dd1876612c69a3dd18d98afa76612c69a3dd18df888daea5a"
 
 ##### Public Key of Signatory Device
-- Περιγραφή: Το δημόσιο κλειδί της συσκευής.
-- Ενδεικτική τιμή: "-----BEGIN PUBLIC KEY-----\nMCowBQYDK3VwAyEAvR97AJTKyGNAjOYROXGk+H367Ix1kOAMNKQwpTuvOfU=\n-----END PUBLIC KEY-----"
+- Περιγραφή: Το δημόσιο κλειδί της συσκευής (Base 64)
+- Ενδεικτική τιμή: "MCowBQYDK3VwAyEAvR97AJTKyGNAjOYROXGk+H367Ix1kOAMNKQwpTuvOfU="
 
 ##### Signature of Signatory Device Public Key
 - Περιγραφή: Υπογραφή του δημόσιου κλειδιού της συσκευής (παρομοίως με την εγγραφή της συσκευής).
@@ -246,7 +266,7 @@ To σώμα του αιτήματος (request body) θα πρέπει να πε
 
 #### Τμήμα κλήσης για PEPPOL (B2G)
 Σε περίπτωση που το τιμολόγιο αφορά παραστατικό B2G το οποίο απαιτείται να δρομολογηθεί μέσω δικτύου PEPPOL, θα πρέπει 
-να συμπληρώνεται η ένδειξη Settings-Is-Peppol-Required, στον header της κλήσης, με την τιμή true
+να συμπληρώνεται η ένδειξη Settings-Is-Peppol-Required, στον header της κλήσης, με την τιμή `true`.
 
 Στην περίπτωση αυτή, το παραστατικό θα ελεγχθεί για την ύπαρξη των παρακάτω πεδίων σε επίπεδο τιμολογίου, τα οποία θα 
 πρέπει να περιέχονται στο τελευταίο element <b2g-peppol> στο element invoice.
