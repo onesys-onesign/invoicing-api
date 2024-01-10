@@ -51,6 +51,7 @@
             <otherTaxesPercentCategory>3</otherTaxesPercentCategory>
             <otherTaxesAmount>40.00</otherTaxesAmount>
             <deductionsAmount>200.00</deductionsAmount>
+            <lineComments>Test Comment</lineComments>
             <incomeClassification>
                 <icls:classificationType>E3_561_001</icls:classificationType>
                 <icls:classificationCategory>category1_1</icls:classificationCategory>
