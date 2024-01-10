@@ -1,4 +1,4 @@
-# OXINUS REST API Ηλεκτρονικής Τιμολόγησης 1.3
+# OXINUS REST API Ηλεκτρονικής Τιμολόγησης 1.4
 
 ## Αριθμός έκδοσης
 
@@ -8,6 +8,7 @@
 | 1.1     | 2023-11-15 | Προσθήκη crypto headers                                         |
 | 1.2     | 2023-12-15 | Προσθήκη Ελληνικής έκδοσης ΑΑΔΕ/B2G                             | 
 | 1.3     | 2023-12-22 | Προσθήκη endpoints, δείγματα payloads, response, postman collection |
+| 1.4     | 2024-01-10 | Ενημέρωση των sample payloads with lineComments and itemCPV elements, HMAC οδηγός |
 
 ## Εισαγωγή
 
@@ -36,6 +37,68 @@ https://api.invoicing.oxinus.net/
 ```
 x-api-key:
 x-signature:
+```
+
+## Οδηγός αυθεντικοποίησης με χρήση HMAC
+
+### Σύνοψη
+
+Το τμήμα αυτό περιέχει οδηγίες σχετικά με την χρήση authentication HMAC για την επικοινωνία server-to-server. 
+Περιλαμβάνει την χρήση ενός ζεύγους κλειδιών API KEY κα μυστικού κωδικού SECRET. 
+Το API KEY χρησιμοποιείται στην κεφαλίδα του μηνύματος (request header), και ο κωδικός Secret, χρησμοπειίται για να παραχθεί μία Υπογραφή HMAC του περιεχομένου του μηνύματος (request body).
+
+### Απαιτήσεις
+
+### API Key and Secret: 
+Δύο ξεχωριστά δεδομένα θα απαιτηθούν, το API KEY και το SECRET.
+
+**API Key:** Αποστέλλεται με τις κεφαλίδες (request header).
+
+**Secret:** Χρησιμοποιείται για την παραγωγή της υπογραφής HMAC του payload.
+
+**Κρυπτογράφηαση μηνύματος:**
+
+Κρυπτογραφείτε το body του request χρησιμοποιώντας το secret.
+Για περιεχόμενο XML, κρυπτογραφείτε το περιεχόμενο απαυθείας.
+Για περιεχόμενο τύπου JSON, θα πρέπει να προηγηθεί πρώτα stringify του JSON πριν την κρυπτογράφηση.
+
+**Κεφαλίδες μηνύματος (Request Headers):**
+
+`x-api-key:` Το δοθέν API-KEY.
+
+`x-signature:` Η υπογραφή HMAC του request body χρησιμοποιώντας το secret.
+
+> **Σημείωση:**
+> Σε περίπτωση χρήσης x-api-key, x-signature μεθόδου δεν θα πρέπει να στέλνεται μαζί το Authorization Bearer
+>
+
+Παράδειγμα, 
+
+Δείγμα φευδοκώδικα σε Python:
+
+```{python}
+import hmac
+import hashlib
+
+def encrypt_body(api_key, body, content_type):
+    if content_type == 'application/json':
+        body = json.stringify(body)
+    signature = hmac.new(api_key.encode(), body.encode(), hashlib.sha256).hexdigest()
+    return signature
+
+api_key = "dsfdsf3434"
+body = "<xml>...</xml>"  # or JSON object
+content_type = "application/xml"  # or "application/json"
+
+signature = encrypt_body(api_key, body, content_type)
+
+headers = {
+    "x-api-key": api_key,
+    "x-signature": signature
+}
+
+# send request with headers
+
 ```
 
 ## 1. Υποβολή Τιμολογίου

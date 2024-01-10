@@ -8,6 +8,8 @@
 | 1.1     | 2023-11-15 | Added crypto headers              |
 | 1.2     | 2023-12-16 | Added GR AADE integration         |
 | 1.3     | 2023-12-22 | Updates/Fixes, Postman, Sample Calls |
+| 1.4     | 2024-01-10 | Updated Postman, XML Calls, added more details on S2S HMAC Authentication |
+
 
 ## Supported Schemas
 

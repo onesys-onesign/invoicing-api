@@ -1,4 +1,4 @@
-# OXINUS REST API Electronic Invoicing 1.3
+# OXINUS REST API Electronic Invoicing 1.4
 
 ## Version History
 
@@ -8,7 +8,7 @@
 | 1.1     | 2023-11-15 | Addition of crypto headers                                         |
 | 1.2     | 2023-12-15 | Addition of Greek version AADE/B2G                                 |
 | 1.3     | 2023-12-22 | Added endpoints, sample payloads, responses, postman collection    |
-| 1.4     | 2024-01-10 | Updated the sample payloads with lineComments and itemCPV elements |
+| 1.4     | 2024-01-10 | Updated the sample payloads with lineComments and itemCPV elements, HMAC Guide |
 
 ## Introduction
 
@@ -43,7 +43,7 @@ x-signature:
 
 ### Overview
 
-This document provides guidance on implementing HMAC authentication for server-to-server communication. It involves the use of an API key and a secret. The API key is used in the request header, while the secret is used to generate an HMAC signature from the request body.
+This section provides guidance on implementing HMAC authentication for server-to-server communication. It involves the use of an API key and a secret. The API key is used in the request header, while the secret is used to generate an HMAC signature from the request body.
 ### Requirements
 
 ### API Key and Secret: 
