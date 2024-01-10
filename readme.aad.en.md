@@ -39,6 +39,84 @@ x-api-key:
 x-signature:
 ```
 
+## HMAC Authentication Implementation Guide
+
+### Overview
+
+This document outlines the implementation of HMAC (Hash-based Message Authentication Code) authentication for secure server-to-server communication. The key components include the usage of an API key for encryption and specific handling for different content types of the request body.
+
+### Requirements
+
+**API Key:** Use the provided API key `Dummy_API_KEY` for encryption purposes.
+
+**Encryption of Request Body:**
+If the request body's content type is XML, encrypt the body directly.
+If the request body's content type is JSON, convert the body to a JSON string (stringify) before encryption.
+
+> **Note:**
+> Do not send Authorization Bearer in header for HMAC Authentication
+> 
+**Request Headers:**
+
+`x-api-key:` Set this to the provided API key.
+`x-signature:` Set this to the encrypted string of the request body.
+HMAC Authentication Process
+
+**Identify Content Type:**
+
+Check the content type of the request body.
+
+Process the body according to its content type (XML or JSON).
+
+**Encrypt Request Body:**
+
+Use the HMAC algorithm with the provided API key to encrypt the request body.
+
+For JSON content, stringify the JSON object before applying the HMAC algorithm.
+
+**Include Headers in Request:**
+
+Add `x-api-key` header with the value `Dummy_API_KEY`.
+
+Add `x-signature` header with the HMAC encrypted string of the request body.
+
+**Send Request:**
+
+Make the server-to-server request with the HMAC-authenticated headers.
+
+### Security Considerations
+Ensure that the API key is stored and transmitted securely.
+Use a secure HMAC algorithm, such as HMAC-SHA256.
+Validate the x-signature on the receiving server to ensure data integrity and authenticity.
+Example
+
+Here is a pseudocode example:
+
+```{python}
+import hmac
+import hashlib
+
+def encrypt_body(api_key, body, content_type):
+    if content_type == 'application/json':
+        body = json.stringify(body)
+    signature = hmac.new(api_key.encode(), body.encode(), hashlib.sha256).hexdigest()
+    return signature
+
+api_key = "dsfdsf3434"
+body = "<xml>...</xml>"  # or JSON object
+content_type = "application/xml"  # or "application/json"
+
+signature = encrypt_body(api_key, body, content_type)
+
+headers = {
+    "x-api-key": api_key,
+    "x-signature": signature
+}
+
+# send request with headers
+
+```
+
 ## 1. Invoice Submission
 To submit an invoice, it is necessary for each call to be accompanied by a cryptographic header, which includes the
 device signature, hashing of the essential elements of the invoice, details. Additionally, the payload  must comply with
