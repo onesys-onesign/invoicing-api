@@ -2,12 +2,13 @@
 
 ## Version History
 
-| Version | Date       | Description                                                     |
-|---------|------------|-----------------------------------------------------------------|
-| 1.0     | 2023-10-01 | Initial release                                                 |
-| 1.1     | 2023-11-15 | Addition of crypto headers                                      |
-| 1.2     | 2023-12-15 | Addition of Greek version AADE/B2G                              |
-| 1.3     | 2023-12-22 | Added endpoints, sample payloads, responses, postman collection |
+| Version | Date       | Description                                                        |
+|---------|------------|--------------------------------------------------------------------|
+| 1.0     | 2023-10-01 | Initial release                                                    |
+| 1.1     | 2023-11-15 | Addition of crypto headers                                         |
+| 1.2     | 2023-12-15 | Addition of Greek version AADE/B2G                                 |
+| 1.3     | 2023-12-22 | Added endpoints, sample payloads, responses, postman collection    |
+| 1.4     | 2024-01-10 | Updated the sample payloads with lineComments and itemCPV elements |
 
 ## Introduction
 
@@ -36,6 +37,65 @@ of the caller, the agreed-upon API key must be present.
 ```
 x-api-key:
 x-signature:
+```
+
+## HMAC Authentication Implementation Guide
+
+### Overview
+
+This document provides guidance on implementing HMAC authentication for server-to-server communication. It involves the use of an API key and a secret. The API key is used in the request header, while the secret is used to generate an HMAC signature from the request body.
+### Requirements
+
+### API Key and Secret: 
+Two distinct pieces of data will be provided:
+
+**API Key:** To be sent in the request header.
+
+**Secret:** To be used for generating the HMAC signature.
+
+**Encryption of Request Body:**
+
+Encrypt the body using the secret.
+For XML content type, encrypt the body directly.
+For JSON content type, stringify the JSON before encryption.
+
+**Request Headers:**
+
+`x-api-key:` Set this to the provided API key.
+
+`x-signature:` Set this to the HMAC encrypted string of the request body using the secret.
+
+> **Note:**
+> Do not send Authorization Bearer in header for HMAC Authentication
+>
+
+Example
+
+Here is a pseudocode example:
+
+```{python}
+import hmac
+import hashlib
+
+def encrypt_body(api_key, body, content_type):
+    if content_type == 'application/json':
+        body = json.stringify(body)
+    signature = hmac.new(api_key.encode(), body.encode(), hashlib.sha256).hexdigest()
+    return signature
+
+api_key = "dsfdsf3434"
+body = "<xml>...</xml>"  # or JSON object
+content_type = "application/xml"  # or "application/json"
+
+signature = encrypt_body(api_key, body, content_type)
+
+headers = {
+    "x-api-key": api_key,
+    "x-signature": signature
+}
+
+# send request with headers
+
 ```
 
 ## 1. Invoice Submission
