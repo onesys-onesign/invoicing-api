@@ -43,51 +43,32 @@ x-signature:
 
 ### Overview
 
-This document outlines the implementation of HMAC (Hash-based Message Authentication Code) authentication for secure server-to-server communication. The key components include the usage of an API key for encryption and specific handling for different content types of the request body.
-
+This document provides guidance on implementing HMAC authentication for server-to-server communication. It involves the use of an API key and a secret. The API key is used in the request header, while the secret is used to generate an HMAC signature from the request body.
 ### Requirements
 
-**API Key:** Use the provided API key `Dummy_API_KEY` for encryption purposes.
+### API Key and Secret: 
+Two distinct pieces of data will be provided:
+
+**API Key:** To be sent in the request header.
+
+**Secret:** To be used for generating the HMAC signature.
 
 **Encryption of Request Body:**
-If the request body's content type is XML, encrypt the body directly.
-If the request body's content type is JSON, convert the body to a JSON string (stringify) before encryption.
 
-> **Note:**
-> Do not send Authorization Bearer in header for HMAC Authentication
-> 
+Encrypt the body using the secret.
+For XML content type, encrypt the body directly.
+For JSON content type, stringify the JSON before encryption.
+
 **Request Headers:**
 
 `x-api-key:` Set this to the provided API key.
-`x-signature:` Set this to the encrypted string of the request body.
-HMAC Authentication Process
 
-**Identify Content Type:**
+`x-signature:` Set this to the HMAC encrypted string of the request body using the secret.
 
-Check the content type of the request body.
+> **Note:**
+> Do not send Authorization Bearer in header for HMAC Authentication
+>
 
-Process the body according to its content type (XML or JSON).
-
-**Encrypt Request Body:**
-
-Use the HMAC algorithm with the provided API key to encrypt the request body.
-
-For JSON content, stringify the JSON object before applying the HMAC algorithm.
-
-**Include Headers in Request:**
-
-Add `x-api-key` header with the value `Dummy_API_KEY`.
-
-Add `x-signature` header with the HMAC encrypted string of the request body.
-
-**Send Request:**
-
-Make the server-to-server request with the HMAC-authenticated headers.
-
-### Security Considerations
-Ensure that the API key is stored and transmitted securely.
-Use a secure HMAC algorithm, such as HMAC-SHA256.
-Validate the x-signature on the receiving server to ensure data integrity and authenticity.
 Example
 
 Here is a pseudocode example:
