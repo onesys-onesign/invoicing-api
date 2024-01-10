@@ -7,14 +7,14 @@
 | 1.0     | 2023-10-01 | Initial release                                                 |
 | 1.1     | 2023-11-15 | Addition of crypto headers                                      |
 | 1.2     | 2023-12-15 | Addition of Greek version AADE/B2G                              |
-| 1.3     | 2023-12-20 | Added endpoints, sample payloads, responses, postman collection |
+| 1.3     | 2023-12-22 | Added endpoints, sample payloads, responses, postman collection |
 
 ## Introduction
 
-Welcome to the e-invoicing API, a REST API designed for managing functions related to electronic invoicing by OXINUS 
+Welcome to the e-invoicing API, a REST API designed for managing functions related to electronic invoicing by OXINUS
 and submission through a provider to AADE, and subsequently to KED (GGPS) if required.
-This document provides details on how to interact with the API, including HTTP headers, request and response structures, 
- as well as cryptographic certification.
+This document provides details on how to interact with the API, including HTTP headers, request and response structures,
+as well as cryptographic certification.
 
 ## Test Environment (Sandbox)
 
@@ -30,7 +30,7 @@ To submit any call to the API, the following two (2) methods are supported:
 1) You should use an API key and Hash-based Message Authentication Code (HMAC).
 2) Use Json Web Token (JWT).
 
-In the case of a Service 2 Service call, in the headers of the call (HTTP Request-Header) related to the authentication 
+In the case of a Service 2 Service call, in the headers of the call (HTTP Request-Header) related to the authentication
 of the caller, the agreed-upon API key must be present.
 
 ```
@@ -54,7 +54,8 @@ To certify a device in the application, the following steps should be followed:
 
 #### Key Generation
 ##### Linux/Unix/MacOS
-From a Linux/Unix/MacOS system, keys can be generated using the following commands, utilizing OpenSSL through the terminal/console.
+From a Linux/Unix/MacOS system, keys can be generated using the following commands, utilizing OpenSSL through the 
+terminal/console.
 
 ```shell
 $ openssl genpkey -algorithm Ed25519 -out private_key.pem
@@ -64,7 +65,7 @@ $ openssl pkey -in private_key.pem -pubout -out public_key.pem
 For more information, you can refer to the following link [How To Generate ed25519 SSH Key].
 
 ##### Windows
-From a Windows system (Windows 10+, Windows Server 2016+), keys can be generated using the following command, 
+From a Windows system (Windows 10+, Windows Server 2016+), keys can be generated using the following command,
 using OpenSSL through Windows PowerShell.
 
 ```shell
@@ -74,9 +75,9 @@ ssh-keygen -t ed25519
 For more information, refer to the following link: [Key-based authentication in OpenSSH for Windows].
 
 #### Submission and Signing of Keys
-After generating the keys, device certification in the application is required. To certify the device in the 
+After generating the keys, device certification in the application is required. To certify the device in the
 application, the public key generated in the previous process should be signed, and both elements (public key and signature)
-should be submitted using the "signing-devices" method in the application. 
+should be submitted using the "signing-devices" method in the application.
 The application will in turn return a device specific signature that the device should use in each call.
 
 Alternatively, it can be done using curl with the following command, replacing the necessary fields.
@@ -99,7 +100,7 @@ curl --location 'https://api.invoicing.oxinus.net/signing-devices' \
 ```
 
 #### Revoking a device
-If the signing device needs to be revoked from use, a delete request can be sent to disable the device from signing anymore invoices. 
+If the signing device needs to be revoked from use, a delete request can be sent to disable the device from signing anymore invoices.
 
 ```shell
 curl --location --request DELETE 'https://api.invoicing.oxinus.net/signing-devices/1' \
@@ -116,6 +117,7 @@ curl --location 'https://api.invoicing.oxinus.net/invoice/DC9555A9F4786C0605698D
 ```
 
 ### Request Headers:
+Following is the list of supported headers that are analysed in detail.
 
 | Name                                             | Description (PEPPOL Identifier)                                    | Example Value                                    |
 |--------------------------------------------------|-----------------------------------------------------------------   |--------------------------------------------------|
@@ -135,10 +137,10 @@ curl --location 'https://api.invoicing.oxinus.net/invoice/DC9555A9F4786C0605698D
 | Crypto-Header-Invoice-Payload-SHA256-Hash        | SHA256 Hash of the invoice content.                                | "31481f96c1677e8f0e1cd81d941561824f19b344476612c69a3dd18db1a47277"                                     |                                                                  
 | Crypto-Header-Signature                          | Signature of (Fiscal Header and Invoice Payload Hash) with the Privatκό Κλειδί της Συσκευής | "0D64FD1B9B95790E473489D6964B4D1A76811BC3A63407118B3CCCB3BC6F789A384F2EF80BD8A70347ACD89E0C342F1DA300C85A5830254011543A3B64EB9206"   |            
 | Crypto-Header-Previous-Invoice-Fiscal-Header     | SHA256 hash of the previous fiscal header.                         | "aa3a677e8f0e19a3dd1876612c69a3dd18d98afa76612c69a3dd18df888daea5a"                 |                                                                                     
-| Crypto-Header-Public-Key-of-Signatory-Device     | Public Key of the Signing Device                                   | "-----BEGIN PUBLIC KEY-----\nMCowBQYDK3VwAyEAvR97AJTKyGNAjOYROXGk+H367Ix1kOAMNKQwpTuvOfU=\n-----END PUBLIC KEY-----"                                |                     
+| Crypto-Header-Public-Key-of-Signatory-Device     | Public Key of the Signing Device (Base 64)                         | "MCowBQYDK3VwAyEAvR97AJTKyGNAjOYROXGk+H367Ix1kOAMNKQwpTuvOfU="                                |                     
 | Crypto-Header-Signature-of-Signatory-Device-Public-Key | Signature of the Public Key of the Signing Device            | "E473489D6964B4D1A76811BC3A634070D64FD15830254011B9B95790118B3CCCB3BC6F789A384F2EFF1DA300C85A543A3B64EB920680BD8A70347ACD89E0C342"                        |               
 
-As shown in the table above, the headers required for the secure and successful submission of a document consist of 
+As shown in the table above, the headers required for the secure and successful submission of a document consist of
 three separate parts:
 
 - **Settings**: Settings section includes configuration options for the API.
@@ -209,21 +211,33 @@ Description: Document tax value (Invoice.TaxTotal.TaxAmount).
 
 #### Crypto Header
 
-The cryptographic section of the headers includes the necessary security and encryption data of the document to verify 
+The cryptographic section of the headers includes the necessary security and encryption data of the document to verify
 its validity.
 
 ##### Fiscal Header SHA256 Hash
-- Description: SHA256 hash of all headers in the financial section (fiscal-header fields) concatenated into one field 
+- Description: SHA256 hash of all headers in the financial section (fiscal-header fields) concatenated into one field
 - separated by the "|" pipe character.
-  e.g., "fd4bdc10-b0f3-4f3b-beb1-14fc4f42dc2b|987654321|123456789|1702140669|380|1000.00|240.00|EUR|EUR"
-- Example Value: "ba2a7576612c69a3dd18da20b3c47c598afabe1c1aec9fa98a1f888daecf5a5d"
+  - e.g., "fd4bdc10-b0f3-4f3b-beb1-14fc4f42dc2b|987654321|123456789|1702140669|380|1000.00|240.00|EUR|EUR"
+  
+The order of appearance is the following:
+  - Fiscal-Header-Invoice-ID                                                                          
+  - Fiscal-Header-Issuer-TaxID                                                                             
+  - Fiscal-Header-Recipient-TaxID                                                                              
+  - Fiscal-Header-TimeStamp-Epoch                                                                                                  
+  - Fiscal-Header-Document-Type                                                                                                         
+  - Fiscal-Header-Document-Value                                                                                                       
+  - Fiscal-Header-Document-Tax-Value                                                                                                        
+  - Fiscal-Header-Currency                                                                                                         
+  - Fiscal-Header-Tax-Currency
+
+  - Example Value: "ba2a7576612c69a3dd18da20b3c47c598afabe1c1aec9fa98a1f888daecf5a5d"
 
 ##### Invoice Payload SHA256 Hash
 - Description: SHA256 hash of the entire payload of the call.
 - Example Value: "31481f96c1677e8f0e1cd81d941561824f19b34448026a2639e56a92b1a47277"
 
 ##### Signature
-- Description: Signature with the device's public key (previously authenticated) of the concatenation of the two (2) 
+- Description: Signature with the device's public key (previously authenticated) of the concatenation of the two (2)
 - previous hashes.
   e.g., sign((FiscalHeaderHash+ InvoicePayloadHash),myPrivateKey)
 - Example Value: "0D64FD1B9B95790E473489D6964B4D1A76811BC3A63407118B3CCCB3BC6F789A384F2EF80BD8A70347ACD89E0C342F1DA300C85A5830254011543A3B64EB9206"
@@ -233,7 +247,7 @@ its validity.
 - Example Value: "aa3a677e8f0e19a3dd1876612c69a3dd18d98afa76612c69a3dd18df888daea5a"
 
 ##### Public Key of Signatory Device
-- Description: The public key of the device.
+- Description: The public key of the device (Base 64)
 - Example Value: "MCowBQYDK3VwAyEAvR97AJTKyGNAjOYROXGk+H367Ix1kOAMNKQwpTuvOfU="
 
 ##### Signature of Signatory Device Public Key
@@ -243,7 +257,7 @@ its validity.
 
 #### Request Body (Payload)
 
-The request body should contain the XML format of AADE as it has been configured with the latest version of the 
+The request body should contain the XML format of AADE as it has been configured with the latest version of the
 specifications.
 
 ***Current specifications 1.0.7***
@@ -252,17 +266,18 @@ The relevant specifications can be found in the following link (link through the
 
 [myDATA API Documentation_Providers_v1.0.7_official.pdf]
 
-The references mentioned in the Provider's specifications point to the ERP specifications, which are available at the 
+The references mentioned in the Provider's specifications point to the ERP specifications, which are available at the
 following link (link ERP).
 
 [myDATA API Documentation_v1.0.7_official_ERP.pdf]
 
 
 #### Call Section for PEPPOL (B2G)
-In case the invoice pertains to a B2G document that needs to be routed through the PEPPOL network, the indication 
+In case the invoice pertains to a B2G document that needs to be routed through the PEPPOL network, the indication
 `Settings-Is-Peppol-Required` should be filled in the call header with the value `true`.
 
-In this case, the document will be checked for the existence of the following fields:
+In this case, the document will be checked for the existence of the following fields which should be included in the
+ last element <b2g-peppol> within <invoice>
 
 | Field              | Description                             | Sample Value          | Required | Peppol Field |
 |--------------------|-----------------------------------------|-----------------------|----------|----------|
@@ -314,11 +329,10 @@ Below is a sample of the mentioned section embedded in the XML format of AADE.
 </invoice>
 ```
 
-Furthermore, since the document concerns Business-to-Government (B2G), the CPV code of the product must be included 
-on each line, encoded according to the Common Product Vocabulary guidelines (CPV codes) as specified by the EE 
-(European Union). The document will be verified for the presence of a value in the itemCPV field, which should 
+Furthermore, since the document concerns Business-to-Government (B2G), the CPV code of the product must be included
+on each line, encoded according to the Common Product Vocabulary guidelines (CPV codes) as specified by the EE
+(European Union). The document will be verified for the presence of a value in the itemCPV field, which should
 be the last field in the invoiceDetails element.
-
 
 
 | Πεδίο              | Περιγραφή                              | Ενδεικτική Τιμή      | Υποχρεωτικό | PEPPOL BT |
@@ -339,6 +353,7 @@ Below is a sample of the mentioned segment integrated into the XML format of AAD
     ...
 </invoice>
 ```
+
 ### Response to Request
 
 In the case of a successful document submission, you will receive a response containing the following fields:
@@ -454,7 +469,7 @@ In case of submission failure, the following errors are returned by the applicat
 | 200 OK      | ValidationError  | 322      | Invoice  | Unsupported correlated invoice type                                                                                         |
 
 
-## Classification Errors 
+## Classification Errors
 HTTP Status | Error Code       | Error No | Source | Description                                          |                  
 -------------|------------------|----------|--------------|------------------------------------------------------------|  
 | 200 OK      | ValidationError  | 301     | Classification  | Invoices with ΜΑΡΚ {mark} requested not found                                                                                 |
