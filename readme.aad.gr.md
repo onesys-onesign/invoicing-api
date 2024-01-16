@@ -1,4 +1,4 @@
-# OXINUS REST API Ηλεκτρονικής Τιμολόγησης 1.4
+# OXINUS REST API Ηλεκτρονικής Τιμολόγησης 1.4.2
 
 ## Αριθμός έκδοσης
 
@@ -9,6 +9,9 @@
 | 1.2     | 2023-12-15 | Προσθήκη Ελληνικής έκδοσης ΑΑΔΕ/B2G                             | 
 | 1.3     | 2023-12-22 | Προσθήκη endpoints, δείγματα payloads, response, postman collection |
 | 1.4     | 2024-01-10 | Ενημέρωση των sample payloads with lineComments and itemCPV elements, HMAC οδηγός |
+| 1.4.1   | 2024-01-15 | Ενημέρωση του sample payload B2G με πεδία απαραίτητα για PEPPOL, counterpart.name, invoiceDetails.quantity, invoiceDetails.measurementUnit |
+| 1.4.2   | 2024-01-15 | Αλλαγή των headers HMAC Auth |
+
 
 ## Εισαγωγή
 
@@ -35,8 +38,8 @@ https://api.invoicing.oxinus.net/
 του καλούντος θα πρέπει να υπάρχει το προσυμφωνημένο api-key
 
 ```
-x-api-key:
-x-signature:
+client-api-key:
+client-signature:
 ```
 
 ## Οδηγός αυθεντικοποίησης με χρήση HMAC
@@ -64,12 +67,12 @@ x-signature:
 
 **Κεφαλίδες μηνύματος (Request Headers):**
 
-`x-api-key:` Το δοθέν API-KEY.
+`client-api-key:` Το δοθέν API-KEY.
 
-`x-signature:` Η υπογραφή HMAC του request body χρησιμοποιώντας το secret.
+`client-signature:` Η υπογραφή HMAC του request body χρησιμοποιώντας το secret.
 
 > **Σημείωση:**
-> Σε περίπτωση χρήσης x-api-key, x-signature μεθόδου δεν θα πρέπει να στέλνεται μαζί το Authorization Bearer
+> Σε περίπτωση χρήσης client-api-key, client-signature μεθόδου δεν θα πρέπει να στέλνεται μαζί το Authorization Bearer
 >
 
 Παράδειγμα, 
@@ -93,8 +96,8 @@ content_type = "application/xml"  # or "application/json"
 signature = encrypt_body(api_key, body, content_type)
 
 headers = {
-    "x-api-key": api_key,
-    "x-signature": signature
+    "client-api-key": api_key,
+    "client-signature": signature
 }
 
 # send request with headers

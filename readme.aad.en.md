@@ -1,4 +1,4 @@
-# OXINUS REST API Electronic Invoicing 1.4
+# OXINUS REST API Electronic Invoicing 1.4.2
 
 ## Version History
 
@@ -9,6 +9,8 @@
 | 1.2     | 2023-12-15 | Addition of Greek version AADE/B2G                                 |
 | 1.3     | 2023-12-22 | Added endpoints, sample payloads, responses, postman collection    |
 | 1.4     | 2024-01-10 | Updated the sample payloads with lineComments and itemCPV elements, HMAC Guide |
+| 1.4.1   | 2024-01-15 | Updates Sample B2G payload with PEPPOL required fields, counterpart.name, invoiceDetails.quantity, invoiceDetails.measurementUnit |
+| 1.4.2   | 2024-01-16 | Updates HMAC headers |
 
 ## Introduction
 
@@ -35,8 +37,8 @@ In the case of a Service 2 Service call, in the headers of the call (HTTP Reques
 of the caller, the agreed-upon API key must be present.
 
 ```
-x-api-key:
-x-signature:
+client-api-key:
+client-signature:
 ```
 
 ## HMAC Authentication Implementation Guide
@@ -61,9 +63,9 @@ For JSON content type, stringify the JSON before encryption.
 
 **Request Headers:**
 
-`x-api-key:` Set this to the provided API key.
+`client-api-key:` Set this to the provided API key.
 
-`x-signature:` Set this to the HMAC encrypted string of the request body using the secret.
+`client-signature:` Set this to the HMAC encrypted string of the request body using the secret.
 
 > **Note:**
 > Do not send Authorization Bearer in header for HMAC Authentication
@@ -90,8 +92,8 @@ content_type = "application/xml"  # or "application/json"
 signature = encrypt_body(api_key, body, content_type)
 
 headers = {
-    "x-api-key": api_key,
-    "x-signature": signature
+    "client-api-key": api_key,
+    "client-signature": signature
 }
 
 # send request with headers

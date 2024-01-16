@@ -13,6 +13,7 @@
             <vatNumber>026883248</vatNumber>
             <country>GR</country>
             <branch>0</branch>
+            <name>ΕΤΑΡΕΙΑ ΑΕ</name>
             <address>
                 <street>Βενιζέλου</street>
                 <number>3</number>
@@ -39,6 +40,8 @@
         </paymentMethods>
         <invoiceDetails>
             <lineNumber>1</lineNumber>
+            <quantity>1</quantity>
+            <measurementUnit>1</measurementUnit>
             <netValue>1000.00</netValue>
             <vatCategory>1</vatCategory>
             <vatAmount>240.00</vatAmount>

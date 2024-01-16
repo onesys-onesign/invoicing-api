@@ -1,4 +1,4 @@
-# OXINUS envoice API Documentation
+# OXINUS envoice API Documentation 1.4.2
 
 ## Version History
 
@@ -9,6 +9,8 @@
 | 1.2     | 2023-12-16 | Added GR AADE integration         |
 | 1.3     | 2023-12-22 | Updates/Fixes, Postman, Sample Calls |
 | 1.4     | 2024-01-10 | Updated Postman, XML Calls, added more details on S2S HMAC Authentication |
+| 1.4.1   | 2024-01-16 | Updated B2G sample with more fields, required by PEPPOL |
+| 1.4.2   | 2024-01-16 | Updated HMAC Auth Headers |
 
 
 ## Supported Schemas
