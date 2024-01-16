@@ -125,7 +125,7 @@
 					"variable": [
 						{
 							"key": "uid",
-							"value": ""
+							"value": "A9FD2AD667346462F53DBDEB3291D0D318C5577E"
 						}
 					]
 				}
@@ -149,7 +149,7 @@
 					},
 					{
 						"key": "Fiscal-Header-TimeStamp-Epoch",
-						"value": "1702035028",
+						"value": "1704982941735",
 						"type": "text"
 					},
 					{
@@ -174,17 +174,17 @@
 					},
 					{
 						"key": "Crypto-Header-Fiscal-Header-SHA256-Hash",
-						"value": "abe10abd9fb074e2655379a9a2bdea1d820bf47a6a5291b9411bf0960119b5a1",
+						"value": "32c2a533a4040c80b87d1e8139323bd56300d29abc9754e509278f8857162d31",
 						"type": "text"
 					},
 					{
 						"key": "Crypto-Header-Invoice-Payload-SHA256-Hash",
-						"value": "dcb33eab3018875476f8f694f1c094b5359328270aa5b6655e00c97e09a29c7a",
+						"value": "33cf0d1081b5446656c4c98644b59d8eb74d528fcc78e2945ecb5806959f2fa6",
 						"type": "text"
 					},
 					{
 						"key": "Crypto-Header-Signature",
-						"value": "6146333667ed51bd1e88e21eda26dcb401cbfc1c2fa765e08b8df621eebb629937737299f440af3db3a1b17c572e92fc38b030dfd972f6e88d50065fde305204",
+						"value": "427c8e4b54c01ccb523717039b75ff1a4e422b3b3d3c2e75dd89413b7094aacb5881b01a27bb699c065268f248576ffbcf928f0cda272907cac81640ce3a9003",
 						"type": "text"
 					},
 					{
@@ -199,12 +199,12 @@
 					},
 					{
 						"key": "Crypto-Header-Public-Key-of-Signatory-Device",
-						"value": "8777f2474ba651020d1b857c14dd21961de777de3a28565181af0aa8b7693b88",
+						"value": "88cdb3d444f785ef2e6dec97b1b9b3c74e00f4610760820a276959c7d0310b2a",
 						"type": "text"
 					},
 					{
 						"key": "Crypto-Header-Signature-of-Signatory-Device-Public-Key",
-						"value": "e14a17861751459b826d05a8e4f94bff74ce9cff4e641a09c6ead994a812fb723dbf2c35679a0a3b673f6ee41b155d1f38fe17c5f7b34ad8d375adf3e920c207",
+						"value": "7f0a1ab07f04b388c57142e1b4862db2a2b852a915c83068f7598df3d9fe1110f84990da9238517b01a06fe391f7f558685fdef5832c466277fe4040e6cd920f",
 						"type": "text"
 					},
 					{
@@ -214,7 +214,7 @@
 					},
 					{
 						"key": "Settings-Document-TemplateID",
-						"value": "13",
+						"value": "4",
 						"type": "text"
 					},
 					{
@@ -224,18 +224,18 @@
 					},
 					{
 						"key": "Fiscal-Header-Invoice-ID",
-						"value": "321fbd4b-a157-4c3c-ad85-faa6f79fa143",
+						"value": "4d2a1d49-664d-4fab-9a5e-d52a9857861b",
 						"type": "text"
 					},
 					{
 						"key": "Authorization",
-						"value": "",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQzMGE4YzIyLWYyZjAtNDA5YS04NWMxLWMyODc4MTZiMTY5ZCIsIm5hbWUiOiJNb2hkIEVqYXoiLCJlbWFpbCI6Im0uc2lkZGlxdWlAb3hpbnVzLmlvIiwibGFzdG5hbWUiOiJTaWRkaXF1aSIsImlhdCI6MTcwNDk3ODcwNSwiZXhwIjoxNzA3NTcwNzA1fQ.ZNobjlHbhkpK079cVY9QfPKZ501L0BkzBVpfJbpdJi1KBTNVMsdYscn_Q8dSlwG-_l90-6pNtBvVjt-8_B0P-fClY0IFC6MWf4oI3dRoXXfBmypRknkalDGSKQA2Y74fRAVtS3T4-Fr4kCZR-K21y4vgauMfwf_1ax9h6vfBS1tN1R7sKv-1w6F4PoECOqD-bUmI52mDQvJ4cLIxCLp-I0qfKqJDBMKS_StxkOi2RHID6P4IsFDKeqwurpFmZBVlKiMww7RzLR9FxX_tKQGHAmUQlNuLkgyYK0I6YXhKHTpIaFQK0ySfLQpN6nJyMwLaZDDqpkv29emuvKrIsDNDBA",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<InvoicesDoc xmlns:icls=\"https://www.aade.gr/myDATA/incomeClassificaton/v1.0\"\n            xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n            xmlns=\"http://www.aade.gr/myDATA/invoice/v1.0\" xsi:schemaLocation=\"http://www.aade.gr/myDATA/invoice/v1.0/InvoicesDoc-v0.6.xsd\">\n    <invoice>\n        <issuer>\n            <vatNumber>090000045</vatNumber>\n            <country>GR</country>\n            <branch>0</branch>\n        </issuer>\n        <counterpart>\n            <vatNumber>026883248</vatNumber>\n            <country>GR</country>\n            <branch>0</branch>\n            <address>\n                <street>Street</street>\n                <number>3</number>\n                <postalCode>12100</postalCode>\n                <city>City</city>\n            </address>\n        </counterpart>\n        <invoiceHeader>\n            <series>Α</series>\n            <aa>130820</aa>\n            <issueDate>2024-01-10</issueDate>\n            <invoiceType>1.4</invoiceType>\n            <currency>EUR</currency>\n        </invoiceHeader>\n        <paymentMethods>\n            <paymentMethodDetails>\n                <type>3</type>\n                <amount>1000.00</amount>\n            </paymentMethodDetails>\n        </paymentMethods>\n        <invoiceDetails>\n            <lineNumber>1</lineNumber>\n            <invoiceDetailType>1</invoiceDetailType>\n            <netValue>1000.00</netValue>\n            <vatCategory>1</vatCategory>\n            <vatAmount>240</vatAmount>\n            <discountOption>true</discountOption>\n            <withheldAmount>200.00</withheldAmount>\n            <withheldPercentCategory>2</withheldPercentCategory>\n            <stampDutyAmount>12.00</stampDutyAmount>\n            <stampDutyPercentCategory>1</stampDutyPercentCategory>\n            <feesAmount>120.00</feesAmount>\n            <feesPercentCategory>1</feesPercentCategory>\n            <otherTaxesPercentCategory>3</otherTaxesPercentCategory>\n            <otherTaxesAmount>40.00</otherTaxesAmount>\n            <deductionsAmount>200.00</deductionsAmount>\n            <lineComments>Test Comment</lineComments>\n            <incomeClassification>\n                <icls:classificationType>E3_881_001</icls:classificationType>\n                <icls:classificationCategory>category1_7</icls:classificationCategory>\n                <icls:amount>1000.00</icls:amount>\n            </incomeClassification>\n        </invoiceDetails>\n        <invoiceSummary>\n            <totalNetValue>1000.00</totalNetValue>\n            <totalVatAmount>240</totalVatAmount>\n            <totalWithheldAmount>200.00</totalWithheldAmount>\n            <totalFeesAmount>120.00</totalFeesAmount>\n            <totalStampDutyAmount>12.00</totalStampDutyAmount>\n            <totalOtherTaxesAmount>40.00</totalOtherTaxesAmount>\n            <totalDeductionsAmount>200.00</totalDeductionsAmount>\n            <totalGrossValue>1012</totalGrossValue>\n            <incomeClassification>\n                <icls:classificationType>E3_881_001</icls:classificationType>\n                <icls:classificationCategory>category1_7</icls:classificationCategory>\n                <icls:amount>1000.00</icls:amount>\n            </incomeClassification>\n        </invoiceSummary>\n    </invoice>\n</InvoicesDoc>",
+					"raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<InvoicesDoc xmlns:icls=\"https://www.aade.gr/myDATA/incomeClassificaton/v1.0\"\n            xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n            xmlns=\"http://www.aade.gr/myDATA/invoice/v1.0\" xsi:schemaLocation=\"http://www.aade.gr/myDATA/invoice/v1.0/InvoicesDoc-v0.6.xsd\">\n    <invoice>\n        <issuer>\n            <vatNumber>090000045</vatNumber>\n            <country>GR</country>\n            <branch>0</branch>\n        </issuer>\n        <counterpart>\n            <vatNumber>026883248</vatNumber>\n            <country>GR</country>\n            <branch>0</branch>\n            <address>\n                <street>Street</street>\n                <number>3</number>\n                <postalCode>12100</postalCode>\n                <city>City</city>\n            </address>\n        </counterpart>\n        <invoiceHeader>\n            <series>Α</series>\n            <aa>669</aa>\n            <issueDate>2024-01-11</issueDate>\n            <invoiceType>1.4</invoiceType>\n            <currency>EUR</currency>\n        </invoiceHeader>\n        <paymentMethods>\n            <paymentMethodDetails>\n                <type>3</type>\n                <amount>1000.00</amount>\n            </paymentMethodDetails>\n        </paymentMethods>\n        <invoiceDetails>\n            <lineNumber>1</lineNumber>\n            <invoiceDetailType>1</invoiceDetailType>\n            <netValue>1000.00</netValue>\n            <vatCategory>1</vatCategory>\n            <vatAmount>240</vatAmount>\n            <discountOption>true</discountOption>\n            <withheldAmount>200.00</withheldAmount>\n            <withheldPercentCategory>2</withheldPercentCategory>\n            <stampDutyAmount>12.00</stampDutyAmount>\n            <stampDutyPercentCategory>1</stampDutyPercentCategory>\n            <feesAmount>120.00</feesAmount>\n            <feesPercentCategory>1</feesPercentCategory>\n            <otherTaxesPercentCategory>3</otherTaxesPercentCategory>\n            <otherTaxesAmount>40.00</otherTaxesAmount>\n            <deductionsAmount>200.00</deductionsAmount>\n            <lineComments>Test Comment</lineComments>\n            <incomeClassification>\n                <icls:classificationType>E3_881_001</icls:classificationType>\n                <icls:classificationCategory>category1_7</icls:classificationCategory>\n                <icls:amount>1000.00</icls:amount>\n            </incomeClassification>\n        </invoiceDetails>\n        <invoiceSummary>\n            <totalNetValue>1000.00</totalNetValue>\n            <totalVatAmount>240</totalVatAmount>\n            <totalWithheldAmount>200.00</totalWithheldAmount>\n            <totalFeesAmount>120.00</totalFeesAmount>\n            <totalStampDutyAmount>12.00</totalStampDutyAmount>\n            <totalOtherTaxesAmount>40.00</totalOtherTaxesAmount>\n            <totalDeductionsAmount>200.00</totalDeductionsAmount>\n            <totalGrossValue>1012</totalGrossValue>\n            <incomeClassification>\n                <icls:classificationType>E3_881_001</icls:classificationType>\n                <icls:classificationCategory>category1_7</icls:classificationCategory>\n                <icls:amount>1000.00</icls:amount>\n            </incomeClassification>\n        </invoiceSummary>\n    </invoice>\n</InvoicesDoc>",
 					"options": {
 						"raw": {
 							"language": "xml"
@@ -362,7 +362,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<InvoicesDoc xmlns:icls=\"https://www.aade.gr/myDATA/incomeClassificaton/v1.0\"\n            xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n            xmlns=\"http://www.aade.gr/myDATA/invoice/v1.0\" xsi:schemaLocation=\"http://www.aade.gr/myDATA/invoice/v1.0/InvoicesDoc-v0.6.xsd\">\n    <invoice>\n        <issuer>\n            <vatNumber>090000045</vatNumber>\n            <country>GR</country>\n            <branch>0</branch>\n        </issuer>\n        <counterpart>\n            <vatNumber>026883248</vatNumber>\n            <country>GR</country>\n            <branch>0</branch>\n            <address>\n                <street>Street</street>\n                <number>3</number>\n                <postalCode>12100</postalCode>\n                <city>City</city>\n            </address>\n        </counterpart>\n        <invoiceHeader>\n            <series>Α</series>\n            <aa>1308501</aa>\n            <issueDate>2024-01-10</issueDate>\n            <invoiceType>1.4</invoiceType>\n            <currency>EUR</currency>\n        </invoiceHeader>\n        <paymentMethods>\n            <paymentMethodDetails>\n                <type>3</type>\n                <amount>1000.00</amount>\n            </paymentMethodDetails>\n        </paymentMethods>\n        <invoiceDetails>\n            <lineNumber>1</lineNumber>\n            <invoiceDetailType>1</invoiceDetailType>\n            <netValue>1000.00</netValue>\n            <vatCategory>1</vatCategory>\n            <vatAmount>240</vatAmount>\n            <discountOption>true</discountOption>\n            <withheldAmount>200.00</withheldAmount>\n            <withheldPercentCategory>2</withheldPercentCategory>\n            <stampDutyAmount>12.00</stampDutyAmount>\n            <stampDutyPercentCategory>1</stampDutyPercentCategory>\n            <feesAmount>120.00</feesAmount>\n            <feesPercentCategory>1</feesPercentCategory>\n            <otherTaxesPercentCategory>3</otherTaxesPercentCategory>\n            <otherTaxesAmount>40.00</otherTaxesAmount>\n            <deductionsAmount>200.00</deductionsAmount>\n            <lineComments>Test Comment</lineComments>\n            <itemCPV>03.1234567</itemCPV>\n            <incomeClassification>\n                <icls:classificationType>E3_881_001</icls:classificationType>\n                <icls:classificationCategory>category1_7</icls:classificationCategory>\n                <icls:amount>1000.00</icls:amount>\n            </incomeClassification>\n        </invoiceDetails>\n        <b2g-peppol>\n            <projectReference>111/1123</projectReference>\n            <contractReference>SSS/SSS</contractReference>\n            <assignReference>1000.E00961.0001</assignReference>\n            <deliveryParty>ΓΕΝΙΚΗ ΔΙΕΥΘΥΝΣΗ</deliveryParty>\n        </b2g-peppol>\n        <invoiceSummary>\n            <totalNetValue>1000.00</totalNetValue>\n            <totalVatAmount>240</totalVatAmount>\n            <totalWithheldAmount>200.00</totalWithheldAmount>\n            <totalFeesAmount>120.00</totalFeesAmount>\n            <totalStampDutyAmount>12.00</totalStampDutyAmount>\n            <totalOtherTaxesAmount>40.00</totalOtherTaxesAmount>\n            <totalDeductionsAmount>200.00</totalDeductionsAmount>\n            <totalGrossValue>1012</totalGrossValue>\n            <incomeClassification>\n                <icls:classificationType>E3_881_001</icls:classificationType>\n                <icls:classificationCategory>category1_7</icls:classificationCategory>\n                <icls:amount>1000.00</icls:amount>\n            </incomeClassification>\n        </invoiceSummary>\n    </invoice>\n</InvoicesDoc>",
+					"raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<InvoicesDoc xmlns:icls=\"https://www.aade.gr/myDATA/incomeClassificaton/v1.0\"\n             xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n             xmlns=\"http://www.aade.gr/myDATA/invoice/v1.0\"\n             xsi:schemaLocation=\"http://www.aade.gr/myDATA/invoice/v1.0/InvoicesDoc-v0.6.xsd\">\n    <invoice>\n        <issuer>\n            <vatNumber>090000045</vatNumber>\n            <country>GR</country>\n            <branch>0</branch>\n        </issuer>\n        <counterpart>\n            <vatNumber>026883248</vatNumber>\n            <country>GR</country>\n            <branch>0</branch>\n            <name>ΕΤΑΡΕΙΑ ΑΕ</name>\n            <address>\n                <street>Βενιζέλου</street>\n                <number>3</number>\n                <postalCode>13400</postalCode>\n                <city>Αθήνα</city>\n            </address>\n        </counterpart>\n        <invoiceHeader>\n            <series>A</series>\n            <aa>20</aa>\n            <issueDate>2023-12-19</issueDate>\n            <invoiceType>1.1</invoiceType>\n            <currency>EUR</currency>\n            <dispatchDate>2023-12-14</dispatchDate>\n            <dispatchTime>17:30:00</dispatchTime>\n            <vehicleNumber>ΑΡΔ3217</vehicleNumber>\n            <movePurpose>1</movePurpose>\n        </invoiceHeader>\n        <paymentMethods>\n            <paymentMethodDetails>\n                <type>3</type>\n                <amount>1012.00</amount>\n            </paymentMethodDetails>\n        </paymentMethods>\n        <invoiceDetails>\n            <lineNumber>1</lineNumber>\n            <quantity>1</quantity>\n            <measurementUnit>1</measurementUnit>\n            <netValue>1000.00</netValue>\n            <vatCategory>1</vatCategory>\n            <vatAmount>240.00</vatAmount>\n            <discountOption>true</discountOption>\n            <withheldAmount>200.00</withheldAmount>\n            <withheldPercentCategory>2</withheldPercentCategory>\n            <stampDutyAmount>12.00</stampDutyAmount>\n            <stampDutyPercentCategory>1</stampDutyPercentCategory>\n            <feesAmount>120.00</feesAmount>\n            <feesPercentCategory>1</feesPercentCategory>\n            <otherTaxesPercentCategory>3</otherTaxesPercentCategory>\n            <otherTaxesAmount>40.00</otherTaxesAmount>\n            <deductionsAmount>200.00</deductionsAmount>\n            <itemCPV>03.1234567</itemCPV>\n            <lineComments>Test Comment</lineComments>\n            <incomeClassification>\n                <icls:classificationType>E3_561_001</icls:classificationType>\n                <icls:classificationCategory>category1_1</icls:classificationCategory>\n                <icls:amount>1000.00</icls:amount>\n            </incomeClassification>\n        </invoiceDetails>\n        <b2g-peppol>\n            <projectReference>111/1123</projectReference>\n            <contractReference>SSS/SSS</contractReference>\n            <assignReference>1000.E00961.0001</assignReference>\n            <deliveryParty>ΓΕΝΙΚΗ ΔΙΕΥΘΥΝΣΗ</deliveryParty>\n        </b2g-peppol>\n        <invoiceSummary>\n            <totalNetValue>1000.00</totalNetValue>\n            <totalVatAmount>240.00</totalVatAmount>\n            <totalWithheldAmount>200.00</totalWithheldAmount>\n            <totalFeesAmount>120.00</totalFeesAmount>\n            <totalStampDutyAmount>12.00</totalStampDutyAmount>\n            <totalOtherTaxesAmount>40.00</totalOtherTaxesAmount>\n            <totalDeductionsAmount>200.00</totalDeductionsAmount>\n            <totalGrossValue>1012.00</totalGrossValue>\n            <incomeClassification>\n                <icls:classificationType>E3_561_001</icls:classificationType>\n                <icls:classificationCategory>category1_1</icls:classificationCategory>\n                <icls:amount>1000.00</icls:amount>\n            </incomeClassification>\n        </invoiceSummary>\n    </invoice>\n</InvoicesDoc>\n",
 					"options": {
 						"raw": {
 							"language": "xml"
