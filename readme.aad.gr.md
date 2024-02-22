@@ -431,7 +431,7 @@ element invoiceDetails.
 Παρακάτω ακολουθεί σχετικό δείγμα απαντητικού.
 
 ```xml
-<?xml version=`"1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ResponseDoc xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <response>
     <index>1</index>
