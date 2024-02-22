@@ -1,4 +1,4 @@
-# OXINUS REST API Ηλεκτρονικής Τιμολόγησης 1.4.2
+# OXINUS REST API Ηλεκτρονικής Τιμολόγησης 1.5.0
 
 ## Αριθμός έκδοσης
 
@@ -11,6 +11,7 @@
 | 1.4     | 2024-01-10 | Ενημέρωση των sample payloads with lineComments and itemCPV elements, HMAC οδηγός |
 | 1.4.1   | 2024-01-15 | Ενημέρωση του sample payload B2G με πεδία απαραίτητα για PEPPOL, counterpart.name, invoiceDetails.quantity, invoiceDetails.measurementUnit |
 | 1.4.2   | 2024-01-15 | Αλλαγή των headers HMAC Auth |
+| 1.5.0   | 2024-02-22 | Προσθήκη Transmission Failure 2, Status Request, εμπλουτισμός POSTMAN |
 
 
 ## Εισαγωγή
@@ -417,6 +418,58 @@ element invoiceDetails.
 - UID (Υπογραφή HASH του παραστατικού από την ΑΑΔΕ)
 - AUTH (Υπογραφή HASH του παραστατικού από τον πάροχο)
 - QrCode (public url όπου μπορεί κάποιος να επιβεβαιώσει το παραστατικό)
+
+
+### Transmission Failure (Αδυναμία Σύνδεσης με ΑΑΔΕ)
+Σε περίπτωση αποτυχίας διασύνδεσης με ΑΑΔΕ, και εφόσον το παραστατικό είναι έγκυρο, θα ληφθεί παρόμοια απάντηση από το 
+σύστημα η οποία θα περιέχει κενά τα πεδία ΜΑΡΚ, AUTH και UID, με την προσθήκη ενός νέου πεδίου:
+
+- **extRefId (Μοναδικός κωδικός Oxinus, Reference Id Υποβολής)**
+
+Επιπρόσθετα, το πεδίο statusCode θα έχει την τιμή "Transmission Failure"
+
+Παρακάτω ακολουθεί σχετικό δείγμα απαντητικού.
+
+```xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ResponseDoc xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <response>
+    <index>1</index>
+    <invoiceUid/>
+    <invoiceMark/>
+    <authenticationCode/>
+    <statusCode>Transmission Failure</statusCode>
+    <qrUrl>https://onesign.onesys.gr/invoices/ca06f967-cc01-49ca-aa64-a7dacfc21813</qrUrl>
+    <extRefId>3965ab8e-4b59-499d-a102-32b3eeef3268</extRefId>
+  </response>
+</ResponseDoc>
+```
+
+Με την χρήση του εν λόγω κωδικού αναφοράς, extRefId, μπορεί να αναζητηθεί το status του παραστατικού αν έχει ολοκληρωθεί 
+η αποστολή στην ΑΑΔΕ. Η Oxinus θα δοκιμάζει την υποβολή του μέχρι τη λήψη απάντησης από την ΑΑΔΕ οπότε και το παραστατικό
+θα αποκτήσει τιμές (MARK, AUTH, UID).
+
+#### Ελεγχος Κατάστασης Παραστατικού (Status Request)
+Για να ελέγξετε το status υποβολής παραστατικού που έχει αδυναμία σύνδεσης, χρησιμοποιείτε το παρακάτω αίτημα:
+```http
+GET https://api.invoicing.oxinus.net/pending-documents/:extRefId/status
+```
+
+Σε περίπτωση επιτυχίας θα λάβετε το παρακάτω απαντητικό:
+
+```XML
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ResponseDoc>
+    <response>
+        <index>1</index>
+        <invoiceUid>398DF85AF27196AF7F617DEA648C26D49EA85064</invoiceUid>
+        <invoiceMark>400001924527016</invoiceMark>
+        <authenticationCode>B94D9C24035C10383913CE7FDE249F9875326A99</authenticationCode>
+        <statusCode>Success</statusCode>
+        <qrUrl>https://onesign.onesys.gr/invoices/ca06f967-cc01-49ca-aa64-a7dacfc21813</qrUrl>
+    </response>
+</ResponseDoc>
+```
 
 
 ### Μηνύματα Λάθους (B2G)

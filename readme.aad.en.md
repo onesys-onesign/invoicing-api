@@ -1,4 +1,4 @@
-# OXINUS REST API Electronic Invoicing 1.4.2
+# OXINUS REST API Electronic Invoicing 1.5.0
 
 ## Version History
 
@@ -11,6 +11,7 @@
 | 1.4     | 2024-01-10 | Updated the sample payloads with lineComments and itemCPV elements, HMAC Guide |
 | 1.4.1   | 2024-01-15 | Updates Sample B2G payload with PEPPOL required fields, counterpart.name, invoiceDetails.quantity, invoiceDetails.measurementUnit |
 | 1.4.2   | 2024-01-16 | Updates HMAC headers |
+| 1.5.0   | 2024-02-22 | Added Transmission Failure 2, Status Request, Updated POSTMAN |
 
 ## Introduction
 
@@ -423,6 +424,58 @@ In the case of a successful document submission, you will receive a response con
 - **UID (HASH Signature of the document from AADE)**
 - **AUTH (HASH Signature of the document from the provider)**
 - **QrCode (public URL where someone can verify the document)**
+
+### Transmission Failure (AADE Down Scenario)
+In the case of an unsuccessful document submission from the Provider to AADE, provided that the invoice is valid, you 
+will receive similar success response containing the same fields as the successful response (empty), with the addition 
+of the following field:
+- **extRefId (Unique Oxinus Reference Id)**
+
+Additionaly, the statusCode will be "Transmission Failure"
+
+The following is a sample response 
+
+```xml
+<?xml version=`"1.0" encoding="UTF-8" standalone="yes"?>
+<ResponseDoc xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <response>
+    <index>1</index>
+    <invoiceUid/>
+    <invoiceMark/>
+    <authenticationCode/>
+    <statusCode>Transmission Failure</statusCode>
+    <qrUrl>https://onesign.onesys.gr/invoices/ca06f967-cc01-49ca-aa64-a7dacfc21813</qrUrl>
+    <extRefId>3965ab8e-4b59-499d-a102-32b3eeef3268</extRefId>
+  </response>
+</ResponseDoc>
+```
+
+Using the returned external reference, extRefId, you can query the status of the document, whether is was submitted at a
+later stage. Oxinus will retry indefinitely the submission to AADE and eventually the document will receive the required
+values (MARK, AUTH, UID).
+
+#### Document Status Request
+To query the status of the transmission failed document, you can use the following endpoint :
+```http
+GET https://api.invoicing.oxinus.net/pending-documents/:extRefId/status
+```
+
+You will receive the following response:
+
+```XML
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ResponseDoc>
+    <response>
+        <index>1</index>
+        <invoiceUid>398DF85AF27196AF7F617DEA648C26D49EA85064</invoiceUid>
+        <invoiceMark>400001924527016</invoiceMark>
+        <authenticationCode>B94D9C24035C10383913CE7FDE249F9875326A99</authenticationCode>
+        <statusCode>Success</statusCode>
+        <qrUrl>https://onesign.onesys.gr/invoices/ca06f967-cc01-49ca-aa64-a7dacfc21813</qrUrl>
+    </response>
+</ResponseDoc>
+```
+
 
 ### Error Messages (B2G)
 

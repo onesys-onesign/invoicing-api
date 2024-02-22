@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ResponseDoc xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <response>
+        <statusCode>Not Processed</statusCode>
+        <extRefId>8c1c1f6d-78cf-47f3-a224-8b1be1b1185a</extRefId>
+        <message>Invoice not processed</message>
+    </response>
+</ResponseDoc>
