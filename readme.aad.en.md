@@ -1,4 +1,4 @@
-# OXINUS REST API Electronic Invoicing 1.4.2
+# OXINUS REST API Electronic Invoicing 1.5.0
 
 ## Version History
 
@@ -11,6 +11,7 @@
 | 1.4     | 2024-01-10 | Updated the sample payloads with lineComments and itemCPV elements, HMAC Guide |
 | 1.4.1   | 2024-01-15 | Updates Sample B2G payload with PEPPOL required fields, counterpart.name, invoiceDetails.quantity, invoiceDetails.measurementUnit |
 | 1.4.2   | 2024-01-16 | Updates HMAC headers |
+| 1.5.0   | 2024-02-22 | Added Transmission Failure 2, Status Request, Updated POSTMAN |
 
 ## Introduction
 
@@ -424,16 +425,18 @@ In the case of a successful document submission, you will receive a response con
 - **AUTH (HASH Signature of the document from the provider)**
 - **QrCode (public URL where someone can verify the document)**
 
+### Transmission Failure (AADE Down Scenario)
+In the case of an unsuccessful document submission from the Provider to AADE, provided that the invoice is valid, you 
+will receive similar success response containing the same fields as the successful response (empty), with the addition 
+of the following field:
+- **extRefId (Unique Oxinus Reference Id)**
 
-## 2. Transmission Failure
+Additionaly, the statusCode will be "Transmission Failure"
 
-Incase the invoice sent to AADE times out, the document will be saved in our database and sent whenever AADE services are up. 
+The following is a sample response 
 
-In such a scenario, we'll return an `extRefId` in the response, which can be used to check the status of the submitted invoice. 
-
-Sample Response:
 ```xml
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version=`"1.0" encoding="UTF-8" standalone="yes"?>
 <ResponseDoc xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <response>
     <index>1</index>
@@ -441,27 +444,25 @@ Sample Response:
     <invoiceMark/>
     <authenticationCode/>
     <statusCode>Transmission Failure</statusCode>
-    <extRefId>8c1c1f6d-78cf-47f3-a224-8b1be1b1185a</extRefId>
+    <qrUrl>https://onesign.onesys.gr/invoices/ca06f967-cc01-49ca-aa64-a7dacfc21813</qrUrl>
+    <extRefId>3965ab8e-4b59-499d-a102-32b3eeef3268</extRefId>
   </response>
 </ResponseDoc>
 ```
 
-### Checking the status of the submitted invoice
+Using the returned external reference, extRefId, you can query the status of the document, whether is was submitted at a
+later stage. Oxinus will retry indefinitely the submission to AADE and eventually the document will receive the required
+values (MARK, AUTH, UID).
 
-With the provided `extRefId`, the status of the submitted invoice can be retrieved. 
-
-Endpoint to check the status of the invoice:
-
-```text
-HTTP GET
-https://api.invoicing.oxinus.net/pending-documents/:extRefId/status
+#### Document Status Request
+To query the status of the transmission failed document, you can use the following endpoint :
+```http
+GET https://api.invoicing.oxinus.net/pending-documents/:extRefId/status
 ```
 
-### If invoice was processed successfully at AADE
+You will receive the following response:
 
-If the invoice was successfully processed, the structure of the response will be like below:
-
-```xml
+```XML
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ResponseDoc>
     <response>
@@ -470,69 +471,11 @@ If the invoice was successfully processed, the structure of the response will be
         <invoiceMark>400001924527016</invoiceMark>
         <authenticationCode>B94D9C24035C10383913CE7FDE249F9875326A99</authenticationCode>
         <statusCode>Success</statusCode>
-        <qrUrl>https://onesign.onesys.gr/invoices/398DF85AF27196AF7F617DEA648C26D49EA85064</qrUrl>
+        <qrUrl>https://onesign.onesys.gr/invoices/ca06f967-cc01-49ca-aa64-a7dacfc21813</qrUrl>
     </response>
 </ResponseDoc>
 ```
 
-### If invoice failed at AADE
-
-If the invoice failed at AADE, the structure of the response will be like below:
-
-```xml
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ResponseDoc>
-    <response>
-        <index>1</index>
-        <statusCode>ValidationError</statusCode>
-        <errors>
-            <error>
-                <message>The UID: 026B7A452CD5179335AC8CFB7995A5B0E678854B is invalid . It has already been sent for another invoice (MARK:400001924529519 , AUTHENTICATION_CODE:E2510341354BBF960E7C06A6EA32282CF6094CC6)</message>
-                <code>228</code>
-            </error>
-        </errors>
-    </response>
-</ResponseDoc>
-```
-
-### If the extRefId is not found in our systems
-
-If the `extRefId` is not found in our systems, the structure of the response will be like below:
-
-```xml
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ResponseDoc xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <response>
-        <statusCode>Not found</statusCode>
-        <extRefId>8c1c1f6d-78cf-47f3-a224-8b1be1b1185a2</extRefId>
-        <message>extRefId not found</message>
-    </response>
-</ResponseDoc>
-```
-
-### If the submitted invoice has not been processed
-
-If the submitted invoice has not yet been processed, the structure of the response will be like below:
-
-```xml
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ResponseDoc xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <response>
-        <statusCode>Not Processed</statusCode>
-        <extRefId>8c1c1f6d-78cf-47f3-a224-8b1be1b1185a</extRefId>
-        <message>Invoice not processed</message>
-    </response>
-</ResponseDoc>
-```
-
-### Sample cURL
-
-The endpoint can be accessed via both `Bearer` token and `S2S` authentication
-
-```text
-curl --location 'https://api.invoicing.oxinus.net/pending-documents/20b8f1a3-14e1-453b-9da5-cd971415471f/status' \
---header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCIkpXVCJ9.eyJpZCI6IjhmMTA2Njg5LTE3Y2EtNDAwMC05OGIwLWE5ZGNhOTA0NWI5NiIsImZpcnN0X25hbWUiOiJNdWhhbW1hZCIsImxhc3RfbmFtZSI6IlNhcWliIG1lIiwiZW1haWwiOiJyLmlxYmFsK294aW51c0BveGludXMuaW8iLCJ0eXBlIjoiYnVzaW5lc3MiLCJtb2JpbGUiOiIxMjMiLCJjb3VudHJ5IjoicGsiLCJhZGRyZXNzIjoidGVzdCIsImltYWdlIjoiaHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL21vb2RzdHJlYW0tYnVja2V0LTEvY2M0MTcwNjYtNTQ0OS00YjljLWFlMDYtZDc1ZDNlOTU0OTE4LmpwZWciLCJjaXR5IjoiY2l0eSIsInBvc3RhbENvZGUiOiJwb3N0YWxDb2RlIiwidmF0Tm8iOiJ2YXRObyIsInRheElkIjoidGF4SWQiLCJzdGF0dXMiOiJjb21wbGV0ZWQiLCJjcmVhdGVkQXQiOiIyMDI0LTAyLTA2VDAyOjQyOjQ0LjMzMFoiLCJ1cGRhdGVkQXQiOiIyMDI0LTAyLTA2VDAzOjAxOjE4LjMwOVoiLCJkZWxldGVkQXQiOm51bGwsImNyZWF0ZWRCeSI6eyJpZCI6ImFiMGMzMDI0LTE4ODgtNDMyYi05NWI2LWEzMTFlMWQxMmVhOSIsImZpcnN0X25hbWUiOiJTYXFpYiIsImxhc3RfbmFtZSI6IlJhbyIsImVtYWlsIjoici5pcWJhbEBveGludXMuaW8iLCJ0eXBlIjoic3lzdGVtIiwibW9iaWxlIjoiIiwiY291bnRyeSI6IiIsImFkZHJlc3MiOiIiLCJpbWFnZSI6IiIsImNpdHkiOiIiLCJwb3N0YWxDb2RlIjoiIiwidmF0Tm8iOiIiLCJ0YXhJZCI6IiIsInN0YXR1cyI6InBlbmRpbmciLCJjcmVhdGVkQXQiOiIyMDI0LTAyLTA2VDAxOjU1OjM5Ljg1MFoiLCJ1cGRhdGVkQXQiOiIyMDI0LTAyLTA2VDAxOjU1OjM5Ljg1MFoiLCJkZWxldGVkQXQiOm51bGx9LCJzZXJ2aWNlSWQiOiIxNGIzODgxOC0wNmQyLTQxNTUtODY1ZC0wYWRjOWNiMDVkZGEiLCJyb2xlIjpbeyJpZCI6ImYyMDYwMGM5LWM1YjctNDE0Yy04Y2YxLTIyZjhhNDQ3YjY1YSIsIm5hbWUiOiJTdXBlciBBZG1pbiIsImFjY2Vzc1RvIjpudWxsLCJjcmVhdGVkQXQiOiIyMDI0LTAyLTA2VDAyOjE1OjMwLjg3M1oiLCJ1cGRhdGVkQXQiOiIyMDI0LTAyLTA2VDAyOjE1OjMwLjg3M1oiLCJwb2xpY2llcyI6W3siaWQiOiJlZTgxMGNkOC00ZmI3LTRjZDAtODhkZi0wM2MxYTk4NTkxZDMiLCJuYW1lIjoiU3VwZXIgQWRtaW4iLCJlZmZlY3QiOiJBbGxvdyIsImFjdGlvbnMiOlsiKiJdLCJyZXNvdXJjZXMiOlsiKiJdLCJjb25kaXRpb25zIjp7fSwiY3JlYXRlZEF0IjoiMjAyNC0wMi0wNlQwMjoxNTozMC44NzhaIiwidXBkYXRlZEF0IjoiMjAyNC0wMi0wNlQwMjoxNTozMC44NzhaIn1dfV0sImFwaVNlY3JldCI6IjYwOTVhNmY5MGEyZDQ3MjkyMDI0MmYyNWRkZjYwZTZkOjNlMmJkOTg3OGQ2NDk0ZThlMjlkYTY0Yjc0N2E4MzBkMGFhYWYxOGViM2RlZmNiZDAwMGFjYmQ2MzhjOWVmYjcxZGMzZjZlMjM2ZDJhNWIzOWM4NTdjYWQyNWY3YjcxOGQwOTUwZGI0OWRjNjdlOWRlMTI0MjJlYTM5MWVlNWU4MTA0M2Y2MmNlYWM2NTQzNjM1MDkwYjNkZDY1MmEyZDUxNDIzZTMxNjk5YTgyZDlmZTQ4MzY2ZTE0ZDQ1ODExM2Y4N2FkYWMyNzEwMzdlYjQ4NDBjMjc2ZjhhODgzM2QyIiwiaWF0IjoxNzA3MjAyODc4LCJleHAiOjE3MDk3OTQ4Nzh9.tGBaS2LNh7fXzi83Ym4jr3HFBqkLW3f7gnbMVbv0t5w'
-```
 
 ### Error Messages (B2G)
 
