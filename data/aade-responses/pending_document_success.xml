@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ResponseDoc>
+    <response>
+        <index>1</index>
+        <invoiceUid>398DF85AF27196AF7F617DEA648C26D49EA85064</invoiceUid>
+        <invoiceMark>400001924527016</invoiceMark>
+        <authenticationCode>B94D9C24035C10383913CE7FDE249F9875326A99</authenticationCode>
+        <statusCode>Success</statusCode>
+        <qrUrl>https://onesign.onesys.gr/invoices/398DF85AF27196AF7F617DEA648C26D49EA85064</qrUrl>
+    </response>
+</ResponseDoc>
