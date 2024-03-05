@@ -417,6 +417,35 @@ Below is a sample of the mentioned segment integrated into the XML format of AAD
 </invoice>
 ```
 
+#### itemUnitPrice and measurementUnit
+
+For B2G (`Settings-Is-Peppol-Required`: `true`), we should send `itemUnitPrice` and `measurementUnit` for each line item. The `itemUnitPrice` is the 
+price for one unit of the line item. The `measurementUnit` for the line item accepts all the valid values that AADE accepts and some additional values 
+listed below:
+
+| measurementUnit | BaseQuantity @UnitCode (Peppol Field) |
+|-----------------|---------------------------------------|
+| 101             | C62                                   |
+| 102             | KWT                                   |
+| 103             | KWH                                   |
+
+
+Below is a sample of the mentioned segment integrated into the XML format of AADE.
+
+```xml
+<invoice>
+    ...
+    <invoiceDetails>
+        <lineNumber>...</lineNumber>
+        <itemUnitPrice>2.34</itemUnitPrice>
+        <measurementUnit>101</measurementUnit>
+        ...
+        ...
+    </invoiceDetails>
+    ...
+</invoice>
+```
+
 ### Response to Request
 
 In the case of a successful document submission, you will receive a response containing the following fields:

@@ -40,6 +40,7 @@
         </paymentMethods>
         <invoiceDetails>
             <lineNumber>1</lineNumber>
+            <itemUnitPrice>2.34</itemUnitPrice>
             <quantity>1</quantity>
             <measurementUnit>1</measurementUnit>
             <netValue>1000.00</netValue>
