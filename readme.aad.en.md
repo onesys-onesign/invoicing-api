@@ -12,6 +12,7 @@
 | 1.4.1   | 2024-01-15 | Updates Sample B2G payload with PEPPOL required fields, counterpart.name, invoiceDetails.quantity, invoiceDetails.measurementUnit |
 | 1.4.2   | 2024-01-16 | Updates HMAC headers |
 | 1.5.0   | 2024-02-22 | Added Transmission Failure 2, Status Request, Updated POSTMAN |
+| 1.5.1   | 2024-03-05 | Updated B2G sample itemUnitPrice, and measurementUnit accepts additional values |
 
 ## Introduction
 
