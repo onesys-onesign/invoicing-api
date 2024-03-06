@@ -424,11 +424,26 @@ For B2G (`Settings-Is-Peppol-Required`: `true`), we should send `itemUnitPrice` 
 price for one unit of the line item. The `measurementUnit` for the line item accepts all the valid values that AADE accepts and some additional values 
 listed below:
 
-| measurementUnit | BaseQuantity @UnitCode (Peppol Field) |
-|-----------------|---------------------------------------|
-| 101             | C62                                   |
-| 102             | KWT                                   |
-| 103             | KWH                                   |
+| measurementUnit | BaseQuantity @UnitCode (Peppol Field) | Description     |
+|-----------------|---------------------------------------|-----------------|
+| 101             | C62                                   | unit            |
+| 102             | KWT                                   | kilowatt        |
+| 103             | KWH                                   | kilowatt hour   |
+| 104             | EA                                    | each            |
+| 105             | HUR                                   | hour            |
+| 106             | XBX                                   | box             |
+| 107             | KGM                                   | kilogram        |
+| 108             | LTR                                   | litre           |
+| 109             | MTR                                   | metre           |
+| 110             | MTQ                                   | cubic metre     |
+| 111             | MAW                                   | mega watt       |
+| 112             | MWH                                   | mega watt hour  |
+| 113             | PR                                    | pair            |
+| 114             | SET                                   | set             |
+| 115             | H87                                   | piece           |
+| 116             | HUR                                   | hours           |
+| 117             | TNE                                   | tonne           |
+| 118             | M4                                    | monetary value  |
 
 
 Below is a sample of the mentioned segment integrated into the XML format of AADE.
