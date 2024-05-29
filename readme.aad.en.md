@@ -1,4 +1,4 @@
-# OXINUS REST API Electronic Invoicing 1.5.0
+# OXINUS REST API Electronic Invoicing 1.5.1
 
 ## Version History
 
