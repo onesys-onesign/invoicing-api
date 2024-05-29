@@ -12,6 +12,7 @@
 | 1.4.1   | 2024-01-15 | Updated B2G sample with more fields, required by PEPPOL |
 | 1.4.2   | 2024-01-16 | Updated HMAC Auth Headers |
 | 1.5.0   | 2024-02-22 | Added Transmission Failure 2, Status Request, Updated POSTMAN |
+| 1.5.1   | 2024-05-28 | Added self handling of Transmission Failure 2                  |
 
 
 ## Supported Schemas

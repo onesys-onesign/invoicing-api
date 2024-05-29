@@ -12,6 +12,7 @@
 | 1.4.1   | 2024-01-15 | Updates Sample B2G payload with PEPPOL required fields, counterpart.name, invoiceDetails.quantity, invoiceDetails.measurementUnit |
 | 1.4.2   | 2024-01-16 | Updates HMAC headers |
 | 1.5.0   | 2024-02-22 | Added Transmission Failure 2, Status Request, Updated POSTMAN |
+| 1.5.1   | 2024-05-28 | Added self handling of Transmission Failure 2                  |
 
 ## Introduction
 
@@ -425,8 +426,13 @@ In the case of a successful document submission, you will receive a response con
 - **AUTH (HASH Signature of the document from the provider)**
 - **QrCode (public URL where someone can verify the document)**
 
-### Transmission Failure (AADE Down Scenario)
-In the case of an unsuccessful document submission from the Provider to AADE, provided that the invoice is valid, you 
+### Transmission Failure 2 (AADE Down Scenario)
+
+Depending on the business settings, Oxinus handles this scenario differently.
+
+#### Scenario 1 - Oxinus re-submits the document to AADE
+
+In this scenario, in the case of an unsuccessful document submission from the Provider to AADE, provided that the invoice is valid, you 
 will receive similar success response containing the same fields as the successful response (empty), with the addition 
 of the following field:
 - **extRefId (Unique Oxinus Reference Id)**
@@ -453,6 +459,28 @@ The following is a sample response
 Using the returned external reference, extRefId, you can query the status of the document, whether is was submitted at a
 later stage. Oxinus will retry indefinitely the submission to AADE and eventually the document will receive the required
 values (MARK, AUTH, UID).
+
+#### Scenario 2 - Customer re-submits the document to Oxinus
+
+In this scenario, on un-successful document submission from the Provider to AADE, Oxinus will not re-submit the document to AADE. Oxinus
+will return a response as below, and the customer is responsible for re-submitting the document.
+
+The following is a sample response 
+
+```xml
+<?xml version=`"1.0" encoding="UTF-8" standalone="yes"?>
+<ResponseDoc xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <response>
+    <index>1</index>
+    <invoiceUid/>
+    <invoiceMark/>
+    <authenticationCode/>
+    <statusCode>Transmission Failure</statusCode>
+    <qrUrl/>
+  </response>
+</ResponseDoc>
+```
+
 
 #### Document Status Request
 To query the status of the transmission failed document, you can use the following endpoint :
