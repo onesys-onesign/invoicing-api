@@ -1,4 +1,4 @@
-# OXINUS envoice API Documentation 1.5.0
+# OXINUS envoice API Documentation 1.5.1
 
 ## Version History
 
