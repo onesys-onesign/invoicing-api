@@ -1,0 +1,496 @@
+{
+	"info": {
+		"_postman_id": "4cbf587c-579e-4f3f-a66a-236849777190",
+		"name": "External: e-Invoicing (S2S Auth)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28718757",
+		"_collection_link": "https://oxinus.postman.co/workspace/Team-Workspace~a6e4708c-8fbd-482a-861d-19ec716bd159/collection/28718757-4cbf587c-579e-4f3f-a66a-236849777190?action=share&source=collection_link&creator=28718757"
+	},
+	"item": [
+		{
+			"name": "Add Device",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": ""
+					},
+					{
+						"key": "x-signature",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"deviceName\": \"device 1\",\n    \"deviceType\": \"virtual\",  // virtual, hardware\n    \"deviceSerial\": \"98594583434\",\n    \"devicePublicKey\": \"057391dca8cb988a933a2a17af6477bc7643b27f235b375ef59a14ed34a1a5d4\",\n    \"devicePublicKeySignature\": \"fbcc779d9bd0498929a5c9650028673e8faa5b755dcb72b17b152272e4cccc0ebdce994a55ca0d7f08cd431e878a6adfafa79ff6b0afa54e324c8deaccdf730c\",\n    \"businessId\": 1, \n    \"authority\": \"AAD\"\n}"
+				},
+				"url": {
+					"raw": "https://staging-onesign-api.onesys.gr/signing-devices",
+					"protocol": "https",
+					"host": [
+						"staging-onesign-api",
+						"onesys",
+						"gr"
+					],
+					"path": [
+						"signing-devices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Revoke Device",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": ""
+					},
+					{
+						"key": "x-signature",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://staging-onesign-api.onesys.gr/signing-devices/:businessId/:id",
+					"protocol": "https",
+					"host": [
+						"staging-onesign-api",
+						"onesys",
+						"gr"
+					],
+					"path": [
+						"signing-devices",
+						":businessId",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "businessId",
+							"value": ""
+						},
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Invoice By InvoiceUId",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": ""
+					},
+					{
+						"key": "x-signature",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://staging-onesign-api.onesys.gr/invoice/public/:uid",
+					"protocol": "https",
+					"host": [
+						"staging-onesign-api",
+						"onesys",
+						"gr"
+					],
+					"path": [
+						"invoice",
+						"public",
+						":uid"
+					],
+					"variable": [
+						{
+							"key": "uid",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Issue Invoice",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Fiscal-Header-Issuer-TaxID",
+						"value": "090000045",
+						"type": "text"
+					},
+					{
+						"key": "Fiscal-Header-Recipient-TaxID",
+						"value": "",
+						"type": "text"
+					},
+					{
+						"key": "Fiscal-Header-TimeStamp-Epoch",
+						"value": "1702035028",
+						"type": "text"
+					},
+					{
+						"key": "Fiscal-Header-Document-Type",
+						"value": "380",
+						"type": "text"
+					},
+					{
+						"key": "Fiscal-Header-Document-Value",
+						"value": "1012",
+						"type": "text"
+					},
+					{
+						"key": "Fiscal-Header-Document-Tax-Value",
+						"value": "240",
+						"type": "text"
+					},
+					{
+						"key": "Fiscal-Header-Currency",
+						"value": "EUR",
+						"type": "text"
+					},
+					{
+						"key": "Crypto-Header-Fiscal-Header-SHA256-Hash",
+						"value": "abe10abd9fb074e2655379a9a2bdea1d820bf47a6a5291b9411bf0960119b5a1",
+						"type": "text"
+					},
+					{
+						"key": "Crypto-Header-Invoice-Payload-SHA256-Hash",
+						"value": "dcb33eab3018875476f8f694f1c094b5359328270aa5b6655e00c97e09a29c7a",
+						"type": "text"
+					},
+					{
+						"key": "Crypto-Header-Signature",
+						"value": "6146333667ed51bd1e88e21eda26dcb401cbfc1c2fa765e08b8df621eebb629937737299f440af3db3a1b17c572e92fc38b030dfd972f6e88d50065fde305204",
+						"type": "text"
+					},
+					{
+						"key": "Crypto-Header-Previous-Invoice-Fiscal-Header",
+						"value": "",
+						"type": "text"
+					},
+					{
+						"key": "Settings-Authority-ID",
+						"value": "AAD",
+						"type": "text"
+					},
+					{
+						"key": "Crypto-Header-Public-Key-of-Signatory-Device",
+						"value": "8777f2474ba651020d1b857c14dd21961de777de3a28565181af0aa8b7693b88",
+						"type": "text"
+					},
+					{
+						"key": "Crypto-Header-Signature-of-Signatory-Device-Public-Key",
+						"value": "e14a17861751459b826d05a8e4f94bff74ce9cff4e641a09c6ead994a812fb723dbf2c35679a0a3b673f6ee41b155d1f38fe17c5f7b34ad8d375adf3e920c207",
+						"type": "text"
+					},
+					{
+						"key": "Settings-Is-Peppol-Required",
+						"value": "false",
+						"type": "text"
+					},
+					{
+						"key": "Settings-Document-TemplateID",
+						"value": "13",
+						"type": "text"
+					},
+					{
+						"key": "Fiscal-Header-Tax-Currency",
+						"value": "EUR",
+						"type": "text"
+					},
+					{
+						"key": "Fiscal-Header-Invoice-ID",
+						"value": "321fbd4b-a157-4c3c-ad85-faa6f79fa143",
+						"type": "text"
+					},
+					{
+						"key": "client-api-key",
+						"value": "",
+						"type": "text"
+					},
+					{
+						"key": "client-signature",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<InvoicesDoc xmlns:icls=\"https://www.aade.gr/myDATA/incomeClassificaton/v1.0\"\n            xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n            xmlns=\"http://www.aade.gr/myDATA/invoice/v1.0\" xsi:schemaLocation=\"http://www.aade.gr/myDATA/invoice/v1.0/InvoicesDoc-v0.6.xsd\">\n    <invoice>\n        <issuer>\n            <vatNumber>090000045</vatNumber>\n            <country>GR</country>\n            <branch>0</branch>\n        </issuer>\n        <counterpart>\n            <vatNumber>026883248</vatNumber>\n            <country>GR</country>\n            <branch>0</branch>\n            <address>\n                <street>Street</street>\n                <number>3</number>\n                <postalCode>12100</postalCode>\n                <city>City</city>\n            </address>\n        </counterpart>\n        <invoiceHeader>\n            <series>Α</series>\n            <aa>130820</aa>\n            <issueDate>2024-01-10</issueDate>\n            <invoiceType>1.4</invoiceType>\n            <currency>EUR</currency>\n        </invoiceHeader>\n        <paymentMethods>\n            <paymentMethodDetails>\n                <type>3</type>\n                <amount>1000.00</amount>\n            </paymentMethodDetails>\n        </paymentMethods>\n        <invoiceDetails>\n            <lineNumber>1</lineNumber>\n            <invoiceDetailType>1</invoiceDetailType>\n            <netValue>1000.00</netValue>\n            <vatCategory>1</vatCategory>\n            <vatAmount>240</vatAmount>\n            <discountOption>true</discountOption>\n            <withheldAmount>200.00</withheldAmount>\n            <withheldPercentCategory>2</withheldPercentCategory>\n            <stampDutyAmount>12.00</stampDutyAmount>\n            <stampDutyPercentCategory>1</stampDutyPercentCategory>\n            <feesAmount>120.00</feesAmount>\n            <feesPercentCategory>1</feesPercentCategory>\n            <otherTaxesPercentCategory>3</otherTaxesPercentCategory>\n            <otherTaxesAmount>40.00</otherTaxesAmount>\n            <deductionsAmount>200.00</deductionsAmount>\n            <lineComments>Test Comment</lineComments>\n            <incomeClassification>\n                <icls:classificationType>E3_881_001</icls:classificationType>\n                <icls:classificationCategory>category1_7</icls:classificationCategory>\n                <icls:amount>1000.00</icls:amount>\n            </incomeClassification>\n        </invoiceDetails>\n        <invoiceSummary>\n            <totalNetValue>1000.00</totalNetValue>\n            <totalVatAmount>240</totalVatAmount>\n            <totalWithheldAmount>200.00</totalWithheldAmount>\n            <totalFeesAmount>120.00</totalFeesAmount>\n            <totalStampDutyAmount>12.00</totalStampDutyAmount>\n            <totalOtherTaxesAmount>40.00</totalOtherTaxesAmount>\n            <totalDeductionsAmount>200.00</totalDeductionsAmount>\n            <totalGrossValue>1012</totalGrossValue>\n            <incomeClassification>\n                <icls:classificationType>E3_881_001</icls:classificationType>\n                <icls:classificationCategory>category1_7</icls:classificationCategory>\n                <icls:amount>1000.00</icls:amount>\n            </incomeClassification>\n        </invoiceSummary>\n    </invoice>\n</InvoicesDoc>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://staging-onesign-api.onesys.gr/invoice/issue",
+					"protocol": "https",
+					"host": [
+						"staging-onesign-api",
+						"onesys",
+						"gr"
+					],
+					"path": [
+						"invoice",
+						"issue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Issue Invoice B2G",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Fiscal-Header-Issuer-TaxID",
+						"value": "090000045",
+						"type": "text"
+					},
+					{
+						"key": "Fiscal-Header-Recipient-TaxID",
+						"value": "",
+						"type": "text"
+					},
+					{
+						"key": "Fiscal-Header-TimeStamp-Epoch",
+						"value": "1702035028",
+						"type": "text"
+					},
+					{
+						"key": "Fiscal-Header-Document-Type",
+						"value": "380",
+						"type": "text"
+					},
+					{
+						"key": "Fiscal-Header-Document-Value",
+						"value": "1012",
+						"type": "text"
+					},
+					{
+						"key": "Fiscal-Header-Document-Tax-Value",
+						"value": "240",
+						"type": "text"
+					},
+					{
+						"key": "Fiscal-Header-Currency",
+						"value": "EUR",
+						"type": "text"
+					},
+					{
+						"key": "Crypto-Header-Fiscal-Header-SHA256-Hash",
+						"value": "abe10abd9fb074e2655379a9a2bdea1d820bf47a6a5291b9411bf0960119b5a1",
+						"type": "text"
+					},
+					{
+						"key": "Crypto-Header-Invoice-Payload-SHA256-Hash",
+						"value": "dcb33eab3018875476f8f694f1c094b5359328270aa5b6655e00c97e09a29c7a",
+						"type": "text"
+					},
+					{
+						"key": "Crypto-Header-Signature",
+						"value": "6146333667ed51bd1e88e21eda26dcb401cbfc1c2fa765e08b8df621eebb629937737299f440af3db3a1b17c572e92fc38b030dfd972f6e88d50065fde305204",
+						"type": "text"
+					},
+					{
+						"key": "Crypto-Header-Previous-Invoice-Fiscal-Header",
+						"value": "",
+						"type": "text"
+					},
+					{
+						"key": "Settings-Authority-ID",
+						"value": "AAD",
+						"type": "text"
+					},
+					{
+						"key": "Crypto-Header-Public-Key-of-Signatory-Device",
+						"value": "8777f2474ba651020d1b857c14dd21961de777de3a28565181af0aa8b7693b88",
+						"type": "text"
+					},
+					{
+						"key": "Crypto-Header-Signature-of-Signatory-Device-Public-Key",
+						"value": "e14a17861751459b826d05a8e4f94bff74ce9cff4e641a09c6ead994a812fb723dbf2c35679a0a3b673f6ee41b155d1f38fe17c5f7b34ad8d375adf3e920c207",
+						"type": "text"
+					},
+					{
+						"key": "Settings-Is-Peppol-Required",
+						"value": "true",
+						"type": "text"
+					},
+					{
+						"key": "Settings-Document-TemplateID",
+						"value": "13",
+						"type": "text"
+					},
+					{
+						"key": "Fiscal-Header-Tax-Currency",
+						"value": "EUR",
+						"type": "text"
+					},
+					{
+						"key": "Fiscal-Header-Invoice-ID",
+						"value": "321fbd4b-a157-4c3c-ad85-faa6f79fa143",
+						"type": "text"
+					},
+					{
+						"key": "client-api-key",
+						"value": "",
+						"type": "text"
+					},
+					{
+						"key": "client-signature",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<InvoicesDoc xmlns:icls=\"https://www.aade.gr/myDATA/incomeClassificaton/v1.0\"\n             xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n             xmlns=\"http://www.aade.gr/myDATA/invoice/v1.0\"\n             xsi:schemaLocation=\"http://www.aade.gr/myDATA/invoice/v1.0/InvoicesDoc-v0.6.xsd\">\n    <invoice>\n        <issuer>\n            <vatNumber>090000045</vatNumber>\n            <country>GR</country>\n            <branch>0</branch>\n        </issuer>\n        <counterpart>\n            <vatNumber>026883248</vatNumber>\n            <country>GR</country>\n            <branch>0</branch>\n            <name>ΕΤΑΡΕΙΑ ΑΕ</name>\n            <address>\n                <street>Βενιζέλου</street>\n                <number>3</number>\n                <postalCode>13400</postalCode>\n                <city>Αθήνα</city>\n            </address>\n        </counterpart>\n        <invoiceHeader>\n            <series>A</series>\n            <aa>20</aa>\n            <issueDate>2023-12-19</issueDate>\n            <invoiceType>1.1</invoiceType>\n            <currency>EUR</currency>\n            <dispatchDate>2023-12-14</dispatchDate>\n            <dispatchTime>17:30:00</dispatchTime>\n            <vehicleNumber>ΑΡΔ3217</vehicleNumber>\n            <movePurpose>1</movePurpose>\n        </invoiceHeader>\n        <paymentMethods>\n            <paymentMethodDetails>\n                <type>3</type>\n                <amount>1012.00</amount>\n            </paymentMethodDetails>\n        </paymentMethods>\n        <invoiceDetails>\n            <lineNumber>1</lineNumber>\n            <quantity>1</quantity>\n            <measurementUnit>1</measurementUnit>\n            <netValue>1000.00</netValue>\n            <vatCategory>1</vatCategory>\n            <vatAmount>240.00</vatAmount>\n            <discountOption>true</discountOption>\n            <withheldAmount>200.00</withheldAmount>\n            <withheldPercentCategory>2</withheldPercentCategory>\n            <stampDutyAmount>12.00</stampDutyAmount>\n            <stampDutyPercentCategory>1</stampDutyPercentCategory>\n            <feesAmount>120.00</feesAmount>\n            <feesPercentCategory>1</feesPercentCategory>\n            <otherTaxesPercentCategory>3</otherTaxesPercentCategory>\n            <otherTaxesAmount>40.00</otherTaxesAmount>\n            <deductionsAmount>200.00</deductionsAmount>\n            <itemCPV>03.1234567</itemCPV>\n            <lineComments>Test Comment</lineComments>\n            <incomeClassification>\n                <icls:classificationType>E3_561_001</icls:classificationType>\n                <icls:classificationCategory>category1_1</icls:classificationCategory>\n                <icls:amount>1000.00</icls:amount>\n            </incomeClassification>\n        </invoiceDetails>\n        <b2g-peppol>\n            <projectReference>111/1123</projectReference>\n            <contractReference>SSS/SSS</contractReference>\n            <assignReference>1000.E00961.0001</assignReference>\n            <deliveryParty>ΓΕΝΙΚΗ ΔΙΕΥΘΥΝΣΗ</deliveryParty>\n        </b2g-peppol>\n        <invoiceSummary>\n            <totalNetValue>1000.00</totalNetValue>\n            <totalVatAmount>240.00</totalVatAmount>\n            <totalWithheldAmount>200.00</totalWithheldAmount>\n            <totalFeesAmount>120.00</totalFeesAmount>\n            <totalStampDutyAmount>12.00</totalStampDutyAmount>\n            <totalOtherTaxesAmount>40.00</totalOtherTaxesAmount>\n            <totalDeductionsAmount>200.00</totalDeductionsAmount>\n            <totalGrossValue>1012.00</totalGrossValue>\n            <incomeClassification>\n                <icls:classificationType>E3_561_001</icls:classificationType>\n                <icls:classificationCategory>category1_1</icls:classificationCategory>\n                <icls:amount>1000.00</icls:amount>\n            </incomeClassification>\n        </invoiceSummary>\n    </invoice>\n</InvoicesDoc>\n",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://staging-onesign-api.onesys.gr/invoice/issue",
+					"protocol": "https",
+					"host": [
+						"staging-onesign-api",
+						"onesys",
+						"gr"
+					],
+					"path": [
+						"invoice",
+						"issue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generate Key Pairs",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": ""
+					},
+					{
+						"key": "x-signature",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://staging-onesign-api.onesys.gr/signing-devices/generate-keys",
+					"protocol": "https",
+					"host": [
+						"staging-onesign-api",
+						"onesys",
+						"gr"
+					],
+					"path": [
+						"signing-devices",
+						"generate-keys"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pending Document - Check Status",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhmMTA2Njg5LTE3Y2EtNDAwMC05OGIwLWE5ZGNhOTA0NWI5NiIsImZpcnN0X25hbWUiOiJNdWhhbW1hZCIsImxhc3RfbmFtZSI6IlNhcWliIG1lIiwiZW1haWwiOiJyLmlxYmFsK294aW51c0BveGludXMuaW8iLCJ0eXBlIjoiYnVzaW5lc3MiLCJtb2JpbGUiOiIxMjMiLCJjb3VudHJ5IjoicGsiLCJhZGRyZXNzIjoidGVzdCIsImltYWdlIjoiaHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL21vb2RzdHJlYW0tYnVja2V0LTEvY2M0MTcwNjYtNTQ0OS00YjljLWFlMDYtZDc1ZDNlOTU0OTE4LmpwZWciLCJjaXR5IjoiY2l0eSIsInBvc3RhbENvZGUiOiJwb3N0YWxDb2RlIiwidmF0Tm8iOiJ2YXRObyIsInRheElkIjoidGF4SWQiLCJzdGF0dXMiOiJjb21wbGV0ZWQiLCJjcmVhdGVkQXQiOiIyMDI0LTAyLTA2VDAyOjQyOjQ0LjMzMFoiLCJ1cGRhdGVkQXQiOiIyMDI0LTAyLTA2VDAzOjAxOjE4LjMwOVoiLCJkZWxldGVkQXQiOm51bGwsImNyZWF0ZWRCeSI6eyJpZCI6ImFiMGMzMDI0LTE4ODgtNDMyYi05NWI2LWEzMTFlMWQxMmVhOSIsImZpcnN0X25hbWUiOiJTYXFpYiIsImxhc3RfbmFtZSI6IlJhbyIsImVtYWlsIjoici5pcWJhbEBveGludXMuaW8iLCJ0eXBlIjoic3lzdGVtIiwibW9iaWxlIjoiIiwiY291bnRyeSI6IiIsImFkZHJlc3MiOiIiLCJpbWFnZSI6IiIsImNpdHkiOiIiLCJwb3N0YWxDb2RlIjoiIiwidmF0Tm8iOiIiLCJ0YXhJZCI6IiIsInN0YXR1cyI6InBlbmRpbmciLCJjcmVhdGVkQXQiOiIyMDI0LTAyLTA2VDAxOjU1OjM5Ljg1MFoiLCJ1cGRhdGVkQXQiOiIyMDI0LTAyLTA2VDAxOjU1OjM5Ljg1MFoiLCJkZWxldGVkQXQiOm51bGx9LCJzZXJ2aWNlSWQiOiIxNGIzODgxOC0wNmQyLTQxNTUtODY1ZC0wYWRjOWNiMDVkZGEiLCJyb2xlIjpbeyJpZCI6ImYyMDYwMGM5LWM1YjctNDE0Yy04Y2YxLTIyZjhhNDQ3YjY1YSIsIm5hbWUiOiJTdXBlciBBZG1pbiIsImFjY2Vzc1RvIjpudWxsLCJjcmVhdGVkQXQiOiIyMDI0LTAyLTA2VDAyOjE1OjMwLjg3M1oiLCJ1cGRhdGVkQXQiOiIyMDI0LTAyLTA2VDAyOjE1OjMwLjg3M1oiLCJwb2xpY2llcyI6W3siaWQiOiJlZTgxMGNkOC00ZmI3LTRjZDAtODhkZi0wM2MxYTk4NTkxZDMiLCJuYW1lIjoiU3VwZXIgQWRtaW4iLCJlZmZlY3QiOiJBbGxvdyIsImFjdGlvbnMiOlsiKiJdLCJyZXNvdXJjZXMiOlsiKiJdLCJjb25kaXRpb25zIjp7fSwiY3JlYXRlZEF0IjoiMjAyNC0wMi0wNlQwMjoxNTozMC44NzhaIiwidXBkYXRlZEF0IjoiMjAyNC0wMi0wNlQwMjoxNTozMC44NzhaIn1dfV0sImFwaVNlY3JldCI6IjYwOTVhNmY5MGEyZDQ3MjkyMDI0MmYyNWRkZjYwZTZkOjNlMmJkOTg3OGQ2NDk0ZThlMjlkYTY0Yjc0N2E4MzBkMGFhYWYxOGViM2RlZmNiZDAwMGFjYmQ2MzhjOWVmYjcxZGMzZjZlMjM2ZDJhNWIzOWM4NTdjYWQyNWY3YjcxOGQwOTUwZGI0OWRjNjdlOWRlMTI0MjJlYTM5MWVlNWU4MTA0M2Y2MmNlYWM2NTQzNjM1MDkwYjNkZDY1MmEyZDUxNDIzZTMxNjk5YTgyZDlmZTQ4MzY2ZTE0ZDQ1ODExM2Y4N2FkYWMyNzEwMzdlYjQ4NDBjMjc2ZjhhODgzM2QyIiwiaWF0IjoxNzA3MjAyODc4LCJleHAiOjE3MDk3OTQ4Nzh9.tGBaS2LNh7fXzi83Ym4jr3HFBqkLW3f7gnbMVbv0t5w",
+						"disabled": true
+					},
+					{
+						"key": "client-api-key",
+						"value": "",
+						"type": "text"
+					},
+					{
+						"key": "client-signature",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://staging-onesign-api.onesys.gr/pending-documents/:extRefId/status",
+					"protocol": "https",
+					"host": [
+						"staging-onesign-api",
+						"onesys",
+						"gr"
+					],
+					"path": [
+						"pending-documents",
+						":extRefId",
+						"status"
+					],
+					"variable": [
+						{
+							"key": "extRefId",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

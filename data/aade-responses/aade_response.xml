@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ResponseDoc xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <response>
+    <index>1</index>
+    <invoiceUid>C1ACDFE4528661CD2E7DF722B65561940C24C93Q</invoiceUid>
+    <invoiceMark>400001922215397</invoiceMark>
+    <authenticationCode>BE5884DD5550DA989780191B79E3FAF6D661D82D</authenticationCode>
+    <statusCode>Success</statusCode>
+    <qrUrl>https://onesign.onesys.gr/invoices/ca06f967-cc01-49ca-aa64-a7dacfc21813</qrUrl>
+  </response>
+</ResponseDoc>
