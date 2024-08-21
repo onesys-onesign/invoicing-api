@@ -2,16 +2,17 @@
 
 ## Version History
 
-| Version | Date       | Description                                                        |
-|---------|------------|--------------------------------------------------------------------|
-| 1.0     | 2023-10-01 | Initial release                                                    |
-| 1.1     | 2023-11-15 | Addition of crypto headers                                         |
-| 1.2     | 2023-12-15 | Addition of Greek version AADE/B2G                                 |
-| 1.3     | 2023-12-22 | Added endpoints, sample payloads, responses, postman collection    |
-| 1.4     | 2024-01-10 | Updated the sample payloads with lineComments and itemCPV elements, HMAC Guide |
+| Version | Date       | Description                                                                                                                       |
+|---------|------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| 1.0     | 2023-10-01 | Initial release                                                                                                                   |
+| 1.1     | 2023-11-15 | Addition of crypto headers                                                                                                        |
+| 1.2     | 2023-12-15 | Addition of Greek version AADE/B2G                                                                                                |
+| 1.3     | 2023-12-22 | Added endpoints, sample payloads, responses, postman collection                                                                   |
+| 1.4     | 2024-01-10 | Updated the sample payloads with lineComments and itemCPV elements, HMAC Guide                                                    |
 | 1.4.1   | 2024-01-15 | Updates Sample B2G payload with PEPPOL required fields, counterpart.name, invoiceDetails.quantity, invoiceDetails.measurementUnit |
-| 1.4.2   | 2024-01-16 | Updates HMAC headers |
-| 1.5.0   | 2024-02-22 | Added Transmission Failure 2, Status Request, Updated POSTMAN |
+| 1.4.2   | 2024-01-16 | Updates HMAC headers                                                                                                              |
+| 1.5.0   | 2024-02-22 | Added Transmission Failure 2, Status Request, Updated POSTMAN                                                                     |
+| 1.5.1   | 2024-02-22 | Added commands to extract raw keys, and some API updates                                                                          |
 
 ## Introduction
 
