@@ -137,6 +137,14 @@ using OpenSSL through Windows PowerShell.
 ssh-keygen -t ed25519
 ```
 
+Once the `private_key.pem` and `public_key.pem` files have been generated, we'll need to extract the 
+raw hexadecimal keys for use in your application. To do this, we can use the following commands:
+
+```shell
+$ openssl pkey -in private_key.pem -outform DER | tail -c 32 | xxd -p -c 32 > raw_private_key.hex
+$ openssl pkey -in public_key.pem -pubin -outform DER | tail -c 32 | xxd -p -c 32 > raw_public_key.hex
+```
+
 For more information, refer to the following link: [Key-based authentication in OpenSSH for Windows].
 
 #### Submission and Signing of Keys
@@ -157,10 +165,8 @@ curl --location 'https://staging-onesign-api.onesys.gr/signing-devices' \
     "deviceSerial": "98594583434",
     "devicePublicKey": "0e6c1b121a9ce7f593fb6f1a3794090885a93de2812fafaf6b6f5c0867477f4",
     "devicePublicKeySignature": "b926537302ebcacb367a2e4bf608a2c7751322fd835915a640b95ffa37208775d6b5d56d6c1f01b2df7f20b4fd31749cce8f6c950b10f202d09cc331664ef07",
-    "networkTxnId": "123243323",
-    "country": "GR",
     "authority": "AAD",
-    "entity": 1
+    "businessId": "<VAT_WITHOUT_EL>"
 }'
 ```
 
@@ -168,7 +174,7 @@ curl --location 'https://staging-onesign-api.onesys.gr/signing-devices' \
 If the signing device needs to be revoked from use, a delete request can be sent to disable the device from signing anymore invoices.
 
 ```shell
-curl --location --request DELETE 'https://staging-onesign-api.onesys.gr/signing-devices/1' \
+curl --location --request DELETE 'https://staging-onesign-api.onesys.gr/signing-devices/:businessId/:deviceId' \
 --header 'Authorization: Bearer eyJhbGciiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImtqZG5nZTg0NTQwOTgiLCJmaXJzdE5hbWUiOiJSaWNreSIsImxhc3ROYW1lIjoiTWFydGluIiwiZW1haWwiOiJtLnNpZGRpcXVpQG94aW51cy5pbyIsImFwaUtleSI6ImhoaGpqamRkZGtrayIsInNlY3JldCI6InNlY3JldCIsImFjY2Vzc1R5cGUiOiJTMlMiLCJjcmVhdGVkQXQiOiIyMDIzLTEyLTE0VDA3OjA3OjE0LjgzMloiLCJ1cGRhdGVkQXQiOiIyMDIzLTEyLTE0VDA3OjA3OjE0LjgzMloiLCJpYXQiOjE3MDI1NDE3OTZ9.a3XfDBcXVJ5mZFkKR7u5Er_zT9L06SaIUzi9biYD6gU' \
 --data ''
 ```
@@ -177,8 +183,7 @@ curl --location --request DELETE 'https://staging-onesign-api.onesys.gr/signing-
 A successfully submitted invoice can be retrieved with the Uid from the response of the successfully submitted invoice.
 
 ```shell
-curl --location 'https://staging-onesign-api.onesys.gr/invoice/DC9555A9F4786C0605698D7DA5EDED4EBCB87A73' \
---header 'Authorization: Bearer eyJhbGciOJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImtqZG5nZTg0NTQwOTgiLCJmaXJzdE5hbWUiOiJSaWNreSIsImxhc3ROYW1lIjoiTWFydGluIiwiZW1haWwiOiJtLnNpZGRpcXVpQG94aW51cy5pbyIsImFwaUtleSI6ImhoaGpqamRkZGtrayIsInNlY3JldCI6InNlY3JldCIsImFjY2Vzc1R5cGUiOiJTMlMiLCJjcmVhdGVkQXQiOiIyMDIzLTEyLTE0VDA3OjA3OjE0LjgzMloiLCJ1cGRhdGVkQXQiOiIyMDIzLTEyLTE0VDA3OjA3OjE0LjgzMloiLCJpYXQiOjE3MDI1NDE3OTZ9.a3XfDBcXVJ5mZFkKR7u5Er_zT9L06SaIUzi9biYD6gU'
+curl --location 'https://staging-onesign-api.onesys.gr/invoice/public/qrcode/:uid'
 ```
 
 ### Request Headers:
@@ -316,7 +321,7 @@ The order of appearance is the following:
 - Example Value: "MCowBQYDK3VwAyEAvR97AJTKyGNAjOYROXGk+H367Ix1kOAMNKQwpTuvOfU="
 
 ##### Signature of Signatory Device Public Key
-- Description: Signature of the device's public key (similarly to the device's enrollment).
+- Description: Signature that was received on registering the device.
 - Example Value: "E473489D6964B4D1A76811BC3A634070D64FD15830254011B9B95790118B3CCCB3BC6F789A384F2EFF1DA300C85A543A3B64EB920680BD8A70347ACD89E0C342"
 
 
@@ -499,7 +504,7 @@ You will receive the following response:
         <invoiceMark>400001924527016</invoiceMark>
         <authenticationCode>B94D9C24035C10383913CE7FDE249F9875326A99</authenticationCode>
         <statusCode>Success</statusCode>
-        <qrUrl>https://staging-onesign.onesys.gr/invoices/ca06f967-cc01-49ca-aa64-a7dacfc21813</qrUrl>
+        <qrUrl>https://staging-onesign.onesys.gr/invoice/public/qrcode/398DF85AF27196AF7F617DEA648C26D49EA85064</qrUrl>
     </response>
 </ResponseDoc>
 ```
