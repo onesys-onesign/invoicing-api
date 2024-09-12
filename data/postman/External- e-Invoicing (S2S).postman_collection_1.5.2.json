@@ -768,160 +768,6 @@
 					"response": []
 				},
 				{
-					"name": "Search Invoice By InvoiceUId",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": ""
-							}
-						],
-						"url": {
-							"raw": "{{api_url}}/invoice/public/:uid",
-							"host": [
-								"{{api_url}}"
-							],
-							"path": [
-								"invoice",
-								"public",
-								":uid"
-							],
-							"variable": [
-								{
-									"key": "uid",
-									"value": "4A296448ED2DE85845B8E42E1D10BB1029F1AAA2"
-								}
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "200 OK",
-							"originalRequest": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": ""
-									}
-								],
-								"url": {
-									"raw": "{{api_url}}/invoice/public/:uid",
-									"host": [
-										"{{api_url}}"
-									],
-									"path": [
-										"invoice",
-										"public",
-										":uid"
-									],
-									"variable": [
-										{
-											"key": "uid",
-											"value": "33B8EE42ABF40C9C6DD482278DF0D332235106B3"
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "access-control-allow-origin",
-									"value": "*"
-								},
-								{
-									"key": "content-type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "content-length",
-									"value": "735"
-								},
-								{
-									"key": "Date",
-									"value": "Thu, 12 Sep 2024 06:42:38 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=72"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"id\": \"a18aedd8-7595-470b-b4b9-76547463716d\",\n    \"documentHash\": \"db1e3b2b99fbbbf315236ed0abfa5694694cf2a09d42f35571399193673fa44e\",\n    \"preDocumentHash\": \"PreviousHash\",\n    \"documentType\": 380,\n    \"aadeDocumentType\": \"1.1\",\n    \"documentTotal\": \"309\",\n    \"documentTax\": \"15.42\",\n    \"documentCurrency\": \"EUR\",\n    \"documentTaxCurrency\": \"EUR\",\n    \"signingAt\": \"2024-08-22T07:46:26.644Z\",\n    \"invoiceUrl\": null,\n    \"series\": \"0\",\n    \"aa\": \"75686\",\n    \"branch\": \"0\",\n    \"isB2g\": true,\n    \"peppolId\": \"979708945|22/08/2024|0|1.1|0|75686\",\n    \"peppolMsgStatus\": \"AB\",\n    \"peppolReasonCode\": \"OK\",\n    \"createdAt\": \"2024-08-22T03:46:27.665Z\",\n    \"updatedAt\": \"2024-08-22T03:46:27.665Z\",\n    \"invoiceUid\": \"33B8EE42ABF40C9C6DD482278DF0D332235106B3\",\n    \"invoiceMark\": \"400001932811698\",\n    \"authenticationCode\": \"FE239BB5783BF184882981035B5F6EEA2980532C\"\n}"
-						},
-						{
-							"name": "400 Bad Request",
-							"originalRequest": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": ""
-									}
-								],
-								"url": {
-									"raw": "{{api_url}}/invoice/public/:uid",
-									"host": [
-										"{{api_url}}"
-									],
-									"path": [
-										"invoice",
-										"public",
-										":uid"
-									],
-									"variable": [
-										{
-											"key": "uid",
-											"value": "4A296448ED2DE85845B8E42E1D10BB1029F1AAA2"
-										}
-									]
-								}
-							},
-							"status": "Bad Request",
-							"code": 400,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "access-control-allow-origin",
-									"value": "*"
-								},
-								{
-									"key": "content-type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "Content-Length",
-									"value": "185"
-								},
-								{
-									"key": "Date",
-									"value": "Thu, 12 Sep 2024 06:39:45 GMT"
-								},
-								{
-									"key": "Via",
-									"value": "1.1 google"
-								},
-								{
-									"key": "Alt-Svc",
-									"value": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"statusCode\": 400,\n    \"timestamp\": \"2024-09-12T06:39:45.842Z\",\n    \"path\": \"/invoice/public/4A296448ED2DE85845B8E42E1D10BB1029F1AAA2\",\n    \"message\": \"Invalid Invoice Id\",\n    \"details\": \"Invalid Invoice Id\"\n}"
-						}
-					]
-				},
-				{
 					"name": "Check Status Copy",
 					"request": {
 						"auth": {
@@ -1069,6 +915,90 @@
 							],
 							"cookie": [],
 							"body": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<ResponseDoc>\n    <response>\n        <index>1</index>\n        <invoiceUid>945A203B069E66C300682384DA5B49DA1CD72EE9</invoiceUid>\n        <invoiceMark>400001926743685</invoiceMark>\n        <authenticationCode>B1A215CF2018F9EA98F4AF736E42BA7ACF839456</authenticationCode>\n        <statusCode>Success</statusCode>\n        <qrUrl>https://onesign.onesys.gr/invoices/945A203B069E66C300682384DA5B49DA1CD72EE9</qrUrl>\n    </response>\n</ResponseDoc>"
+						}
+					]
+				},
+				{
+					"name": "Public - PDF via QRCode",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/invoice/public/qrcode/:uid",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"invoice",
+								"public",
+								"qrcode",
+								":uid"
+							],
+							"variable": [
+								{
+									"key": "uid",
+									"value": "807B3B7701B262A357367FCCBB8517A8CA04B886"
+								}
+							]
+						},
+						"description": "# Get Invoice QR Code\n\nThis endpoint retrieves the invoice for a specific QR Code UID (uid).\n\n## Request\n\n- Method: GET\n    \n- Endpoint: {{api_url}}/invoice/public/qrcode/:uid\n    \n\n## Response\n\nThe response will be in XML format and will include the following fields:\n\n- `responseDoc`\n    \n    - `statusCode`\n        \n    - `errors`\n        \n        - `error`\n            \n            - `extRefId`\n                \n            - `message`\n                \n\nThe `statusCode` indicates the status of the request, while the `errors` object provides any error details if applicable.\n\nExample response:\n\n``` xml\n<ResponseDoc xmlns:xsd=\"\" xmlns:xsi=\"\">\n  <response>\n    <statusCode></statusCode>\n    <errors>\n      <error>\n        <extRefId></extRefId>\n        <message></message>\n      </error>\n    </errors>\n  </response>\n</ResponseDoc>\n\n ```"
+					},
+					"response": [
+						{
+							"name": "200 OK - Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}/invoice/public/qrcode/:uid",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"invoice",
+										"public",
+										"qrcode",
+										":uid"
+									],
+									"variable": [
+										{
+											"key": "uid",
+											"value": ""
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "xml",
+							"header": [
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/xml"
+								},
+								{
+									"key": "content-length",
+									"value": "379"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Sep 2024 06:16:58 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=72"
+								}
+							],
+							"cookie": [],
+							"body": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<ResponseDoc xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n    <response>\n        <statusCode>Not found</statusCode>\n        <errors>\n            <error>\n                <extRefId>:uid</extRefId>\n                <message>Id not found</message>\n            </error>\n        </errors>\n    </response>\n</ResponseDoc>"
 						}
 					]
 				}
