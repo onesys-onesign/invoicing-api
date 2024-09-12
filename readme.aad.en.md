@@ -2,17 +2,18 @@
 
 ## Version History
 
-| Version | Date       | Description                                                        |
-|---------|------------|--------------------------------------------------------------------|
-| 1.0     | 2023-10-01 | Initial release                                                    |
-| 1.1     | 2023-11-15 | Addition of crypto headers                                         |
-| 1.2     | 2023-12-15 | Addition of Greek version AADE/B2G                                 |
-| 1.3     | 2023-12-22 | Added endpoints, sample payloads, responses, postman collection    |
-| 1.4     | 2024-01-10 | Updated the sample payloads with lineComments and itemCPV elements, HMAC Guide |
+| Version | Date       | Description                                                                                                                       |
+|---------|------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| 1.0     | 2023-10-01 | Initial release                                                                                                                   |
+| 1.1     | 2023-11-15 | Addition of crypto headers                                                                                                        |
+| 1.2     | 2023-12-15 | Addition of Greek version AADE/B2G                                                                                                |
+| 1.3     | 2023-12-22 | Added endpoints, sample payloads, responses, postman collection                                                                   |
+| 1.4     | 2024-01-10 | Updated the sample payloads with lineComments and itemCPV elements, HMAC Guide                                                    |
 | 1.4.1   | 2024-01-15 | Updates Sample B2G payload with PEPPOL required fields, counterpart.name, invoiceDetails.quantity, invoiceDetails.measurementUnit |
-| 1.4.2   | 2024-01-16 | Updates HMAC headers |
-| 1.5.0   | 2024-02-22 | Added Transmission Failure 2, Status Request, Updated POSTMAN |
-| 1.5.1   | 2024-05-28 | Added self handling of Transmission Failure 2                  |
+| 1.4.2   | 2024-01-16 | Updates HMAC headers                                                                                                              |
+| 1.5.0   | 2024-02-22 | Added Transmission Failure 2, Status Request, Updated POSTMAN                                                                     |
+| 1.5.1   | 2024-05-28 | Added self handling of Transmission Failure 2                                                                                     |
+| 1.5.2   | 2024-09-11 | Added commands to extract raw keys, and some API updates, updated postman collection                                              |
 
 ## Introduction
 
@@ -26,7 +27,7 @@ as well as cryptographic certification.
 The test environment for all API calls is:
 
 ```
-https://api.invoicing.oxinus.net/
+https://onesign-api.onesys.gr/
 ```
 
 ## Authentication
@@ -47,10 +48,13 @@ client-signature:
 
 ### Overview
 
-This section provides guidance on implementing HMAC authentication for server-to-server communication. It involves the use of an API key and a secret. The API key is used in the request header, while the secret is used to generate an HMAC signature from the request body.
+This section provides guidance on implementing HMAC authentication for server-to-server communication. It involves the
+use of an API key and a secret. The API key is used in the request header, while the secret is used to generate an HMAC
+signature from the request body.
+
 ### Requirements
 
-### API Key and Secret: 
+### API Key and Secret:
 Two distinct pieces of data will be provided:
 
 **API Key:** To be sent in the request header.
@@ -118,7 +122,7 @@ To certify a device in the application, the following steps should be followed:
 
 #### Key Generation
 ##### Linux/Unix/MacOS
-From a Linux/Unix/MacOS system, keys can be generated using the following commands, utilizing OpenSSL through the 
+From a Linux/Unix/MacOS system, keys can be generated using the following commands, utilizing OpenSSL through the
 terminal/console.
 
 ```shell
@@ -136,6 +140,14 @@ using OpenSSL through Windows PowerShell.
 ssh-keygen -t ed25519
 ```
 
+Once the `private_key.pem` and `public_key.pem` files have been generated, we need to extract the
+raw hexadecimal keys for use in your application. To do this, we can use the following commands:
+
+```shell
+$ openssl pkey -in private_key.pem -outform DER | tail -c 32 | xxd -p -c 32 > raw_private_key.hex
+$ openssl pkey -in public_key.pem -pubin -outform DER | tail -c 32 | xxd -p -c 32 > raw_public_key.hex
+```
+
 For more information, refer to the following link: [Key-based authentication in OpenSSH for Windows].
 
 #### Submission and Signing of Keys
@@ -147,7 +159,7 @@ The application will in turn return a device specific signature that the device 
 Alternatively, it can be done using curl with the following command, replacing the necessary fields.
 
 ```shell
-curl --location 'https://api.invoicing.oxinus.net/signing-devices' \
+curl --location 'https://onesign-api.onesys.gr/signing-devices' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer eyJhbGciOiJUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc2YjM1ZDdlLWVkODQtNGI0ZS1hODhiLWQ2Y2RlOWRiY2Q3YiIsImZpcnN0TmFtZSI6Ik94aW51cyIsImxhc3ROYW1lIjoiSG9sZGluZ3MiLCJlbWFpbCI6InNwQG94aW51cy5ob2xkaW5ncyIsImFjY2Vzc1R5cGUiOiJqd3QiLCJpYXQiOjE3MDI4Nzg3MTB9.ZLZGFse5RJMFkgziYs-nH8qYTveztOzmhApbXN0poPA' \
 --data '{
@@ -156,10 +168,8 @@ curl --location 'https://api.invoicing.oxinus.net/signing-devices' \
     "deviceSerial": "98594583434",
     "devicePublicKey": "0e6c1b121a9ce7f593fb6f1a3794090885a93de2812fafaf6b6f5c0867477f4",
     "devicePublicKeySignature": "b926537302ebcacb367a2e4bf608a2c7751322fd835915a640b95ffa37208775d6b5d56d6c1f01b2df7f20b4fd31749cce8f6c950b10f202d09cc331664ef07",
-    "networkTxnId": "123243323",
-    "country": "GR",
     "authority": "AAD",
-    "entity": 1
+    "businessId": "<VAT_WITHOUT_EL>"
 }'
 ```
 
@@ -167,7 +177,7 @@ curl --location 'https://api.invoicing.oxinus.net/signing-devices' \
 If the signing device needs to be revoked from use, a delete request can be sent to disable the device from signing anymore invoices.
 
 ```shell
-curl --location --request DELETE 'https://api.invoicing.oxinus.net/signing-devices/1' \
+curl --location --request DELETE 'https://onesign-api.onesys.gr/signing-devices/:businessId/:deviceId' \
 --header 'Authorization: Bearer eyJhbGciiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImtqZG5nZTg0NTQwOTgiLCJmaXJzdE5hbWUiOiJSaWNreSIsImxhc3ROYW1lIjoiTWFydGluIiwiZW1haWwiOiJtLnNpZGRpcXVpQG94aW51cy5pbyIsImFwaUtleSI6ImhoaGpqamRkZGtrayIsInNlY3JldCI6InNlY3JldCIsImFjY2Vzc1R5cGUiOiJTMlMiLCJjcmVhdGVkQXQiOiIyMDIzLTEyLTE0VDA3OjA3OjE0LjgzMloiLCJ1cGRhdGVkQXQiOiIyMDIzLTEyLTE0VDA3OjA3OjE0LjgzMloiLCJpYXQiOjE3MDI1NDE3OTZ9.a3XfDBcXVJ5mZFkKR7u5Er_zT9L06SaIUzi9biYD6gU' \
 --data ''
 ```
@@ -176,8 +186,7 @@ curl --location --request DELETE 'https://api.invoicing.oxinus.net/signing-devic
 A successfully submitted invoice can be retrieved with the Uid from the response of the successfully submitted invoice.
 
 ```shell
-curl --location 'https://api.invoicing.oxinus.net/invoice/DC9555A9F4786C0605698D7DA5EDED4EBCB87A73' \
---header 'Authorization: Bearer eyJhbGciOJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImtqZG5nZTg0NTQwOTgiLCJmaXJzdE5hbWUiOiJSaWNreSIsImxhc3ROYW1lIjoiTWFydGluIiwiZW1haWwiOiJtLnNpZGRpcXVpQG94aW51cy5pbyIsImFwaUtleSI6ImhoaGpqamRkZGtrayIsInNlY3JldCI6InNlY3JldCIsImFjY2Vzc1R5cGUiOiJTMlMiLCJjcmVhdGVkQXQiOiIyMDIzLTEyLTE0VDA3OjA3OjE0LjgzMloiLCJ1cGRhdGVkQXQiOiIyMDIzLTEyLTE0VDA3OjA3OjE0LjgzMloiLCJpYXQiOjE3MDI1NDE3OTZ9.a3XfDBcXVJ5mZFkKR7u5Er_zT9L06SaIUzi9biYD6gU'
+curl --location 'https://onesign-api.onesys.gr/invoice/public/qrcode/:uid'
 ```
 
 ### Request Headers:
@@ -282,19 +291,19 @@ its validity.
 - Description: SHA256 hash of all headers in the financial section (fiscal-header fields) concatenated into one field
 - separated by the "|" pipe character.
   - e.g., "fd4bdc10-b0f3-4f3b-beb1-14fc4f42dc2b|987654321|123456789|1702140669|380|1000.00|240.00|EUR|EUR"
-  
-The order of appearance is the following:
-  - Fiscal-Header-Invoice-ID                                                                          
-  - Fiscal-Header-Issuer-TaxID                                                                             
-  - Fiscal-Header-Recipient-TaxID                                                                              
-  - Fiscal-Header-TimeStamp-Epoch                                                                                                  
-  - Fiscal-Header-Document-Type                                                                                                         
-  - Fiscal-Header-Document-Value                                                                                                       
-  - Fiscal-Header-Document-Tax-Value                                                                                                        
-  - Fiscal-Header-Currency                                                                                                         
-  - Fiscal-Header-Tax-Currency
 
-  - Example Value: "ba2a7576612c69a3dd18da20b3c47c598afabe1c1aec9fa98a1f888daecf5a5d"
+The order of appearance is the following:
+- Fiscal-Header-Invoice-ID
+- Fiscal-Header-Issuer-TaxID
+- Fiscal-Header-Recipient-TaxID
+- Fiscal-Header-TimeStamp-Epoch
+- Fiscal-Header-Document-Type
+- Fiscal-Header-Document-Value
+- Fiscal-Header-Document-Tax-Value
+- Fiscal-Header-Currency
+- Fiscal-Header-Tax-Currency
+
+- Example Value: "ba2a7576612c69a3dd18da20b3c47c598afabe1c1aec9fa98a1f888daecf5a5d"
 
 ##### Invoice Payload SHA256 Hash
 - Description: SHA256 hash of the entire payload of the call.
@@ -315,7 +324,7 @@ The order of appearance is the following:
 - Example Value: "MCowBQYDK3VwAyEAvR97AJTKyGNAjOYROXGk+H367Ix1kOAMNKQwpTuvOfU="
 
 ##### Signature of Signatory Device Public Key
-- Description: Signature of the device's public key (similarly to the device's enrollment).
+- Description: Signature that was received on registering the device.
 - Example Value: "E473489D6964B4D1A76811BC3A634070D64FD15830254011B9B95790118B3CCCB3BC6F789A384F2EFF1DA300C85A543A3B64EB920680BD8A70347ACD89E0C342"
 
 
@@ -341,7 +350,7 @@ In case the invoice pertains to a B2G document that needs to be routed through t
 `Settings-Is-Peppol-Required` should be filled in the call header with the value `true`.
 
 In this case, the document will be checked for the existence of the following fields which should be included in the
- last element <b2g-peppol> within <invoice>
+last element <b2g-peppol> within <invoice>
 
 | Field              | Description                             | Sample Value          | Required | Peppol Field |
 |--------------------|-----------------------------------------|-----------------------|----------|----------|
@@ -432,14 +441,14 @@ Depending on the business settings, Oxinus handles this scenario differently.
 
 #### Scenario 1 - Oxinus re-submits the document to AADE
 
-In this scenario, in the case of an unsuccessful document submission from the Provider to AADE, provided that the invoice is valid, you 
-will receive similar success response containing the same fields as the successful response (empty), with the addition 
+In this scenario, in the case of an unsuccessful document submission from the Provider to AADE, provided that the invoice is valid, you
+will receive similar success response containing the same fields as the successful response (empty), with the addition
 of the following field:
 - **extRefId (Unique Oxinus Reference Id)**
 
 Additionaly, the statusCode will be "Transmission Failure"
 
-The following is a sample response 
+The following is a sample response
 
 ```xml
 <?xml version=`"1.0" encoding="UTF-8" standalone="yes"?>
@@ -465,7 +474,7 @@ values (MARK, AUTH, UID).
 In this scenario, on un-successful document submission from the Provider to AADE, Oxinus will not re-submit the document to AADE. Oxinus
 will return a response as below, and the customer is responsible for re-submitting the document.
 
-The following is a sample response 
+The following is a sample response
 
 ```xml
 <?xml version=`"1.0" encoding="UTF-8" standalone="yes"?>
@@ -485,7 +494,7 @@ The following is a sample response
 #### Document Status Request
 To query the status of the transmission failed document, you can use the following endpoint :
 ```http
-GET https://api.invoicing.oxinus.net/pending-documents/:extRefId/status
+GET https://onesign-api.onesys.gr/pending-documents/:extRefId/status
 ```
 
 You will receive the following response:

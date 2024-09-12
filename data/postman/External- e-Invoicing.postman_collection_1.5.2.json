@@ -1,0 +1,1010 @@
+{
+	"info": {
+		"_postman_id": "0e69ea26-80b8-4083-bcd5-27595c40cbf7",
+		"name": "External: e-Invoicing",
+		"description": "# API Authentication\n\nThis API uses two authentication mechanisms: JWT (JSON Web Tokens) and HMAC (Hash-based Message Authentication Code). Follow the instructions below to authenticate your requests in Postman.\n\n## JWT Authentication\n\nJWT tokens are provided by the core authentication system.\n\n1. Obtain a valid JWT token from the core authentication system.\n    \n2. In your Postman request, add a header:\n    \n    - Key: `Authorization`\n        \n    - Value: `Bearer token`\n        \n\nReplace with the actual JWT token you received.\n\n## HMAC Authentication\n\nHMAC requires a client API key and secret, which you can obtain from customer support.\n\n1. Contact customer support to receive your `client-api-key` and `secret`.\n    \n2. With the help of the `secret`, create the HMAC signature of the payload.\n    \n3. In your Postman request, add two headers:\n    \n    - Header 1:\n        \n        - Key: `client-api-key`\n            \n        - Value: client-api-key\n            \n    - Header 2:\n        \n        - Key: `client-signature`\n            \n        - Value: payload signature\n            \n\nReplace and with the actual values provided by customer support.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28718757"
+	},
+	"item": [
+		{
+			"name": "Signing Device",
+			"item": [
+				{
+					"name": "Add Device",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"deviceName\": \"Device 1\",\n    \"deviceType\": \"virtual\",  // virtual, hardware\n    \"deviceSerial\": \"837489312\",\n    \"devicePublicKey\": \"35d877b3f6109139fe6a342ffca1511444dab37e1eb481989aa09bc0b2ab0015\",\n    \"devicePublicKeySignature\": \"2d1ac83f261c2d5ce29080978075e80642b7b43f6f4394f56bb9eca9e9b8e1e2579a76d38570eb3962156f4264d083730b0cf7d848c026fcdcc478a5b6530700\",\n    \"businessId\": \"09000005\",\n    \"authority\": \"AAD\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/signing-devices",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"signing-devices"
+							]
+						},
+						"description": "### Signing Devices Endpoint\n\nThis endpoint allows you to register a new signing device.\n\n#### Request Body\n\n- `deviceName` (string): The name of the device.\n    \n- `deviceType` (string): The type of the device, can be either \"virtual\" or \"hardware\".\n    \n- `deviceSerial` (string): The serial number of the device.\n    \n- `devicePublicKey` (string): The public key of the device.\n    \n- `devicePublicKeySignature` (string): The signature of the device's public key.\n    \n- `businessId` (string): The business ID associated with the device.\n    \n- `authority` (string): The authority responsible for the device.\n    \n\n#### Response\n\nThe response will be in JSON format with the following schema:\n\n``` json\n{\n    \"id\": 0,\n    \"deviceSignature\": \"\"\n}\n\n ```\n\n- `id` (number): The ID assigned to the signing device.\n    \n- `deviceSignature` (string): The signature of the device."
+					},
+					"response": [
+						{
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"deviceName\": \"Device 1\",\n    \"deviceType\": \"virtual\",  // virtual, hardware\n    \"deviceSerial\": \"837489312\",\n    \"devicePublicKey\": \"35d877b3f6109139fe6a342ffca1511444dab37e1eb481989aa09bc0b2ab0015\",\n    \"devicePublicKeySignature\": \"2d1ac83f261c2d5ce29080978075e80642b7b43f6f4394f56bb9eca9e9b8e1e2579a76d38570eb3962156f4264d083730b0cf7d848c026fcdcc478a5b6530700\",\n    \"businessId\": \"09000005\",\n    \"authority\": \"AAD\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/signing-devices",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"signing-devices"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "157"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Sep 2024 11:17:41 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=72"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 7,\n    \"deviceSignature\": \"28a1b866b496f1285d82aa6a861e66f401756cef50d844adea86a2b24e6a493a901f799c7deb07f2d07d467f5e5217719d98b498b2b7d3244c721e8a24aa6b05\"\n}"
+						},
+						{
+							"name": "403 Forbidden",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"deviceName\": \"Device 1\",\n    \"deviceType\": \"virtual\",  // virtual, hardware\n    \"deviceSerial\": \"837489312\",\n    \"devicePublicKey\": \"35d877b3f6109139fe6a342ffca1511444dab37e1eb481989aa09bc0b2ab0015\",\n    \"devicePublicKeySignature\": \"2d1ac83f261c2d5ce29080978075e80642b7b43f6f4394f56bb9eca9e9b8e1e2579a76d38570eb3962156f4264d083730b0cf7d848c026fcdcc478a5b6530700\",\n    \"businessId\": \"09000005\",\n    \"authority\": \"AAD\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/signing-devices",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"signing-devices"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "194"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Sep 2024 11:14:47 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=72"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 403,\n    \"timestamp\": \"2024-09-11T11:14:47.864Z\",\n    \"path\": \"/signing-devices\",\n    \"message\": \"Forbidden resource\",\n    \"details\": {\n        \"message\": \"Forbidden resource\",\n        \"error\": \"Forbidden\",\n        \"statusCode\": 403\n    }\n}"
+						},
+						{
+							"name": "400 Invalid Body",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    // \"deviceName\": \"Device 1\",\n    // \"deviceType\": \"virtual\",  // virtual, hardware\n    // \"deviceSerial\": \"837489312\",\n    // \"devicePublicKey\": \"35d877b3f6109139fe6a342ffca1511444dab37e1eb481989aa09bc0b2ab0015\",\n    // \"devicePublicKeySignature\": \"2d1ac83f261c2d5ce29080978075e80642b7b43f6f4394f56bb9eca9e9b8e1e2579a76d38570eb3962156f4264d083730b0cf7d848c026fcdcc478a5b6530700\",\n    // \"businessId\": \"09000005\",\n    // \"authority\": \"AAD\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/signing-devices",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"signing-devices"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "938"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Sep 2024 11:15:53 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=72"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 400,\n    \"timestamp\": \"2024-09-11T11:15:53.104Z\",\n    \"path\": \"/signing-devices\",\n    \"message\": \"Bad Request Exception\",\n    \"errors\": {\n        \"message\": [\n            \"deviceName should not be empty or only whitespace\",\n            \"deviceName should not be empty\",\n            \"deviceName must be a string\",\n            \"deviceType must be one of the following values: virtual, hardware\",\n            \"deviceSerial should not be empty or only whitespace\",\n            \"deviceSerial should not be empty\",\n            \"deviceSerial must be a string\",\n            \"devicePublicKey should not be empty or only whitespace\",\n            \"devicePublicKey should not be empty\",\n            \"devicePublicKey must be a string\",\n            \"devicePublicKeySignature should not be empty or only whitespace\",\n            \"devicePublicKeySignature should not be empty\",\n            \"devicePublicKeySignature must be a string\",\n            \"authority should not be empty or only whitespace\",\n            \"authority should not be empty\",\n            \"businessId should not be empty or only whitespace\",\n            \"businessId should not be empty\"\n        ],\n        \"error\": \"Bad Request\",\n        \"statusCode\": 400\n    }\n}"
+						},
+						{
+							"name": "403 Device Exist",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"deviceName\": \"Device 1\",\n    \"deviceType\": \"virtual\",  // virtual, hardware\n    \"deviceSerial\": \"837489312\",\n    \"devicePublicKey\": \"35d877b3f6109139fe6a342ffca1511444dab37e1eb481989aa09bc0b2ab0015\",\n    \"devicePublicKeySignature\": \"2d1ac83f261c2d5ce29080978075e80642b7b43f6f4394f56bb9eca9e9b8e1e2579a76d38570eb3962156f4264d083730b0cf7d848c026fcdcc478a5b6530700\",\n    \"businessId\": \"09000005\",\n    \"authority\": \"AAD\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/signing-devices",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"signing-devices"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "176"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Sep 2024 11:16:30 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=72"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 403,\n    \"timestamp\": \"2024-09-11T11:16:30.817Z\",\n    \"path\": \"/signing-devices\",\n    \"message\": \"Device already exists\",\n    \"details\": {\n        \"status\": 403,\n        \"message\": \"Device already exists\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Revoke Device",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/signing-devices/:businessId/:id",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"signing-devices",
+								":businessId",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "businessId",
+									"value": "47"
+								},
+								{
+									"key": "id",
+									"value": "50"
+								}
+							]
+						},
+						"description": "### Delete Signing Device\n\nThis endpoint is used to delete a specific signing device associated with a business.\n\n#### Request Parameters\n\n- `businessId` (string, required): The ID of the business to which the signing device belongs.\n    \n- `id` (string, required): The ID of the signing device to be deleted.\n    \n\n#### Response\n\nThe response will not contain a response body. A successful revoke will return a status code of 204 (No Content)."
+					},
+					"response": [
+						{
+							"name": "204 No Content",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}/signing-devices/:businessId/:id",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"signing-devices",
+										":businessId",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "businessId",
+											"value": "09000005"
+										},
+										{
+											"key": "id",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Sep 2024 11:29:21 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=72"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "401 Invalid Business Id",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}/signing-devices/:businessId/:id",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"signing-devices",
+										":businessId",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "businessId",
+											"value": "09000005-9090"
+										},
+										{
+											"key": "id",
+											"value": "50"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "164"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Sep 2024 11:28:09 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=72"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 400,\n    \"timestamp\": \"2024-09-11T11:28:09.304Z\",\n    \"path\": \"/signing-devices/09000005-9090/50\",\n    \"message\": \"Invalid Business Id\",\n    \"details\": \"Invalid Business Id\"\n}"
+						},
+						{
+							"name": "400: Invalid Device",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}/signing-devices/:businessId/:id",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"signing-devices",
+										":businessId",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "businessId",
+											"value": "09000005"
+										},
+										{
+											"key": "id",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "179"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Sep 2024 11:29:01 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=72"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 400,\n    \"timestamp\": \"2024-09-11T11:29:01.723Z\",\n    \"path\": \"/signing-devices/09000005/5\",\n    \"message\": \"Invalid Device Id\",\n    \"details\": {\n        \"status\": 400,\n        \"message\": \"Invalid Device Id\"\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Invoice",
+			"item": [
+				{
+					"name": "Issue Invoice",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Fiscal-Header-Issuer-TaxID",
+								"value": "090000045",
+								"type": "text"
+							},
+							{
+								"key": "Fiscal-Header-Recipient-TaxID",
+								"value": "",
+								"type": "text"
+							},
+							{
+								"key": "Fiscal-Header-TimeStamp-Epoch",
+								"value": "1704982941735",
+								"type": "text"
+							},
+							{
+								"key": "Fiscal-Header-Document-Type",
+								"value": "380",
+								"type": "text"
+							},
+							{
+								"key": "Fiscal-Header-Document-Value",
+								"value": "1012",
+								"type": "text"
+							},
+							{
+								"key": "Fiscal-Header-Document-Tax-Value",
+								"value": "240",
+								"type": "text"
+							},
+							{
+								"key": "Fiscal-Header-Currency",
+								"value": "EUR",
+								"type": "text"
+							},
+							{
+								"key": "Crypto-Header-Fiscal-Header-SHA256-Hash",
+								"value": "32c2a533a4040c80b87d1e8139323bd56300d29abc9754e509278f8857162d31",
+								"type": "text"
+							},
+							{
+								"key": "Crypto-Header-Invoice-Payload-SHA256-Hash",
+								"value": "33cf0d1081b5446656c4c98644b59d8eb74d528fcc78e2945ecb5806959f2fa6",
+								"type": "text"
+							},
+							{
+								"key": "Crypto-Header-Signature",
+								"value": "427c8e4b54c01ccb523717039b75ff1a4e422b3b3d3c2e75dd89413b7094aacb5881b01a27bb699c065268f248576ffbcf928f0cda272907cac81640ce3a9003",
+								"type": "text"
+							},
+							{
+								"key": "Crypto-Header-Previous-Invoice-Fiscal-Header",
+								"value": "",
+								"type": "text"
+							},
+							{
+								"key": "Settings-Authority-ID",
+								"value": "AAD",
+								"type": "text"
+							},
+							{
+								"key": "Crypto-Header-Public-Key-of-Signatory-Device",
+								"value": "88cdb3d444f785ef2e6dec97b1b9b3c74e00f4610760820a276959c7d0310b2a",
+								"type": "text"
+							},
+							{
+								"key": "Crypto-Header-Signature-of-Signatory-Device-Public-Key",
+								"value": "7f0a1ab07f04b388c57142e1b4862db2a2b852a915c83068f7598df3d9fe1110f84990da9238517b01a06fe391f7f558685fdef5832c466277fe4040e6cd920f",
+								"type": "text"
+							},
+							{
+								"key": "Settings-Is-Peppol-Required",
+								"value": "false",
+								"type": "text"
+							},
+							{
+								"key": "Settings-Document-TemplateID",
+								"value": "4",
+								"type": "text"
+							},
+							{
+								"key": "Fiscal-Header-Tax-Currency",
+								"value": "EUR",
+								"type": "text"
+							},
+							{
+								"key": "Fiscal-Header-Invoice-ID",
+								"value": "4d2a1d49-664d-4fab-9a5e-d52a9857861b",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQzMGE4YzIyLWYyZjAtNDA5YS04NWMxLWMyODc4MTZiMTY5ZCIsIm5hbWUiOiJNb2hkIEVqYXoiLCJlbWFpbCI6Im0uc2lkZGlxdWlAb3hpbnVzLmlvIiwibGFzdG5hbWUiOiJTaWRkaXF1aSIsImlhdCI6MTcwNDk3ODcwNSwiZXhwIjoxNzA3NTcwNzA1fQ.ZNobjlHbhkpK079cVY9QfPKZ501L0BkzBVpfJbpdJi1KBTNVMsdYscn_Q8dSlwG-_l90-6pNtBvVjt-8_B0P-fClY0IFC6MWf4oI3dRoXXfBmypRknkalDGSKQA2Y74fRAVtS3T4-Fr4kCZR-K21y4vgauMfwf_1ax9h6vfBS1tN1R7sKv-1w6F4PoECOqD-bUmI52mDQvJ4cLIxCLp-I0qfKqJDBMKS_StxkOi2RHID6P4IsFDKeqwurpFmZBVlKiMww7RzLR9FxX_tKQGHAmUQlNuLkgyYK0I6YXhKHTpIaFQK0ySfLQpN6nJyMwLaZDDqpkv29emuvKrIsDNDBA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<InvoicesDoc xmlns:icls=\"https://www.aade.gr/myDATA/incomeClassificaton/v1.0\"\n            xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n            xmlns=\"http://www.aade.gr/myDATA/invoice/v1.0\" xsi:schemaLocation=\"http://www.aade.gr/myDATA/invoice/v1.0/InvoicesDoc-v0.6.xsd\">\n    <invoice>\n        <issuer>\n            <vatNumber>090000045</vatNumber>\n            <country>GR</country>\n            <branch>0</branch>\n        </issuer>\n        <counterpart>\n            <vatNumber>026883248</vatNumber>\n            <country>GR</country>\n            <branch>0</branch>\n            <address>\n                <street>Street</street>\n                <number>3</number>\n                <postalCode>12100</postalCode>\n                <city>City</city>\n            </address>\n        </counterpart>\n        <invoiceHeader>\n            <series>Α</series>\n            <aa>669</aa>\n            <issueDate>2024-01-11</issueDate>\n            <invoiceType>1.4</invoiceType>\n            <currency>EUR</currency>\n        </invoiceHeader>\n        <paymentMethods>\n            <paymentMethodDetails>\n                <type>3</type>\n                <amount>1000.00</amount>\n            </paymentMethodDetails>\n        </paymentMethods>\n        <invoiceDetails>\n            <lineNumber>1</lineNumber>\n            <invoiceDetailType>1</invoiceDetailType>\n            <netValue>1000.00</netValue>\n            <vatCategory>1</vatCategory>\n            <vatAmount>240</vatAmount>\n            <discountOption>true</discountOption>\n            <withheldAmount>200.00</withheldAmount>\n            <withheldPercentCategory>2</withheldPercentCategory>\n            <stampDutyAmount>12.00</stampDutyAmount>\n            <stampDutyPercentCategory>1</stampDutyPercentCategory>\n            <feesAmount>120.00</feesAmount>\n            <feesPercentCategory>1</feesPercentCategory>\n            <otherTaxesPercentCategory>3</otherTaxesPercentCategory>\n            <otherTaxesAmount>40.00</otherTaxesAmount>\n            <deductionsAmount>200.00</deductionsAmount>\n            <lineComments>Test Comment</lineComments>\n            <incomeClassification>\n                <icls:classificationType>E3_881_001</icls:classificationType>\n                <icls:classificationCategory>category1_7</icls:classificationCategory>\n                <icls:amount>1000.00</icls:amount>\n            </incomeClassification>\n        </invoiceDetails>\n        <invoiceSummary>\n            <totalNetValue>1000.00</totalNetValue>\n            <totalVatAmount>240</totalVatAmount>\n            <totalWithheldAmount>200.00</totalWithheldAmount>\n            <totalFeesAmount>120.00</totalFeesAmount>\n            <totalStampDutyAmount>12.00</totalStampDutyAmount>\n            <totalOtherTaxesAmount>40.00</totalOtherTaxesAmount>\n            <totalDeductionsAmount>200.00</totalDeductionsAmount>\n            <totalGrossValue>1012</totalGrossValue>\n            <incomeClassification>\n                <icls:classificationType>E3_881_001</icls:classificationType>\n                <icls:classificationCategory>category1_7</icls:classificationCategory>\n                <icls:amount>1000.00</icls:amount>\n            </incomeClassification>\n        </invoiceSummary>\n    </invoice>\n</InvoicesDoc>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/invoice/issue",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"invoice",
+								"issue"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Issue Invoice B2G",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Fiscal-Header-Issuer-TaxID",
+								"value": "090000045",
+								"type": "text"
+							},
+							{
+								"key": "Fiscal-Header-Recipient-TaxID",
+								"value": "",
+								"type": "text"
+							},
+							{
+								"key": "Fiscal-Header-TimeStamp-Epoch",
+								"value": "1702035028",
+								"type": "text"
+							},
+							{
+								"key": "Fiscal-Header-Document-Type",
+								"value": "380",
+								"type": "text"
+							},
+							{
+								"key": "Fiscal-Header-Document-Value",
+								"value": "1012",
+								"type": "text"
+							},
+							{
+								"key": "Fiscal-Header-Document-Tax-Value",
+								"value": "240",
+								"type": "text"
+							},
+							{
+								"key": "Fiscal-Header-Currency",
+								"value": "EUR",
+								"type": "text"
+							},
+							{
+								"key": "Crypto-Header-Fiscal-Header-SHA256-Hash",
+								"value": "abe10abd9fb074e2655379a9a2bdea1d820bf47a6a5291b9411bf0960119b5a1",
+								"type": "text"
+							},
+							{
+								"key": "Crypto-Header-Invoice-Payload-SHA256-Hash",
+								"value": "dcb33eab3018875476f8f694f1c094b5359328270aa5b6655e00c97e09a29c7a",
+								"type": "text"
+							},
+							{
+								"key": "Crypto-Header-Signature",
+								"value": "6146333667ed51bd1e88e21eda26dcb401cbfc1c2fa765e08b8df621eebb629937737299f440af3db3a1b17c572e92fc38b030dfd972f6e88d50065fde305204",
+								"type": "text"
+							},
+							{
+								"key": "Crypto-Header-Previous-Invoice-Fiscal-Header",
+								"value": "",
+								"type": "text"
+							},
+							{
+								"key": "Settings-Authority-ID",
+								"value": "AAD",
+								"type": "text"
+							},
+							{
+								"key": "Crypto-Header-Public-Key-of-Signatory-Device",
+								"value": "8777f2474ba651020d1b857c14dd21961de777de3a28565181af0aa8b7693b88",
+								"type": "text"
+							},
+							{
+								"key": "Crypto-Header-Signature-of-Signatory-Device-Public-Key",
+								"value": "e14a17861751459b826d05a8e4f94bff74ce9cff4e641a09c6ead994a812fb723dbf2c35679a0a3b673f6ee41b155d1f38fe17c5f7b34ad8d375adf3e920c207",
+								"type": "text"
+							},
+							{
+								"key": "Settings-Is-Peppol-Required",
+								"value": "true",
+								"type": "text"
+							},
+							{
+								"key": "Settings-Document-TemplateID",
+								"value": "13",
+								"type": "text"
+							},
+							{
+								"key": "Fiscal-Header-Tax-Currency",
+								"value": "EUR",
+								"type": "text"
+							},
+							{
+								"key": "Fiscal-Header-Invoice-ID",
+								"value": "321fbd4b-a157-4c3c-ad85-faa6f79fa143",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer token",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<InvoicesDoc xmlns:icls=\"https://www.aade.gr/myDATA/incomeClassificaton/v1.0\"\n             xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n             xmlns=\"http://www.aade.gr/myDATA/invoice/v1.0\"\n             xsi:schemaLocation=\"http://www.aade.gr/myDATA/invoice/v1.0/InvoicesDoc-v0.6.xsd\">\n    <invoice>\n        <issuer>\n            <vatNumber>090000045</vatNumber>\n            <country>GR</country>\n            <branch>0</branch>\n        </issuer>\n        <counterpart>\n            <vatNumber>026883248</vatNumber>\n            <country>GR</country>\n            <branch>0</branch>\n            <name>ΕΤΑΡΕΙΑ ΑΕ</name>\n            <address>\n                <street>Βενιζέλου</street>\n                <number>3</number>\n                <postalCode>13400</postalCode>\n                <city>Αθήνα</city>\n            </address>\n        </counterpart>\n        <invoiceHeader>\n            <series>A</series>\n            <aa>20</aa>\n            <issueDate>2023-12-19</issueDate>\n            <invoiceType>1.1</invoiceType>\n            <currency>EUR</currency>\n            <dispatchDate>2023-12-14</dispatchDate>\n            <dispatchTime>17:30:00</dispatchTime>\n            <vehicleNumber>ΑΡΔ3217</vehicleNumber>\n            <movePurpose>1</movePurpose>\n        </invoiceHeader>\n        <paymentMethods>\n            <paymentMethodDetails>\n                <type>3</type>\n                <amount>1012.00</amount>\n            </paymentMethodDetails>\n        </paymentMethods>\n        <invoiceDetails>\n            <lineNumber>1</lineNumber>\n            <quantity>1</quantity>\n            <measurementUnit>1</measurementUnit>\n            <netValue>1000.00</netValue>\n            <vatCategory>1</vatCategory>\n            <vatAmount>240.00</vatAmount>\n            <discountOption>true</discountOption>\n            <withheldAmount>200.00</withheldAmount>\n            <withheldPercentCategory>2</withheldPercentCategory>\n            <stampDutyAmount>12.00</stampDutyAmount>\n            <stampDutyPercentCategory>1</stampDutyPercentCategory>\n            <feesAmount>120.00</feesAmount>\n            <feesPercentCategory>1</feesPercentCategory>\n            <otherTaxesPercentCategory>3</otherTaxesPercentCategory>\n            <otherTaxesAmount>40.00</otherTaxesAmount>\n            <deductionsAmount>200.00</deductionsAmount>\n            <itemCPV>03.1234567</itemCPV>\n            <lineComments>Test Comment</lineComments>\n            <incomeClassification>\n                <icls:classificationType>E3_561_001</icls:classificationType>\n                <icls:classificationCategory>category1_1</icls:classificationCategory>\n                <icls:amount>1000.00</icls:amount>\n            </incomeClassification>\n        </invoiceDetails>\n        <b2g-peppol>\n            <projectReference>111/1123</projectReference>\n            <contractReference>0</contractReference>\n            <assignReference>1000.E00961.0001</assignReference>\n            <deliveryParty>ΓΕΝΙΚΗ ΔΙΕΥΘΥΝΣΗ</deliveryParty>\n        </b2g-peppol>\n        <invoiceSummary>\n            <totalNetValue>1000.00</totalNetValue>\n            <totalVatAmount>240.00</totalVatAmount>\n            <totalWithheldAmount>200.00</totalWithheldAmount>\n            <totalFeesAmount>120.00</totalFeesAmount>\n            <totalStampDutyAmount>12.00</totalStampDutyAmount>\n            <totalOtherTaxesAmount>40.00</totalOtherTaxesAmount>\n            <totalDeductionsAmount>200.00</totalDeductionsAmount>\n            <totalGrossValue>1012.00</totalGrossValue>\n            <incomeClassification>\n                <icls:classificationType>E3_561_001</icls:classificationType>\n                <icls:classificationCategory>category1_1</icls:classificationCategory>\n                <icls:amount>1000.00</icls:amount>\n            </incomeClassification>\n        </invoiceSummary>\n    </invoice>\n</InvoicesDoc>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/invoice/issue",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"invoice",
+								"issue"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Invoice By InvoiceUId",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": ""
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/invoice/public/:uid",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"invoice",
+								"public",
+								":uid"
+							],
+							"variable": [
+								{
+									"key": "uid",
+									"value": "4A296448ED2DE85845B8E42E1D10BB1029F1AAA2"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": ""
+									}
+								],
+								"url": {
+									"raw": "{{api_url}}/invoice/public/:uid",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"invoice",
+										"public",
+										":uid"
+									],
+									"variable": [
+										{
+											"key": "uid",
+											"value": "33B8EE42ABF40C9C6DD482278DF0D332235106B3"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "735"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 12 Sep 2024 06:42:38 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=72"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"a18aedd8-7595-470b-b4b9-76547463716d\",\n    \"documentHash\": \"db1e3b2b99fbbbf315236ed0abfa5694694cf2a09d42f35571399193673fa44e\",\n    \"preDocumentHash\": \"PreviousHash\",\n    \"documentType\": 380,\n    \"aadeDocumentType\": \"1.1\",\n    \"documentTotal\": \"309\",\n    \"documentTax\": \"15.42\",\n    \"documentCurrency\": \"EUR\",\n    \"documentTaxCurrency\": \"EUR\",\n    \"signingAt\": \"2024-08-22T07:46:26.644Z\",\n    \"invoiceUrl\": null,\n    \"series\": \"0\",\n    \"aa\": \"75686\",\n    \"branch\": \"0\",\n    \"isB2g\": true,\n    \"peppolId\": \"979708945|22/08/2024|0|1.1|0|75686\",\n    \"peppolMsgStatus\": \"AB\",\n    \"peppolReasonCode\": \"OK\",\n    \"createdAt\": \"2024-08-22T03:46:27.665Z\",\n    \"updatedAt\": \"2024-08-22T03:46:27.665Z\",\n    \"invoiceUid\": \"33B8EE42ABF40C9C6DD482278DF0D332235106B3\",\n    \"invoiceMark\": \"400001932811698\",\n    \"authenticationCode\": \"FE239BB5783BF184882981035B5F6EEA2980532C\"\n}"
+						},
+						{
+							"name": "400 Bad Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": ""
+									}
+								],
+								"url": {
+									"raw": "{{api_url}}/invoice/public/:uid",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"invoice",
+										"public",
+										":uid"
+									],
+									"variable": [
+										{
+											"key": "uid",
+											"value": "4A296448ED2DE85845B8E42E1D10BB1029F1AAA2"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "185"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 12 Sep 2024 06:39:45 GMT"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 google"
+								},
+								{
+									"key": "Alt-Svc",
+									"value": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 400,\n    \"timestamp\": \"2024-09-12T06:39:45.842Z\",\n    \"path\": \"/invoice/public/4A296448ED2DE85845B8E42E1D10BB1029F1AAA2\",\n    \"message\": \"Invalid Invoice Id\",\n    \"details\": \"Invalid Invoice Id\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Check Status Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/pending-documents/:docId/status",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"pending-documents",
+								":docId",
+								"status"
+							],
+							"variable": [
+								{
+									"key": "docId",
+									"value": "01f68b2f-7af3-43ba-b4ba-8e66fd1c3c37"
+								}
+							]
+						},
+						"description": "### GET /pending-documents/:docId/status\n\nThis endpoint retrieves the status of a pending document identified by the provided document ID.\n\n#### Request\n\nNo request body parameters are required for this request.\n\n- `docId` (path parameter) - The ID of the pending document for which the status is to be retrieved.\n    \n\n#### Response\n\nThe response is in the form of an XML document with the following structure:\n\n``` json\n{\n    \"ResponseDoc\": {\n        \"response\": {\n            \"index\": \"\",\n            \"invoiceUid\": \"\",\n            \"invoiceMark\": \"\",\n            \"authenticationCode\": \"\",\n            \"statusCode\": \"\",\n            \"qrUrl\": \"\"\n        }\n    }\n}\n\n ```\n\nThe response can also include additional attributes within the \"ResponseDoc\" and \"response\" objects, such as \"xmlns:xsd\" and \"xmlns:xsi\".\n\n#### JSON Schema\n\n``` json\n{\n    \"type\": \"object\",\n    \"properties\": {\n        \"ResponseDoc\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"response\": {\n                    \"type\": \"object\",\n                    \"properties\": {\n                        \"index\": {\"type\": \"string\"},\n                        \"invoiceUid\": {\"type\": \"string\"},\n                        \"invoiceMark\": {\"type\": \"string\"},\n                        \"authenticationCode\": {\"type\": \"string\"},\n                        \"statusCode\": {\"type\": \"string\"},\n                        \"qrUrl\": {\"type\": \"string\"}\n                    }\n                }\n            }\n        }\n    }\n}\n\n ```"
+					},
+					"response": [
+						{
+							"name": "200: Incorrect Id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}/pending-documents/:docId/status",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"pending-documents",
+										":docId",
+										"status"
+									],
+									"variable": [
+										{
+											"key": "docId",
+											"value": "123"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "xml",
+							"header": [
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/xml"
+								},
+								{
+									"key": "content-length",
+									"value": "378"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Sep 2024 11:53:10 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=72"
+								}
+							],
+							"cookie": [],
+							"body": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<ResponseDoc xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n    <response>\n        <statusCode>Not found</statusCode>\n        <errors>\n            <error>\n                <extRefId>123</extRefId>\n                <message>Id not found</message>\n            </error>\n        </errors>\n    </response>\n</ResponseDoc>"
+						},
+						{
+							"name": "200 Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}/pending-documents/:docId/status",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"pending-documents",
+										":docId",
+										"status"
+									],
+									"variable": [
+										{
+											"key": "docId",
+											"value": "01f68b2f-7af3-43ba-b4ba-8e66fd1c3c37"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "xml",
+							"header": [
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "content-type",
+									"value": "application/xml"
+								},
+								{
+									"key": "content-length",
+									"value": "467"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Sep 2024 11:54:00 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=72"
+								}
+							],
+							"cookie": [],
+							"body": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<ResponseDoc>\n    <response>\n        <index>1</index>\n        <invoiceUid>945A203B069E66C300682384DA5B49DA1CD72EE9</invoiceUid>\n        <invoiceMark>400001926743685</invoiceMark>\n        <authenticationCode>B1A215CF2018F9EA98F4AF736E42BA7ACF839456</authenticationCode>\n        <statusCode>Success</statusCode>\n        <qrUrl>https://onesign.onesys.gr/invoices/945A203B069E66C300682384DA5B49DA1CD72EE9</qrUrl>\n    </response>\n</ResponseDoc>"
+						}
+					]
+				}
+			]
+		}
+	]
+}
