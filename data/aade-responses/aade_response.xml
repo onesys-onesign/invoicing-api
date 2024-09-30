@@ -6,6 +6,6 @@
     <invoiceMark>400001922215397</invoiceMark>
     <authenticationCode>BE5884DD5550DA989780191B79E3FAF6D661D82D</authenticationCode>
     <statusCode>Success</statusCode>
-    <qrUrl>https://onesign.onesys.gr/invoices/ca06f967-cc01-49ca-aa64-a7dacfc21813</qrUrl>
+    <qrUrl>https://onesign.onesys.gr/invoice/ca06f967-cc01-49ca-aa64-a7dacfc21813</qrUrl>
   </response>
 </ResponseDoc>

@@ -65,7 +65,7 @@
         </invoiceDetails>
         <b2g-peppol>
             <projectReference>111/1123</projectReference>
-            <contractReference>SSS/SSS</contractReference>
+            <contractReference>0</contractReference>
             <assignReference>1000.E00961.0001</assignReference>
             <deliveryParty>ΓΕΝΙΚΗ ΔΙΕΥΘΥΝΣΗ</deliveryParty>
         </b2g-peppol>

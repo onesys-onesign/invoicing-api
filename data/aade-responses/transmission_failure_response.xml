@@ -6,7 +6,7 @@
     <invoiceMark/>
     <authenticationCode/>
     <statusCode>Transmission Failure</statusCode>
-    <qrUrl>https://onesign.onesys.gr/invoices/ca06f967-cc01-49ca-aa64-a7dacfc21813</qrUrl>
+    <qrUrl>https://onesign.onesys.gr/invoice/ca06f967-cc01-49ca-aa64-a7dacfc21813</qrUrl>
     <extRefId>8c1c1f6d-78cf-47f3-a224-8b1be1b1185a</extRefId>
   </response>
 </ResponseDoc>
