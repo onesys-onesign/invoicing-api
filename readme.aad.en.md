@@ -1,4 +1,4 @@
-# OXINUS REST API Electronic Invoicing 1.5.1
+# ONESIGN REST API Electronic Invoicing 1.5.1
 
 ## Version History
 
@@ -17,7 +17,7 @@
 
 ## Introduction
 
-Welcome to the e-invoicing API, a REST API designed for managing functions related to electronic invoicing by OXINUS
+Welcome to the e-invoicing API, a REST API designed for managing functions related to electronic invoicing by ONESIGN
 and submission through a provider to AADE, and subsequently to KED (GGPS) if required.
 This document provides details on how to interact with the API, including HTTP headers, request and response structures,
 as well as cryptographic certification.
@@ -437,14 +437,14 @@ In the case of a successful document submission, you will receive a response con
 
 ### Transmission Failure 2 (AADE Down Scenario)
 
-Depending on the business settings, Oxinus handles this scenario differently.
+Depending on the business settings, ONESIGN handles this scenario differently.
 
-#### Scenario 1 - Oxinus re-submits the document to AADE
+#### Scenario 1 - ONESIGN re-submits the document to AADE
 
 In this scenario, in the case of an unsuccessful document submission from the Provider to AADE, provided that the invoice is valid, you
 will receive similar success response containing the same fields as the successful response (empty), with the addition
 of the following field:
-- **extRefId (Unique Oxinus Reference Id)**
+- **extRefId (Unique ONESIGN Reference Id)**
 
 Additionaly, the statusCode will be "Transmission Failure"
 
@@ -466,12 +466,12 @@ The following is a sample response
 ```
 
 Using the returned external reference, extRefId, you can query the status of the document, whether is was submitted at a
-later stage. Oxinus will retry indefinitely the submission to AADE and eventually the document will receive the required
+later stage. ONESIGN will retry indefinitely the submission to AADE and eventually the document will receive the required
 values (MARK, AUTH, UID).
 
-#### Scenario 2 - Customer re-submits the document to Oxinus
+#### Scenario 2 - Customer re-submits the document to ONESIGN
 
-In this scenario, on un-successful document submission from the Provider to AADE, Oxinus will not re-submit the document to AADE. Oxinus
+In this scenario, on un-successful document submission from the Provider to AADE, ONESIGN will not re-submit the document to AADE. ONESIGN
 will return a response as below, and the customer is responsible for re-submitting the document.
 
 The following is a sample response

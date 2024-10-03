@@ -1,4 +1,4 @@
-# OXINUS envoice API Documentation 1.5.1
+# OneSys - ONESIGN API Documentation 1.5.1
 
 ## Version History
 
@@ -17,10 +17,10 @@
 
 ## Supported Schemas
 
-The OXINUS Invoicing API supports the following schemas for invoice payloads:
+The ONESIGN Invoicing API supports the following schemas for invoice payloads:
 
-1. **Oxinus Schema**
-    - Description: Schema for invoicing using OXINUS envoicing solution
+1. **ONESIGN Schema**
+    - Description: Schema for invoicing using ONESIGN envoicing solution
     - TBD
 
 2. **GREECE AADE Schema**

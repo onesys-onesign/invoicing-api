@@ -1,4 +1,4 @@
-# OXINUS REST API Ηλεκτρονικής Τιμολόγησης 1.5.1
+# ONESIGN REST API Ηλεκτρονικής Τιμολόγησης 1.5.1
 
 ## Αριθμός έκδοσης
 
@@ -18,7 +18,7 @@
 ## Εισαγωγή
 
 Καλώς ήρθατε στο e-invoicing API, ένα REST API σχεδιασμένο για τη διαχείριση λειτουργιών που σχετίζονται με την 
-ηλεκτρονική τιμολόγηση της OXINUS και την υποβολή μέσω παρόχου προς την ΑΑΔΕ και στη συνέχεια προς το ΚΕΔ (ΓΓΠΣ) εφόσον αυτό απαιτείται. 
+ηλεκτρονική τιμολόγηση της ONESIGN και την υποβολή μέσω παρόχου προς την ΑΑΔΕ και στη συνέχεια προς το ΚΕΔ (ΓΓΠΣ) εφόσον αυτό απαιτείται. 
 Αυτό το έγγραφο παρέχει λεπτομέρειες σχετικά με τον τρόπο αλληλεπίδρασης με το API, συμπεριλαμβανομένων των HTTP 
 κεφαλίδων, δομών αιτήσεων και απαντήσεων, καθώς και της κρυπτογραφικής πιστοποίησης.
 
@@ -27,7 +27,7 @@
 Το δοκιμαστικό περιβάλλον, για όλες τις κλήσεις του API είναι:
 
 ```
-https://api.invoicing.oxinus.net/
+https://onesign-api.onesys.gr/
 ```
 
 ## Αυθεντικοποίηση (Authentication)
@@ -152,7 +152,7 @@ signing-devices στην εφαρμογή, από όπου θα ληφθεί η 
 Εναλλακτικά, μπορεί να γίνει μέσω curl χρησιμοποιώντας την παρακάτω εντολή, αντικαθιστώντας τα απαραίτητα πεδία.
 
 ```shell
-curl --location 'https://api.invoicing.oxinus.net/signing-devices' \
+curl --location 'https://onesign-api.onesys.gr/signing-devices' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer eyJhbGciOiJUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc2YjM1ZDdlLWVkODQtNGI0ZS1hODhiLWQ2Y2RlOWRiY2Q3YiIsImZpcnN0TmFtZSI6Ik94aW51cyIsImxhc3ROYW1lIjoiSG9sZGluZ3MiLCJlbWFpbCI6InNwQG94aW51cy5ob2xkaW5ncyIsImFjY2Vzc1R5cGUiOiJqd3QiLCJpYXQiOjE3MDI4Nzg3MTB9.ZLZGFse5RJMFkgziYs-nH8qYTveztOzmhApbXN0poPA' \
 --data '{
@@ -161,10 +161,8 @@ curl --location 'https://api.invoicing.oxinus.net/signing-devices' \
     "deviceSerial": "98594583434",
     "devicePublicKey": "0e6c1b121a9ce7f593fb6f1a3794090885a93de2812fafaf6b6f5c0867477f4",
     "devicePublicKeySignature": "b926537302ebcacb367a2e4bf608a2c7751322fd835915a640b95ffa37208775d6b5d56d6c1f01b2df7f20b4fd31749cce8f6c950b10f202d09cc331664ef07",
-    "networkTxnId": "123243323",
-    "country": "GR",
     "authority": "AAD",
-    "entity": 1
+    "businessId": "<VAT_WITHOUT_EL>"
 }'
 ```
 
@@ -172,8 +170,9 @@ curl --location 'https://api.invoicing.oxinus.net/signing-devices' \
 Παραστατικό το οποίο έχει υποβληθεί επιτυχώς, μπορεί να γίνει λήφη, χρησιμοποιοώντας τον κωδικού UID ο οποίος περιλαμβάνεται στην απάντηση (response) κατά την υποβολή του.
 
 ```shell
-curl --location 'https://api.invoicing.oxinus.net/invoice/DC9555A9F4786C0605698D7DA5EDED4EBCB87A73' \
---header 'Authorization: Bearer eyJhbGciOJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImtqZG5nZTg0NTQwOTgiLCJmaXJzdE5hbWUiOiJSaWNreSIsImxhc3ROYW1lIjoiTWFydGluIiwiZW1haWwiOiJtLnNpZGRpcXVpQG94aW51cy5pbyIsImFwaUtleSI6ImhoaGpqamRkZGtrayIsInNlY3JldCI6InNlY3JldCIsImFjY2Vzc1R5cGUiOiJTMlMiLCJjcmVhdGVkQXQiOiIyMDIzLTEyLTE0VDA3OjA3OjE0LjgzMloiLCJ1cGRhdGVkQXQiOiIyMDIzLTEyLTE0VDA3OjA3OjE0LjgzMloiLCJpYXQiOjE3MDI1NDE3OTZ9.a3XfDBcXVJ5mZFkKR7u5Er_zT9L06SaIUzi9biYD6gU'
+curl --location --request DELETE 'https://onesign-api.onesys.gr/signing-devices/:businessId/:deviceId' \
+--header 'Authorization: Bearer eyJhbGciiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImtqZG5nZTg0NTQwOTgiLCJmaXJzdE5hbWUiOiJSaWNreSIsImxhc3ROYW1lIjoiTWFydGluIiwiZW1haWwiOiJtLnNpZGRpcXVpQG94aW51cy5pbyIsImFwaUtleSI6ImhoaGpqamRkZGtrayIsInNlY3JldCI6InNlY3JldCIsImFjY2Vzc1R5cGUiOiJTMlMiLCJjcmVhdGVkQXQiOiIyMDIzLTEyLTE0VDA3OjA3OjE0LjgzMloiLCJ1cGRhdGVkQXQiOiIyMDIzLTEyLTE0VDA3OjA3OjE0LjgzMloiLCJpYXQiOjE3MDI1NDE3OTZ9.a3XfDBcXVJ5mZFkKR7u5Er_zT9L06SaIUzi9biYD6gU' \
+--data ''
 ```
 
 ### Κεφαλίδες Αίτησης:
@@ -423,14 +422,14 @@ element invoiceDetails.
 
 ### Transmission Failure (Αδυναμία Σύνδεσης με ΑΑΔΕ)
 
-Ανάλογα με τις επιχειρησιακές ρυθμίσεις, η Oxinus αντιμετωπίζει διαφορετικά την αδυναμία με δύο σενάρια.
+Ανάλογα με τις επιχειρησιακές ρυθμίσεις, η ONESIGN αντιμετωπίζει διαφορετικά την αδυναμία με δύο σενάρια.
 
-#### Σενάριο 1, Διαχείριση Επαναυποβολής από OXINUS
+#### Σενάριο 1, Διαχείριση Επαναυποβολής από ONESIGN
 
 Σε περίπτωση αποτυχίας διασύνδεσης με ΑΑΔΕ, και εφόσον το παραστατικό είναι έγκυρο, θα ληφθεί παρόμοια απάντηση από το 
 σύστημα η οποία θα περιέχει κενά τα πεδία ΜΑΡΚ, AUTH και UID, με την προσθήκη ενός νέου πεδίου:
 
-- **extRefId (Μοναδικός κωδικός Oxinus, Reference Id Υποβολής)**
+- **extRefId (Μοναδικός κωδικός ONESIGN, Reference Id Υποβολής)**
 
 Επιπρόσθετα, το πεδίο statusCode θα έχει την τιμή "Transmission Failure"
 
@@ -452,12 +451,12 @@ element invoiceDetails.
 ```
 
 Με την χρήση του εν λόγω κωδικού αναφοράς, extRefId, μπορεί να αναζητηθεί το status του παραστατικού αν έχει ολοκληρωθεί 
-η αποστολή στην ΑΑΔΕ. Η Oxinus θα δοκιμάζει την υποβολή του μέχρι τη λήψη απάντησης από την ΑΑΔΕ οπότε και το παραστατικό
+η αποστολή στην ΑΑΔΕ. Η ONESIGN θα δοκιμάζει την υποβολή του μέχρι τη λήψη απάντησης από την ΑΑΔΕ οπότε και το παραστατικό
 θα αποκτήσει τιμές (MARK, AUTH, UID).
 
 #### Σενάριο 2, ο Πελάτης διαχειρίζεται την επαναυποβολή
 
-Σε περίπτωση αποτυχίας διασύνδεσης με ΑΑΔΕ όπου το παραστατικό είναι έγκυρο, η Oxinus δεν ξαναδοκιμάζει την υποβολή του
+Σε περίπτωση αποτυχίας διασύνδεσης με ΑΑΔΕ όπου το παραστατικό είναι έγκυρο, η ONESIGN δεν ξαναδοκιμάζει την υποβολή του
 παραστατικού προς την ΑΑΔΕ, αλλά επιστρέφει σχετικό μήνυμα λάθους και ο πελάτης είναι αρμόδιος για την επαναυποβολή του.
 
 Στην περίπτωση αυτή, επιστρέφεται το παρακάτω δείγμα 
@@ -480,7 +479,7 @@ element invoiceDetails.
 #### Ελεγχος Κατάστασης Παραστατικού (Status Request)
 Για να ελέγξετε το status υποβολής παραστατικού που έχει αδυναμία σύνδεσης, χρησιμοποιείτε το παρακάτω αίτημα:
 ```http
-GET https://api.invoicing.oxinus.net/pending-documents/:extRefId/status
+GET https://onesign-api.onesys.gr/pending-documents/:extRefId/status
 ```
 
 Σε περίπτωση επιτυχίας θα λάβετε το παρακάτω απαντητικό:
