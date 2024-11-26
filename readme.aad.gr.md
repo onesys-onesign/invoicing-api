@@ -320,16 +320,16 @@ To οικονομικό τμήμα του Header περιλαμβάνει τις
 To σώμα του αιτήματος (request body) θα πρέπει να περιέχει τον μορφότυπο XML της ΑΑΔΕ, όπως αυτή έχει διαμορφωθεί με την 
 τελευταία έκδοση των προδιαγραφών.
 
-***Τρέχουσες προδιαγραφές 1.0.7***
+***Τρέχουσες προδιαγραφές 1.0.9***
 
 Οι σχετικές προδιαγραφές βρίσκονται στον ακόλουθο σύνδεσμο (διασύνδεση μέσω Παρόχου).
 
-[myDATA API Documentation_Providers_v1.0.7_official.pdf]
+[myDATA API Documentation_Providers_v1.0.9_official.pdf]
 
 Οι σχετικές αναφορές που αναγράφονται στις προδιαγραφές του Παρόχου, παραπέμπουν στις προδιαγραφές ERP οι οποίες 
 βρίσκονται στον ακόλουθο σύνδεσμο (διασύνδεση ERP).
 
-[myDATA API Documentation_v1.0.7_official_ERP.pdf]
+[myDATA API Documentation_v1.0.9_official_ERP.pdf]
 
 #### Τμήμα κλήσης για PEPPOL (B2G)
 Σε περίπτωση που το τιμολόγιο αφορά παραστατικό B2G το οποίο απαιτείται να δρομολογηθεί μέσω δικτύου PEPPOL, θα πρέπει 
@@ -646,8 +646,8 @@ GET https://onesign-api.onesys.gr/pending-documents/:extRefId/status
 
 
 
-[myDATA API Documentation_Providers_v1.0.7_official.pdf]: https://www.aade.gr/sites/default/files/2023-10/myDATA%20API%20Documentation_Providers_v1%200%207_official.pdf
-[myDATA API Documentation_v1.0.7_official_ERP.pdf]: https://www.aade.gr/sites/default/files/2023-10/myDATA%20API%20Documentation%20v1.0.7_official_erp.pdf
+[myDATA API Documentation_Providers_v1.0.9_official.pdf]: https://www.aade.gr/sites/default/files/2024-10/ENG_myDATA%20API%20Providers_v1%200%209_official.pdf
+[myDATA API Documentation_v1.0.9_official_ERP.pdf]: https://www.aade.gr/sites/default/files/2024-10/ENG_myDATA%20API%20Documentation%20v1.0.9_official_erp.pdf
 [EdDSA and Ed25519]: https://cryptobook.nakov.com/digital-signatures/eddsa-and-ed25519
 [Key-based authentication in OpenSSH for Windows]: https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_keymanagement
 [How To Generate ed25519 SSH Key]: https://www.unixtutorial.org/how-to-generate-ed25519-ssh-key/

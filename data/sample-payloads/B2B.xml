@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<InvoicesDoc xmlns:icls="https://www.aade.gr/myDATA/incomeClassificaton/v1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.aade.gr/myDATA/invoice/v1.0">
+    <invoice>
+        <issuer>
+            <vatNumber>090000045</vatNumber>
+            <country>GR</country>
+            <branch>0</branch>
+        </issuer>
+        <counterpart>
+            <vatNumber>979708945</vatNumber>
+            <country>ES</country>
+            <branch>0</branch>
+        </counterpart>
+        <invoiceHeader>
+            <series>A</series>
+            <aa>45</aa>
+            <issueDate>2024-08-02</issueDate>
+            <invoiceType>1.1</invoiceType>
+            <currency>EUR</currency>
+        </invoiceHeader>
+        <paymentMethods>
+            <paymentMethodDetails>
+                <type>5</type>
+                <amount>700</amount>
+            </paymentMethodDetails>
+        </paymentMethods>
+        <invoiceDetails>
+            <lineNumber>1</lineNumber>
+            <quantity>1</quantity>
+            <measurementUnit>1</measurementUnit>
+            <netValue>564.52</netValue>
+            <vatCategory>1</vatCategory>
+            <vatAmount>135.48</vatAmount>
+            <lineComments>Consulting Fee</lineComments>
+            <incomeClassification>
+                <icls:classificationType>E3_561_001</icls:classificationType>
+                <icls:classificationCategory>category1_3</icls:classificationCategory>
+                <icls:amount>564.52</icls:amount>
+            </incomeClassification>
+        </invoiceDetails>
+        <invoiceSummary>
+            <totalNetValue>564.52</totalNetValue>
+            <totalVatAmount>135.48</totalVatAmount>
+            <totalWithheldAmount>0.00</totalWithheldAmount>
+            <totalFeesAmount>0.00</totalFeesAmount>
+            <totalStampDutyAmount>0.00</totalStampDutyAmount>
+            <totalOtherTaxesAmount>0.00</totalOtherTaxesAmount>
+            <totalDeductionsAmount>0.00</totalDeductionsAmount>
+            <totalGrossValue>700.00</totalGrossValue>
+            <incomeClassification>
+                <icls:classificationType>E3_561_001</icls:classificationType>
+                <icls:classificationCategory>category1_3</icls:classificationCategory>
+                <icls:amount>564.52</icls:amount>
+            </incomeClassification>
+        </invoiceSummary>
+    </invoice>
+</InvoicesDoc>
