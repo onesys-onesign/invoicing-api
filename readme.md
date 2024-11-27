@@ -16,6 +16,7 @@
 | 1.5.2   | 2024-09-11 | Added commands to extract raw keys, and some API updates, updated postman collection |
 | 1.5.3   | 2024-11-26 | Updated the AADE doc links, added sample B2B and B2C XML requests                    |
 | 1.5.4   | 2024-11-27 | Added the supported measurement units                                                |  
+| 1.5.5   | 2024-11-27 | Added soft rejection resubmit header                                                 |
 
 
 ## Supported Schemas
