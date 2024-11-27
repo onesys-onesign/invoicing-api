@@ -1,88 +1,233 @@
-<?xml version="1.0" encoding="utf-8"?>
-<InvoicesDoc xmlns:icls="https://www.aade.gr/myDATA/incomeClassificaton/v1.0"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xmlns="http://www.aade.gr/myDATA/invoice/v1.0"
-             xsi:schemaLocation="http://www.aade.gr/myDATA/invoice/v1.0/InvoicesDoc-v0.6.xsd">
-    <invoice>
-        <issuer>
-            <vatNumber>090000045</vatNumber>
-            <country>GR</country>
-            <branch>0</branch>
-        </issuer>
-        <counterpart>
-            <vatNumber>026883248</vatNumber>
-            <country>GR</country>
-            <branch>0</branch>
-            <name>ΕΤΑΡΕΙΑ ΑΕ</name>
-            <address>
-                <street>Βενιζέλου</street>
-                <number>3</number>
-                <postalCode>13400</postalCode>
-                <city>Αθήνα</city>
-            </address>
-        </counterpart>
-        <invoiceHeader>
-            <series>A</series>
-            <aa>20</aa>
-            <issueDate>2023-12-19</issueDate>
-            <invoiceType>1.1</invoiceType>
-            <currency>EUR</currency>
-            <dispatchDate>2023-12-14</dispatchDate>
-            <dispatchTime>17:30:00</dispatchTime>
-            <vehicleNumber>ΑΡΔ3217</vehicleNumber>
-            <movePurpose>1</movePurpose>
-        </invoiceHeader>
-        <paymentMethods>
-            <paymentMethodDetails>
-                <type>3</type>
-                <amount>1012.00</amount>
-            </paymentMethodDetails>
-        </paymentMethods>
-        <invoiceDetails>
-            <lineNumber>1</lineNumber>
-            <quantity>1</quantity>
-            <measurementUnit>1</measurementUnit>
-            <netValue>1000.00</netValue>
-            <vatCategory>1</vatCategory>
-            <vatAmount>240.00</vatAmount>
-            <discountOption>true</discountOption>
-            <withheldAmount>200.00</withheldAmount>
-            <withheldPercentCategory>2</withheldPercentCategory>
-            <stampDutyAmount>12.00</stampDutyAmount>
-            <stampDutyPercentCategory>1</stampDutyPercentCategory>
-            <feesAmount>120.00</feesAmount>
-            <feesPercentCategory>1</feesPercentCategory>
-            <otherTaxesPercentCategory>3</otherTaxesPercentCategory>
-            <otherTaxesAmount>40.00</otherTaxesAmount>
-            <deductionsAmount>200.00</deductionsAmount>
-            <itemCPV>03.1234567</itemCPV>
-            <lineComments>Test Comment</lineComments>
-            <incomeClassification>
-                <icls:classificationType>E3_561_001</icls:classificationType>
-                <icls:classificationCategory>category1_1</icls:classificationCategory>
-                <icls:amount>1000.00</icls:amount>
-            </incomeClassification>
-        </invoiceDetails>
-        <b2g-peppol>
-            <projectReference>111/1123</projectReference>
-            <contractReference>0</contractReference>
-            <assignReference>1000.E00961.0001</assignReference>
-            <deliveryParty>ΓΕΝΙΚΗ ΔΙΕΥΘΥΝΣΗ</deliveryParty>
-        </b2g-peppol>
-        <invoiceSummary>
-            <totalNetValue>1000.00</totalNetValue>
-            <totalVatAmount>240.00</totalVatAmount>
-            <totalWithheldAmount>200.00</totalWithheldAmount>
-            <totalFeesAmount>120.00</totalFeesAmount>
-            <totalStampDutyAmount>12.00</totalStampDutyAmount>
-            <totalOtherTaxesAmount>40.00</totalOtherTaxesAmount>
-            <totalDeductionsAmount>200.00</totalDeductionsAmount>
-            <totalGrossValue>1012.00</totalGrossValue>
-            <incomeClassification>
-                <icls:classificationType>E3_561_001</icls:classificationType>
-                <icls:classificationCategory>category1_1</icls:classificationCategory>
-                <icls:amount>1000.00</icls:amount>
-            </incomeClassification>
-        </invoiceSummary>
-    </invoice>
-</InvoicesDoc>
+<ns31:InvoicesDoc xmlns:ns31="http://www.aade.gr/myDATA/invoice/v1.0">
+    <ns31:invoice>
+        <ns31:issuer>
+            <ns31:vatNumber>979708945</ns31:vatNumber>
+            <ns31:country>GR</ns31:country>
+            <ns31:branch>0</ns31:branch>
+        </ns31:issuer>
+        <ns31:counterpart>
+            <ns31:vatNumber>996797093</ns31:vatNumber>
+            <ns31:country>GR</ns31:country>
+            <ns31:branch>0</ns31:branch>
+            <ns31:name>Test Name</ns31:name>
+            <ns31:address>
+                <ns31:street>Test Street</ns31:street>
+                <ns31:postalCode>47200</ns31:postalCode>
+                <ns31:city>Test City</ns31:city>
+            </ns31:address>
+        </ns31:counterpart>
+        <ns31:invoiceHeader>
+            <ns31:series>0</ns31:series>
+            <ns31:aa>384783</ns31:aa>
+            <ns31:issueDate>2024-11-27</ns31:issueDate>
+            <ns31:invoiceType>1.1</ns31:invoiceType>
+            <ns31:currency>EUR</ns31:currency>
+        </ns31:invoiceHeader>
+        <ns31:paymentMethods>
+            <ns31:paymentMethodDetails>
+                <ns31:type>5</ns31:type>
+                <ns31:amount>309.00</ns31:amount>
+            </ns31:paymentMethodDetails>
+        </ns31:paymentMethods>
+        <ns31:invoiceDetails>
+            <ns31:lineNumber>1</ns31:lineNumber>
+            <ns31:quantity>1</ns31:quantity>
+            <ns31:itemUnitPrice />
+            <ns31:measurementUnit>115</ns31:measurementUnit>
+            <ns31:netValue>0.56</ns31:netValue>
+            <ns31:vatCategory>3</ns31:vatCategory>
+            <ns31:vatAmount>0.03</ns31:vatAmount>
+            <ns31:itemCPV>71314000-2</ns31:itemCPV>
+            <ns31:lineComments>Item 1</ns31:lineComments>
+            <ns31:incomeClassification>
+                <ns30:classificationType xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">E3_561_001</ns30:classificationType>
+                <ns30:classificationCategory xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">category1_2</ns30:classificationCategory>
+                <ns30:amount xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">0.56</ns30:amount>
+            </ns31:incomeClassification>
+        </ns31:invoiceDetails>
+        <ns31:invoiceDetails>
+            <ns31:lineNumber>2</ns31:lineNumber>
+            <ns31:quantity>1</ns31:quantity>
+            <ns31:itemUnitPrice />
+            <ns31:measurementUnit>115</ns31:measurementUnit>
+            <ns31:netValue>0.17</ns31:netValue>
+            <ns31:vatCategory>3</ns31:vatCategory>
+            <ns31:vatAmount>0.01</ns31:vatAmount>
+            <ns31:itemCPV>71314000-2</ns31:itemCPV>
+            <ns31:lineComments>Item 2</ns31:lineComments>
+            <ns31:incomeClassification>
+                <ns30:classificationCategory xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">category1_95</ns30:classificationCategory>
+                <ns30:amount xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">0.17</ns30:amount>
+            </ns31:incomeClassification>
+        </ns31:invoiceDetails>
+        <ns31:invoiceDetails>
+            <ns31:lineNumber>3</ns31:lineNumber>
+            <ns31:quantity>1</ns31:quantity>
+            <ns31:itemUnitPrice />
+            <ns31:measurementUnit>115</ns31:measurementUnit>
+            <ns31:netValue>21.39</ns31:netValue>
+            <ns31:vatCategory>7</ns31:vatCategory>
+            <ns31:vatAmount>0.00</ns31:vatAmount>
+            <ns31:vatExemptionCategory>27</ns31:vatExemptionCategory>
+            <ns31:itemCPV>71314000-2</ns31:itemCPV>
+            <ns31:lineComments>Item 3</ns31:lineComments>
+            <ns31:incomeClassification>
+                <ns30:classificationCategory xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">category1_95</ns30:classificationCategory>
+                <ns30:amount xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">21.39</ns30:amount>
+            </ns31:incomeClassification>
+        </ns31:invoiceDetails>
+        <ns31:invoiceDetails>
+            <ns31:lineNumber>4</ns31:lineNumber>
+            <ns31:quantity>1</ns31:quantity>
+            <ns31:itemUnitPrice />
+            <ns31:measurementUnit>115</ns31:measurementUnit>
+            <ns31:netValue>14.23</ns31:netValue>
+            <ns31:vatCategory>7</ns31:vatCategory>
+            <ns31:vatAmount>0.00</ns31:vatAmount>
+            <ns31:vatExemptionCategory>27</ns31:vatExemptionCategory>
+            <ns31:itemCPV>71314000-2</ns31:itemCPV>
+            <ns31:lineComments>Item 4</ns31:lineComments>
+            <ns31:incomeClassification>
+                <ns30:classificationCategory xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">category1_95</ns30:classificationCategory>
+                <ns30:amount xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">14.23</ns30:amount>
+            </ns31:incomeClassification>
+        </ns31:invoiceDetails>
+        <ns31:invoiceDetails>
+            <ns31:lineNumber>5</ns31:lineNumber>
+            <ns31:quantity>1</ns31:quantity>
+            <ns31:itemUnitPrice />
+            <ns31:measurementUnit>115</ns31:measurementUnit>
+            <ns31:netValue>0.28</ns31:netValue>
+            <ns31:vatCategory>3</ns31:vatCategory>
+            <ns31:vatAmount>0.02</ns31:vatAmount>
+            <ns31:itemCPV>71314000-2</ns31:itemCPV>
+            <ns31:lineComments>Item 5</ns31:lineComments>
+            <ns31:incomeClassification>
+                <ns30:classificationType xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">E3_561_001</ns30:classificationType>
+                <ns30:classificationCategory xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">category1_2</ns30:classificationCategory>
+                <ns30:amount xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">0.28</ns30:amount>
+            </ns31:incomeClassification>
+        </ns31:invoiceDetails>
+        <ns31:invoiceDetails>
+            <ns31:lineNumber>6</ns31:lineNumber>
+            <ns31:quantity>1</ns31:quantity>
+            <ns31:itemUnitPrice />
+            <ns31:measurementUnit>115</ns31:measurementUnit>
+            <ns31:netValue>210.93</ns31:netValue>
+            <ns31:vatCategory>3</ns31:vatCategory>
+            <ns31:vatAmount>12.66</ns31:vatAmount>
+            <ns31:itemCPV>71314000-2</ns31:itemCPV>
+            <ns31:lineComments>Item 6</ns31:lineComments>
+            <ns31:incomeClassification>
+                <ns30:classificationType xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">E3_561_001</ns30:classificationType>
+                <ns30:classificationCategory xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">category1_2</ns30:classificationCategory>
+                <ns30:amount xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">210.93</ns30:amount>
+            </ns31:incomeClassification>
+        </ns31:invoiceDetails>
+        <ns31:invoiceDetails>
+            <ns31:lineNumber>7</ns31:lineNumber>
+            <ns31:quantity>1</ns31:quantity>
+            <ns31:itemUnitPrice />
+            <ns31:measurementUnit>115</ns31:measurementUnit>
+            <ns31:netValue>0.60</ns31:netValue>
+            <ns31:vatCategory>3</ns31:vatCategory>
+            <ns31:vatAmount>0.04</ns31:vatAmount>
+            <ns31:itemCPV>71314000-2</ns31:itemCPV>
+            <ns31:lineComments>Item 7</ns31:lineComments>
+            <ns31:incomeClassification>
+                <ns30:classificationType xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">E3_561_001</ns30:classificationType>
+                <ns30:classificationCategory xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">category1_2</ns30:classificationCategory>
+                <ns30:amount xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">0.60</ns30:amount>
+            </ns31:incomeClassification>
+        </ns31:invoiceDetails>
+        <ns31:invoiceDetails>
+            <ns31:lineNumber>8</ns31:lineNumber>
+            <ns31:quantity>1</ns31:quantity>
+            <ns31:itemUnitPrice />
+            <ns31:measurementUnit>115</ns31:measurementUnit>
+            <ns31:netValue>1.28</ns31:netValue>
+            <ns31:vatCategory>7</ns31:vatCategory>
+            <ns31:vatAmount>0.00</ns31:vatAmount>
+            <ns31:vatExemptionCategory>27</ns31:vatExemptionCategory>
+            <ns31:itemCPV>71314000-2</ns31:itemCPV>
+            <ns31:lineComments>Item 8</ns31:lineComments>
+            <ns31:incomeClassification>
+                <ns30:classificationCategory xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">category1_95</ns30:classificationCategory>
+                <ns30:amount xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">1.28</ns30:amount>
+            </ns31:incomeClassification>
+        </ns31:invoiceDetails>
+        <ns31:invoiceDetails>
+            <ns31:lineNumber>9</ns31:lineNumber>
+            <ns31:quantity>1</ns31:quantity>
+            <ns31:itemUnitPrice />
+            <ns31:measurementUnit>115</ns31:measurementUnit>
+            <ns31:netValue>0.38-</ns31:netValue>
+            <ns31:vatCategory>7</ns31:vatCategory>
+            <ns31:vatAmount>0.00</ns31:vatAmount>
+            <ns31:vatExemptionCategory>27</ns31:vatExemptionCategory>
+            <ns31:itemCPV>71314000-2</ns31:itemCPV>
+            <ns31:lineComments>Item 9</ns31:lineComments>
+            <ns31:incomeClassification>
+                <ns30:classificationCategory xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">category1_95</ns30:classificationCategory>
+                <ns30:amount xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">0.38-</ns30:amount>
+            </ns31:incomeClassification>
+        </ns31:invoiceDetails>
+        <ns31:invoiceDetails>
+            <ns31:lineNumber>10</ns31:lineNumber>
+            <ns31:quantity>1</ns31:quantity>
+            <ns31:itemUnitPrice />
+            <ns31:measurementUnit>115</ns31:measurementUnit>
+            <ns31:netValue>45.14</ns31:netValue>
+            <ns31:vatCategory>3</ns31:vatCategory>
+            <ns31:vatAmount>2.70</ns31:vatAmount>
+            <ns31:itemCPV>71314000-2</ns31:itemCPV>
+            <ns31:lineComments>Item 10</ns31:lineComments>
+            <ns31:incomeClassification>
+                <ns30:classificationType xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">E3_561_001</ns30:classificationType>
+                <ns30:classificationCategory xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">category1_2</ns30:classificationCategory>
+                <ns30:amount xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">45.14</ns30:amount>
+            </ns31:incomeClassification>
+        </ns31:invoiceDetails>
+        <ns31:invoiceDetails>
+            <ns31:lineNumber>11</ns31:lineNumber>
+            <ns31:quantity>1</ns31:quantity>
+            <ns31:itemUnitPrice />
+            <ns31:measurementUnit>113</ns31:measurementUnit>
+            <ns31:netValue>0.62-</ns31:netValue>
+            <ns31:vatCategory>3</ns31:vatCategory>
+            <ns31:vatAmount>0.04-</ns31:vatAmount>
+            <ns31:itemCPV>71314000-2</ns31:itemCPV>
+            <ns31:lineComments>Item 11</ns31:lineComments>
+            <ns31:incomeClassification>
+                <ns30:classificationType xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">E3_561_001</ns30:classificationType>
+                <ns30:classificationCategory xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">category1_2</ns30:classificationCategory>
+                <ns30:amount xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">0.62-</ns30:amount>
+            </ns31:incomeClassification>
+        </ns31:invoiceDetails>
+        <ns31:b2g-peppol>
+            <ns31:projectReference>1|2003ΣΕ05500005</ns31:projectReference>
+            <ns31:contractReference>0</ns31:contractReference>
+            <ns31:assignReference>1055.0000000000.0001</ns31:assignReference>
+            <ns31:deliveryParty>Delivery Party</ns31:deliveryParty>
+        </ns31:b2g-peppol>
+        <ns31:invoiceSummary>
+            <ns31:totalNetValue>293.58</ns31:totalNetValue>
+            <ns31:totalVatAmount>15.42</ns31:totalVatAmount>
+            <ns31:totalWithheldAmount>0</ns31:totalWithheldAmount>
+            <ns31:totalFeesAmount>0</ns31:totalFeesAmount>
+            <ns31:totalStampDutyAmount>0</ns31:totalStampDutyAmount>
+            <ns31:totalOtherTaxesAmount>0</ns31:totalOtherTaxesAmount>
+            <ns31:totalDeductionsAmount>0</ns31:totalDeductionsAmount>
+            <ns31:totalGrossValue>309.00</ns31:totalGrossValue>
+            <ns31:incomeClassification>
+                <ns30:classificationType xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">E3_561_001</ns30:classificationType>
+                <ns30:classificationCategory xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">category1_2</ns30:classificationCategory>
+                <ns30:amount xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">256.89 </ns30:amount>
+            </ns31:incomeClassification>
+            <ns31:incomeClassification>
+                <ns30:classificationCategory xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">category1_95</ns30:classificationCategory>
+                <ns30:amount xmlns:ns30="https://www.aade.gr/myDATA/incomeClassificaton/v1.0">36.69 </ns30:amount>
+            </ns31:incomeClassification>
+        </ns31:invoiceSummary>
+    </ns31:invoice>
+</ns31:InvoicesDoc>
