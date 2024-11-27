@@ -337,7 +337,7 @@ The order of appearance is the following:
 - Mandatory: NO
 
 ##### Email
-- Description: Email Address
+- Description: Email Address of Document Recipient
 - Example Value: "info@example.com"
 - Mandatory: NO
 
