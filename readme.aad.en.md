@@ -217,7 +217,7 @@ Following is the list of supported headers that are analysed in detail.
 | Crypto-Header-Public-Key-of-Signatory-Device           | Public Key of the Signing Device (Base 64)                                                    | "MCowBQYDK3VwAyEAvR97AJTKyGNAjOYROXGk+H367Ix1kOAMNKQwpTuvOfU="                                                                     |                     
 | Crypto-Header-Signature-of-Signatory-Device-Public-Key | Signature of the Public Key of the Signing Device                                             | "E473489D6964B4D1A76811BC3A634070D64FD15830254011B9B95790118B3CCCB3BC6F789A384F2EFF1DA300C85A543A3B64EB920680BD8A70347ACD89E0C342" |
 | Source-System                                          | Source System of the document                                                                 | "SRC-100"                                                                                                                          |
-| Email                                                  | Email Address of Document Recipient                                                           | info@example.com                                                                                                                   |
+| Document-Recipient-Email                               | Email Address of Document Recipient                                                           | info@example.com                                                                                                                   |
 | Soft-Rejection-Resubmit                                | Resubmission of B2G PEPPOL document after soft rejection                                      | true                                                                                                                               |
 
 As shown in the table above, the headers required for the secure and successful submission of a document consist of
@@ -339,7 +339,7 @@ The order of appearance is the following:
 - Example Value: "SRC-100"
 - Mandatory: NO
 
-##### Email
+##### Document-Recipient-Email
 - Description: Email Address of Document Recipient
 - Example Value: "info@example.com"
 - Mandatory: NO
