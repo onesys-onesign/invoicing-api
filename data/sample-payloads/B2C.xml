@@ -16,7 +16,7 @@
         </invoiceHeader>
         <paymentMethods>
             <paymentMethodDetails>
-                <type>7</type>
+                <type>3</type>
                 <amount>2.50</amount>
             </paymentMethodDetails>
         </paymentMethods>
