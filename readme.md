@@ -13,6 +13,8 @@
 | 1.4.2   | 2024-01-16 | Updated HMAC Auth Headers |
 | 1.5.0   | 2024-02-22 | Added Transmission Failure 2, Status Request, Updated POSTMAN |
 | 1.5.1   | 2024-05-28 | Added self handling of Transmission Failure 2                  |
+| 1.5.2   | 2024-09-11 | Added commands to extract raw keys, and some API updates, updated postman collection                                              |
+| 1.5.3   | 2024-11-26 | Updated the AADE doc links, added sample B2B and B2C XML requests                                                                 |
 
 
 ## Supported Schemas

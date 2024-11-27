@@ -14,6 +14,8 @@
 | 1.5.0   | 2024-02-22 | Added Transmission Failure 2, Status Request, Updated POSTMAN                                                                     |
 | 1.5.1   | 2024-05-28 | Added self handling of Transmission Failure 2                                                                                     |
 | 1.5.2   | 2024-09-11 | Added commands to extract raw keys, and some API updates, updated postman collection                                              |
+| 1.5.3   | 2024-11-26 | Updated the AADE doc links, added sample B2B and B2C XML requests                                                                 |
+| 1.5.4   | 2024-11-27 | Added the supported measurement units                                                                                             |
 
 ## Introduction
 
@@ -192,26 +194,28 @@ curl --location 'https://onesign-api.onesys.gr/invoice/public/qrcode/:uid'
 ### Request Headers:
 Following is the list of supported headers that are analysed in detail.
 
-| Name                                             | Description (PEPPOL Identifier)                                    | Example Value                                    |
-|--------------------------------------------------|-----------------------------------------------------------------   |--------------------------------------------------|
-| Settings-Authority-ID                            | Identifier of the authority.                                       | "AAD"                                            |                                                                                                               
-| Settings-Is-Peppol-Required                      | Logical value indicating whether Peppol is required.               | true                                             |                                                                                                                      
-| Settings-Document-TemplateID                     | Identifier of the document template.                               | 1                                                |                                                                                                                           
-| Fiscal-Header-Invoice-ID                         | Identifier of the invoice.                                         | "fd4bdc10-b0f3-4f3b-beb1-14fc4f42dc2b"           |                                                                               
-| Fiscal-Header-Issuer-TaxID                       | Tax identification number of the issuer (AccountingSupplierParty.PartyTaxScheme.CompanyID) | "987654321"              |                                                                                    
-| Fiscal-Header-Recipient-TaxID                    | Tax identification number of the recipient (AccountingCustomerParty.PartyTaxScheme.CompanyID) | "123456789"           |                                                                                       
-| Fiscal-Header-TimeStamp-Epoch                    | Epoch timestamp (Invoice.IssueDate)                                | "1702140669"                                     |                                                                                                            
-| Fiscal-Header-Document-Type                      | Document type (Invoice.InvoiceTypeCode)                            | "380"                                            |                                                                                                                 
-| Fiscal-Header-Document-Value                     | Document value (Invoice.LegalMonetaryTotal.TaxInclusiveAmount)     | 1240.00                                          |                                                                                                                
-| Fiscal-Header-Document-Tax-Value                 | Document tax value (Invoice.TaxTotal.TaxAmount)                    | 240.00                                           |                                                                                                                     
-| Fiscal-Header-Currency                           | Currency (Invoice.DocumentCurrencyCode)                            | "EUR"                                            |                                                                                                            
-| Fiscal-Header-Tax-Currency                       | Tax currency (Invoice.TaxCurrencyCode)                             | "EUR"                                            |                                                                                                                
-| Crypto-Header-Fiscal-Header-SHA256-Hash          | SHA256 hash of the fiscal header.                                  | "ba2a7576612c69a3dd18da20b3c47c598afabe1c1aec9fa98a1f888daecf5a5d"                                     |                                                                
-| Crypto-Header-Invoice-Payload-SHA256-Hash        | SHA256 Hash of the invoice content.                                | "31481f96c1677e8f0e1cd81d941561824f19b344476612c69a3dd18db1a47277"                                     |                                                                  
-| Crypto-Header-Signature                          | Signature of (Fiscal Header and Invoice Payload Hash) with the Privatκό Κλειδί της Συσκευής | "0D64FD1B9B95790E473489D6964B4D1A76811BC3A63407118B3CCCB3BC6F789A384F2EF80BD8A70347ACD89E0C342F1DA300C85A5830254011543A3B64EB9206"   |            
-| Crypto-Header-Previous-Invoice-Fiscal-Header     | SHA256 hash of the previous fiscal header.                         | "aa3a677e8f0e19a3dd1876612c69a3dd18d98afa76612c69a3dd18df888daea5a"                 |                                                                                     
-| Crypto-Header-Public-Key-of-Signatory-Device     | Public Key of the Signing Device (Base 64)                         | "MCowBQYDK3VwAyEAvR97AJTKyGNAjOYROXGk+H367Ix1kOAMNKQwpTuvOfU="                                |                     
-| Crypto-Header-Signature-of-Signatory-Device-Public-Key | Signature of the Public Key of the Signing Device            | "E473489D6964B4D1A76811BC3A634070D64FD15830254011B9B95790118B3CCCB3BC6F789A384F2EFF1DA300C85A543A3B64EB920680BD8A70347ACD89E0C342"                        |               
+| Name                                                   | Description (PEPPOL Identifier)                                                               | Example Value                                                                                                                      |
+|--------------------------------------------------------|-----------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
+| Settings-Authority-ID                                  | Identifier of the authority.                                                                  | "AAD"                                                                                                                              |                                                                                                               
+| Settings-Is-Peppol-Required                            | Logical value indicating whether Peppol is required.                                          | true                                                                                                                               |                                                                                                                      
+| Settings-Document-TemplateID                           | Identifier of the document template.                                                          | 1                                                                                                                                  |                                                                                                                           
+| Fiscal-Header-Invoice-ID                               | Identifier of the invoice.                                                                    | "fd4bdc10-b0f3-4f3b-beb1-14fc4f42dc2b"                                                                                             |                                                                               
+| Fiscal-Header-Issuer-TaxID                             | Tax identification number of the issuer (AccountingSupplierParty.PartyTaxScheme.CompanyID)    | "987654321"                                                                                                                        |                                                                                    
+| Fiscal-Header-Recipient-TaxID                          | Tax identification number of the recipient (AccountingCustomerParty.PartyTaxScheme.CompanyID) | "123456789"                                                                                                                        |                                                                                       
+| Fiscal-Header-TimeStamp-Epoch                          | Epoch timestamp (Invoice.IssueDate)                                                           | "1702140669"                                                                                                                       |                                                                                                            
+| Fiscal-Header-Document-Type                            | Document type (Invoice.InvoiceTypeCode)                                                       | "380"                                                                                                                              |                                                                                                                 
+| Fiscal-Header-Document-Value                           | Document value (Invoice.LegalMonetaryTotal.TaxInclusiveAmount)                                | 1240.00                                                                                                                            |                                                                                                                
+| Fiscal-Header-Document-Tax-Value                       | Document tax value (Invoice.TaxTotal.TaxAmount)                                               | 240.00                                                                                                                             |                                                                                                                     
+| Fiscal-Header-Currency                                 | Currency (Invoice.DocumentCurrencyCode)                                                       | "EUR"                                                                                                                              |                                                                                                            
+| Fiscal-Header-Tax-Currency                             | Tax currency (Invoice.TaxCurrencyCode)                                                        | "EUR"                                                                                                                              |                                                                                                                
+| Crypto-Header-Fiscal-Header-SHA256-Hash                | SHA256 hash of the fiscal header.                                                             | "ba2a7576612c69a3dd18da20b3c47c598afabe1c1aec9fa98a1f888daecf5a5d"                                                                 |                                                                
+| Crypto-Header-Invoice-Payload-SHA256-Hash              | SHA256 Hash of the invoice content.                                                           | "31481f96c1677e8f0e1cd81d941561824f19b344476612c69a3dd18db1a47277"                                                                 |                                                                  
+| Crypto-Header-Signature                                | Signature of (Fiscal Header and Invoice Payload Hash) with the Privatκό Κλειδί της Συσκευής   | "0D64FD1B9B95790E473489D6964B4D1A76811BC3A63407118B3CCCB3BC6F789A384F2EF80BD8A70347ACD89E0C342F1DA300C85A5830254011543A3B64EB9206" |            
+| Crypto-Header-Previous-Invoice-Fiscal-Header           | SHA256 hash of the previous fiscal header.                                                    | "aa3a677e8f0e19a3dd1876612c69a3dd18d98afa76612c69a3dd18df888daea5a"                                                                |                                                                                     
+| Crypto-Header-Public-Key-of-Signatory-Device           | Public Key of the Signing Device (Base 64)                                                    | "MCowBQYDK3VwAyEAvR97AJTKyGNAjOYROXGk+H367Ix1kOAMNKQwpTuvOfU="                                                                     |                     
+| Crypto-Header-Signature-of-Signatory-Device-Public-Key | Signature of the Public Key of the Signing Device                                             | "E473489D6964B4D1A76811BC3A634070D64FD15830254011B9B95790118B3CCCB3BC6F789A384F2EFF1DA300C85A543A3B64EB920680BD8A70347ACD89E0C342" |
+| Source-System                                          | Source System of the document                                                                 | "SRC-100"                                                                                                                          |
+| Email                                                  | Email Address of Document Recipient                                                           | info@example.com                                                                                                                   |
 
 As shown in the table above, the headers required for the secure and successful submission of a document consist of
 three separate parts:
@@ -327,22 +331,32 @@ The order of appearance is the following:
 - Description: Signature that was received on registering the device.
 - Example Value: "E473489D6964B4D1A76811BC3A634070D64FD15830254011B9B95790118B3CCCB3BC6F789A384F2EFF1DA300C85A543A3B64EB920680BD8A70347ACD89E0C342"
 
+##### Source System
+- Description: Source System of the document
+- Example Value: "SRC-100"
+- Mandatory: NO
+
+##### Email
+- Description: Email Address
+- Example Value: "info@example.com"
+- Mandatory: NO
+
 
 #### Request Body (Payload)
 
 The request body should contain the XML format of AADE as it has been configured with the latest version of the
 specifications.
 
-***Current specifications 1.0.7***
+***Current specifications 1.0.9***
 
 The relevant specifications can be found in the following link (link through the Provider).
 
-[myDATA API Documentation_Providers_v1.0.7_official.pdf]
+[myDATA API Documentation_Providers_v1.0.9_official.pdf]
 
 The references mentioned in the Provider's specifications point to the ERP specifications, which are available at the
 following link (link ERP).
 
-[myDATA API Documentation_v1.0.7_official_ERP.pdf]
+[myDATA API Documentation_v1.0.9_official_ERP.pdf]
 
 
 #### Call Section for PEPPOL (B2G)
@@ -426,6 +440,39 @@ Below is a sample of the mentioned segment integrated into the XML format of AAD
     ...
 </invoice>
 ```
+
+#### Measurement Units
+
+Regarding B2G where measurement unit is a mandatory field the following Measurement Units are supported and below is the mapping of these (payload value, peppol mapped unit)
+
+| Payload Value | Peppol Mapped Unit | Peppol Unit Description |
+|---------------|--------------------|-------------------------|
+| 1             | "H87"              |                         |
+| 2             | "KGM"              |                         |
+| 3             | "LTR"              |                         |
+| 4             | "MTR"              |                         |
+| 5             | "MTK"              |                         |
+| 6             | "MTQ"              |                         |
+| 7             | "H87"              |                         |
+| 101           | "C62"              | Unit                    |
+| 102           | "KWT"              | Kilowatt                |
+| 103           | "KWH"              | Kilowatt hour           |
+| 104           | "EA"               | Each                    |
+| 105           | "HUR"              | Hour                    |
+| 106           | "XBX"              | Box                     |
+| 107           | "KGM"              | Kilogram                |
+| 108           | "LTR"              | Litre                   |
+| 109           | "MTR"              | Metre                   |
+| 110           | "MTQ"              | Cubic metre             |
+| 111           | "MAW"              | Mega watt               |
+| 112           | "MWH"              | Mega watt hour          |
+| 113           | "PR"               | Pair                    |
+| 114           | "SET"              | Set                     |
+| 115           | "H87"              | Piece                   |
+| 116           | "HUR"              | Hours                   |
+| 117           | "TNE"              | Tonne                   |
+| 118           | "M4"               | Monetary value          |
+
 
 ### Response to Request
 
@@ -659,8 +706,8 @@ HTTP Status | Error Code       | Error No | Source | Description                
 
 
 
-[myDATA API Documentation_Providers_v1.0.7_official.pdf]: https://www.aade.gr/sites/default/files/2023-10/myDATA%20API%20Documentation_Providers_v1%200%207_official.pdf
-[myDATA API Documentation_v1.0.7_official_ERP.pdf]: https://www.aade.gr/sites/default/files/2023-10/myDATA%20API%20Documentation%20v1.0.7_official_erp.pdf
+[myDATA API Documentation_Providers_v1.0.9_official.pdf]: https://www.aade.gr/sites/default/files/2024-10/ENG_myDATA%20API%20Providers_v1%200%209_official.pdf
+[myDATA API Documentation_v1.0.9_official_ERP.pdf]: https://www.aade.gr/sites/default/files/2024-10/ENG_myDATA%20API%20Documentation%20v1.0.9_official_erp.pdf
 [EdDSA and Ed25519]: https://cryptobook.nakov.com/digital-signatures/eddsa-and-ed25519
 [Key-based authentication in OpenSSH for Windows]: https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_keymanagement
 [How To Generate ed25519 SSH Key]: https://www.unixtutorial.org/how-to-generate-ed25519-ssh-key/
