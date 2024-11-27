@@ -202,7 +202,7 @@ curl --location --request DELETE 'https://onesign-api.onesys.gr/signing-devices/
 | Crypto-Header-Public-Key-of-Signatory-Device           | Δημόσιο Κλειδί της Συσκευής Υπογραφής (Base64)                                                  | "MCowBQYDK3VwAyEAvR97AJTKyGNAjOYROXGk+H367Ix1kOAMNKQwpTuvOfU="                                                                     |
 | Crypto-Header-Signature-of-Signatory-Device-Public-Key | Υπογραφή του Δημοσίου Κλειδιού της Συσκευής Υπογραφής                                           | "E473489D6964B4D1A76811BC3A634070D64FD15830254011B9B95790118B3CCCB3BC6F789A384F2EFF1DA300C85A543A3B64EB920680BD8A70347ACD89E0C342" |
 | Source-System                                          | Πηγαίο Σύστημα Παραστατικού                                                                     | "SRC-100"                                                                                                                          |
-| Email                                                  | Email Διεύθυνση Λήπτη Παραστατικού                                                              | info@example.com                                                                                                                   |
+| Document-Recipient-Email                               | Email Διεύθυνση Λήπτη Παραστατικού                                                              | info@example.com                                                                                                                   |
 | Soft-Rejection-Resubmit                                | Επαναϋποβολή παραστατικού B2G PEPPOL μετά από soft rejection                                    | true                                                                                                                               |
 
 Όπως φαίνεται στον παραπάνω πίνακα, οι κεφαλίδες που απαιτούνται για την ασφαλή και επιτυχημένη υποβολή ενός 
@@ -325,7 +325,7 @@ To οικονομικό τμήμα του Header περιλαμβάνει τις
 - Ενδεικτική Τιμή: "SRC-100"
 - Απαραίτητο: ΟΧΙ
 
-##### Email
+##### Document-Recipient-Email
 - Περιγραφή: Email Διεύθυνση Παραλήπτη
 - Ενδεικτική Τιμή: "info@example.com"
 - Απαραίτητο: ΟΧΙ
