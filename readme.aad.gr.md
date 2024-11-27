@@ -12,8 +12,10 @@
 | 1.4.1   | 2024-01-15 | Ενημέρωση του sample payload B2G με πεδία απαραίτητα για PEPPOL, counterpart.name, invoiceDetails.quantity, invoiceDetails.measurementUnit |
 | 1.4.2   | 2024-01-15 | Αλλαγή των headers HMAC Auth                                                                                                               |
 | 1.5.0   | 2024-02-22 | Προσθήκη Transmission Failure 2, Status Request, εμπλουτισμός POSTMAN                                                                      |
-| 1.5.1   | 2024-05-27 | Προσθήκη Transmission Failure 2, Ενναλακτικό Business Scenario |
-
+| 1.5.1   | 2024-05-27 | Προσθήκη Transmission Failure 2, Ενναλακτικό Business Scenario                                                                             |
+| 1.5.2   | 2024-09-11 | Προσθήκη εντολών για εξαγωγή κλειδιών, ενημέρωση API, ενημέρωση API Postman Collection                                                     |
+| 1.5.3   | 2024-11-26 | Ενημέρωση των προδιαγραφών ΑΑΔΕ  (1.0.9), προσθήκη δειγμάτων B2B και B2C XML requests                                                      |    
+| 1.5.4   | 2024-11-27 | Added the supported measurement units                                                                                                      |
 
 ## Εισαγωγή
 
@@ -178,26 +180,28 @@ curl --location --request DELETE 'https://onesign-api.onesys.gr/signing-devices/
 ### Κεφαλίδες Αίτησης:
 Παρακάτω ακολουθεί η λίστα των headers του κάθε αιτήματος και στη συνέχεια αναλύονται διεξοδικά.
 
-| Όνομα                                            | Περιγραφή (PEPPOL Identifier)                                   | Παράδειγμα Τιμής                                                  |
-|--------------------------------------------------|-----------------------------------------------------------------|--------------------------------------------------------------------|
-| Settings-Authority-ID                            | Αναγνωριστικό της αρχής.                                        | "AAD"                                                     |
-| Settings-Is-Peppol-Required                      | Λογική τιμή που υποδηλώνει εάν απαιτείται το Peppol.            | true                                               |
-| Settings-Document-TemplateID                     | Αναγνωριστικό του προτύπου έγγραφου.                            | 1                                             |
-| Fiscal-Header-Invoice-ID                         | Αναγνωριστικό τιμολογίου.                                       | "fd4bdc10-b0f3-4f3b-beb1-14fc4f42dc2b"                                                    |
-| Fiscal-Header-Issuer-TaxID                       | Κωδικός φορολογικού ταυτότητας του εκδότη (AccountingSupplierParty.PartyTaxScheme.CompanyID) | "987654321"                                             |
-| Fiscal-Header-Recipient-TaxID                    | Κωδικός φορολογικού ταυτότητας του παραλήπτη (AccountingCustomerParty.PartyTaxScheme.CompanyID) | "123456789"                                       |
-| Fiscal-Header-TimeStamp-Epoch                    | Χρονική σήμανση Epoch (Invoice.IssueDate)                       | "1702140669"                                                 |
-| Fiscal-Header-Document-Type                      | Τύπος εγγράφου (Invoice.InvoiceTypeCode)                        | "380"                                                   |
-| Fiscal-Header-Document-Value                     | Αξία εγγράφου (Invoice.LegalMonetaryTotal.TaxInclusiveAmount)   | 1240.00                                                  |
-| Fiscal-Header-Document-Tax-Value                 | Φορολογική αξία εγγράφου (Invoice.TaxTotal.TaxAmount)           | 240.00                                              |
-| Fiscal-Header-Currency                           | Νόμισμα (Invoice.DocumentCurrencyCode)                          | "EUR"                                                        |
-| Fiscal-Header-Tax-Currency                       | Φορολογικό Νόμισμα (Invoice.TaxCurrencyCode)                    | "EUR"                                                    |
-| Crypto-Header-Fiscal-Header-SHA256-Hash          | SHA256 hash της φορολογικής επικεφαλίδας                        | "ba2a7576612c69a3dd18da20b3c47c598afabe1c1aec9fa98a1f888daecf5a5d"                                       |
-| Crypto-Header-Invoice-Payload-SHA256-Hash        | SHA256 Hash του περιεχομένου του τιμολογίου                     | "31481f96c1677e8f0e1cd81d941561824f19b344476612c69a3dd18db1a47277"                                     |
-| Crypto-Header-Signature                          | Υπογραφή του (Fiscal Header και Invoice Payload Hash) με το Ιδιωτικό Κλειδί της Συσκευής | "0D64FD1B9B95790E473489D6964B4D1A76811BC3A63407118B3CCCB3BC6F789A384F2EF80BD8A70347ACD89E0C342F1DA300C85A5830254011543A3B64EB9206"                                          |
-| Crypto-Header-Previous-Invoice-Fiscal-Header     | SHA256 hash της προηγούμενης φορολογικής επικεφαλίδας           | "aa3a677e8f0e19a3dd1876612c69a3dd18d98afa76612c69a3dd18df888daea5a"                 |
-| Crypto-Header-Public-Key-of-Signatory-Device     | Δημόσιο Κλειδί της Συσκευής Υπογραφής (Base64)                  | "MCowBQYDK3VwAyEAvR97AJTKyGNAjOYROXGk+H367Ix1kOAMNKQwpTuvOfU="                                |
-| Crypto-Header-Signature-of-Signatory-Device-Public-Key | Υπογραφή του Δημοσίου Κλειδιού της Συσκευής Υπογραφής     | "E473489D6964B4D1A76811BC3A634070D64FD15830254011B9B95790118B3CCCB3BC6F789A384F2EFF1DA300C85A543A3B64EB920680BD8A70347ACD89E0C342"                        |
+| Όνομα                                                  | Περιγραφή (PEPPOL Identifier)                                                                   | Παράδειγμα Τιμής                                                                                                                   |
+|--------------------------------------------------------|-------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
+| Settings-Authority-ID                                  | Αναγνωριστικό της αρχής.                                                                        | "AAD"                                                                                                                              |
+| Settings-Is-Peppol-Required                            | Λογική τιμή που υποδηλώνει εάν απαιτείται το Peppol.                                            | true                                                                                                                               |
+| Settings-Document-TemplateID                           | Αναγνωριστικό του προτύπου έγγραφου.                                                            | 1                                                                                                                                  |
+| Fiscal-Header-Invoice-ID                               | Αναγνωριστικό τιμολογίου.                                                                       | "fd4bdc10-b0f3-4f3b-beb1-14fc4f42dc2b"                                                                                             |
+| Fiscal-Header-Issuer-TaxID                             | Κωδικός φορολογικού ταυτότητας του εκδότη (AccountingSupplierParty.PartyTaxScheme.CompanyID)    | "987654321"                                                                                                                        |
+| Fiscal-Header-Recipient-TaxID                          | Κωδικός φορολογικού ταυτότητας του παραλήπτη (AccountingCustomerParty.PartyTaxScheme.CompanyID) | "123456789"                                                                                                                        |
+| Fiscal-Header-TimeStamp-Epoch                          | Χρονική σήμανση Epoch (Invoice.IssueDate)                                                       | "1702140669"                                                                                                                       |
+| Fiscal-Header-Document-Type                            | Τύπος εγγράφου (Invoice.InvoiceTypeCode)                                                        | "380"                                                                                                                              |
+| Fiscal-Header-Document-Value                           | Αξία εγγράφου (Invoice.LegalMonetaryTotal.TaxInclusiveAmount)                                   | 1240.00                                                                                                                            |
+| Fiscal-Header-Document-Tax-Value                       | Φορολογική αξία εγγράφου (Invoice.TaxTotal.TaxAmount)                                           | 240.00                                                                                                                             |
+| Fiscal-Header-Currency                                 | Νόμισμα (Invoice.DocumentCurrencyCode)                                                          | "EUR"                                                                                                                              |
+| Fiscal-Header-Tax-Currency                             | Φορολογικό Νόμισμα (Invoice.TaxCurrencyCode)                                                    | "EUR"                                                                                                                              |
+| Crypto-Header-Fiscal-Header-SHA256-Hash                | SHA256 hash της φορολογικής επικεφαλίδας                                                        | "ba2a7576612c69a3dd18da20b3c47c598afabe1c1aec9fa98a1f888daecf5a5d"                                                                 |
+| Crypto-Header-Invoice-Payload-SHA256-Hash              | SHA256 Hash του περιεχομένου του τιμολογίου                                                     | "31481f96c1677e8f0e1cd81d941561824f19b344476612c69a3dd18db1a47277"                                                                 |
+| Crypto-Header-Signature                                | Υπογραφή του (Fiscal Header και Invoice Payload Hash) με το Ιδιωτικό Κλειδί της Συσκευής        | "0D64FD1B9B95790E473489D6964B4D1A76811BC3A63407118B3CCCB3BC6F789A384F2EF80BD8A70347ACD89E0C342F1DA300C85A5830254011543A3B64EB9206" |
+| Crypto-Header-Previous-Invoice-Fiscal-Header           | SHA256 hash της προηγούμενης φορολογικής επικεφαλίδας                                           | "aa3a677e8f0e19a3dd1876612c69a3dd18d98afa76612c69a3dd18df888daea5a"                                                                |
+| Crypto-Header-Public-Key-of-Signatory-Device           | Δημόσιο Κλειδί της Συσκευής Υπογραφής (Base64)                                                  | "MCowBQYDK3VwAyEAvR97AJTKyGNAjOYROXGk+H367Ix1kOAMNKQwpTuvOfU="                                                                     |
+| Crypto-Header-Signature-of-Signatory-Device-Public-Key | Υπογραφή του Δημοσίου Κλειδιού της Συσκευής Υπογραφής                                           | "E473489D6964B4D1A76811BC3A634070D64FD15830254011B9B95790118B3CCCB3BC6F789A384F2EFF1DA300C85A543A3B64EB920680BD8A70347ACD89E0C342" |
+| Source-System                                          | Πηγαίο Σύστημα Παραστατικού                                                                     | "SRC-100"                                                                                                                          |
+| Email                                                  | Email Διεύθυνση Λήπτη Παραστατικού                                                              | info@example.com                                                                                                                   |
 
 Όπως φαίνεται στον παραπάνω πίνακα, οι κεφαλίδες που απαιτούνται για την ασφαλή και επιτυχημένη υποβολή ενός 
 παραστατικού αποτελούνται από τρία ξεχωριστά μέρη:
@@ -410,6 +414,38 @@ element invoiceDetails.
     ...
 </invoice>
 ```
+
+#### Μονάδες Μέτρησης
+
+Σε σχέση με το B2G όπου οι μονάδες μέτρησης είναι απαραίτητο πεδίο, υποστηρίζουμε τις παρακάτω περιπτώσεις και παρακάτω η σχετική αντιστοίχιση με την τιμή του payload και το αντίστοιχο πεδίο PEPPOL
+
+| Payload Value | Peppol Mapped Unit | Peppol Unit Description |
+|---------------|--------------------|-------------------------|
+| 1             | "H87"              |                         |
+| 2             | "KGM"              |                         |
+| 3             | "LTR"              |                         |
+| 4             | "MTR"              |                         |
+| 5             | "MTK"              |                         |
+| 6             | "MTQ"              |                         |
+| 7             | "H87"              |                         |
+| 101           | "C62"              | Unit                    |
+| 102           | "KWT"              | Kilowatt                |
+| 103           | "KWH"              | Kilowatt hour           |
+| 104           | "EA"               | Each                    |
+| 105           | "HUR"              | Hour                    |
+| 106           | "XBX"              | Box                     |
+| 107           | "KGM"              | Kilogram                |
+| 108           | "LTR"              | Litre                   |
+| 109           | "MTR"              | Metre                   |
+| 110           | "MTQ"              | Cubic metre             |
+| 111           | "MAW"              | Mega watt               |
+| 112           | "MWH"              | Mega watt hour          |
+| 113           | "PR"               | Pair                    |
+| 114           | "SET"              | Set                     |
+| 115           | "H87"              | Piece                   |
+| 116           | "HUR"              | Hours                   |
+| 117           | "TNE"              | Tonne                   |
+| 118           | "M4"               | Monetary value          |
 
 ### Απάντηση Κλήσης
 

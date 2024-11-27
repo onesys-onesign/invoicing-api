@@ -15,6 +15,7 @@
 | 1.5.1   | 2024-05-28 | Added self handling of Transmission Failure 2                                                                                     |
 | 1.5.2   | 2024-09-11 | Added commands to extract raw keys, and some API updates, updated postman collection                                              |
 | 1.5.3   | 2024-11-26 | Updated the AADE doc links, added sample B2B and B2C XML requests                                                                 |
+| 1.5.4   | 2024-11-27 | Added the supported measurement units                                                                                             |
 
 ## Introduction
 
@@ -214,7 +215,7 @@ Following is the list of supported headers that are analysed in detail.
 | Crypto-Header-Public-Key-of-Signatory-Device           | Public Key of the Signing Device (Base 64)                                                    | "MCowBQYDK3VwAyEAvR97AJTKyGNAjOYROXGk+H367Ix1kOAMNKQwpTuvOfU="                                                                     |                     
 | Crypto-Header-Signature-of-Signatory-Device-Public-Key | Signature of the Public Key of the Signing Device                                             | "E473489D6964B4D1A76811BC3A634070D64FD15830254011B9B95790118B3CCCB3BC6F789A384F2EFF1DA300C85A543A3B64EB920680BD8A70347ACD89E0C342" |
 | Source-System                                          | Source System of the document                                                                 | "SRC-100"                                                                                                                          |
-| Email                                                  | Email Address                                                                                 | info@example.com                                                                                                                   |
+| Email                                                  | Email Address of Document Recipient                                                           | info@example.com                                                                                                                   |
 
 As shown in the table above, the headers required for the secure and successful submission of a document consist of
 three separate parts:
@@ -439,6 +440,39 @@ Below is a sample of the mentioned segment integrated into the XML format of AAD
     ...
 </invoice>
 ```
+
+#### Measurement Units
+
+Regarding B2G where measurement unit is a mandatory field the following Measurement Units are supported and below is the mapping of these (payload value, peppol mapped unit)
+
+| Payload Value | Peppol Mapped Unit | Peppol Unit Description |
+|---------------|--------------------|-------------------------|
+| 1             | "H87"              |                         |
+| 2             | "KGM"              |                         |
+| 3             | "LTR"              |                         |
+| 4             | "MTR"              |                         |
+| 5             | "MTK"              |                         |
+| 6             | "MTQ"              |                         |
+| 7             | "H87"              |                         |
+| 101           | "C62"              | Unit                    |
+| 102           | "KWT"              | Kilowatt                |
+| 103           | "KWH"              | Kilowatt hour           |
+| 104           | "EA"               | Each                    |
+| 105           | "HUR"              | Hour                    |
+| 106           | "XBX"              | Box                     |
+| 107           | "KGM"              | Kilogram                |
+| 108           | "LTR"              | Litre                   |
+| 109           | "MTR"              | Metre                   |
+| 110           | "MTQ"              | Cubic metre             |
+| 111           | "MAW"              | Mega watt               |
+| 112           | "MWH"              | Mega watt hour          |
+| 113           | "PR"               | Pair                    |
+| 114           | "SET"              | Set                     |
+| 115           | "H87"              | Piece                   |
+| 116           | "HUR"              | Hours                   |
+| 117           | "TNE"              | Tonne                   |
+| 118           | "M4"               | Monetary value          |
+
 
 ### Response to Request
 
