@@ -1,4 +1,4 @@
-# ONESIGN REST API Electronic Invoicing 1.5.5
+# ONESIGN REST API Electronic Invoicing 1.5.6
 
 ## Version History
 
@@ -17,6 +17,7 @@
 | 1.5.3   | 2024-11-26 | Updated the AADE doc links, added sample B2B and B2C XML requests                                                                 |
 | 1.5.4   | 2024-11-27 | Added the supported measurement units                                                                                             |
 | 1.5.5   | 2024-11-27 | Added soft rejection resubmit header                                                                                              |
+| 1.5.6   | 2024-12-12 | Added business-id and location-id headers                                                                                         |
 
 
 ## Introduction
@@ -219,6 +220,8 @@ Following is the list of supported headers that are analysed in detail.
 | Source-System                                          | Source System of the document                                                                 | "SRC-100"                                                                                                                          |
 | Document-Recipient-Email                               | Email Address of Document Recipient                                                           | info@example.com                                                                                                                   |
 | Soft-Rejection-Resubmit                                | Resubmission of B2G PEPPOL document after soft rejection                                      | true                                                                                                                               |
+| Business-Id                                            | Business id in UUID format                                                                    | "4b0d382d-dc6a-4605-aadd-1313156915c4"                                                                                             |
+| Location-Id                                            | Location id in UUID format                                                                    | "5d677662-7c3a-42ab-a757-aa777bfcd2c0"                                                                                             |
 
 As shown in the table above, the headers required for the secure and successful submission of a document consist of
 three separate parts:
@@ -333,6 +336,16 @@ The order of appearance is the following:
 ##### Signature of Signatory Device Public Key
 - Description: Signature that was received on registering the device.
 - Example Value: "E473489D6964B4D1A76811BC3A634070D64FD15830254011B9B95790118B3CCCB3BC6F789A384F2EFF1DA300C85A543A3B64EB920680BD8A70347ACD89E0C342"
+
+##### Business-Id
+- Description: Business Id of the business in UUID format
+- Example Value: UUID format
+- Mandatory: Yes
+
+##### Location-Id
+- Description: Location Id of the location in UUID format
+- Example Value: UUID format
+- Mandatory: Yes
 
 ##### Source System
 - Description: Source System of the document
