@@ -1,23 +1,24 @@
-# ONESIGN REST API Ηλεκτρονικής Τιμολόγησης 1.5.6
+# ONESIGN REST API Ηλεκτρονικής Τιμολόγησης 1.5.7
 
 ## Αριθμός έκδοσης
 
-| Έκδοση  | Ημερομηνία | Περιγραφή                                                                                                                                  |
-|---------|------------|--------------------------------------------------------------------------------------------------------------------------------------------|
-| 1.0     | 2023-10-01 | Αρχική έκδοση                                                                                                                              |
-| 1.1     | 2023-11-15 | Προσθήκη crypto headers                                                                                                                    |
-| 1.2     | 2023-12-15 | Προσθήκη Ελληνικής έκδοσης ΑΑΔΕ/B2G                                                                                                        | 
-| 1.3     | 2023-12-22 | Προσθήκη endpoints, δείγματα payloads, response, postman collection                                                                        |
-| 1.4     | 2024-01-10 | Ενημέρωση των sample payloads with lineComments and itemCPV elements, HMAC οδηγός                                                          |
-| 1.4.1   | 2024-01-15 | Ενημέρωση του sample payload B2G με πεδία απαραίτητα για PEPPOL, counterpart.name, invoiceDetails.quantity, invoiceDetails.measurementUnit |
-| 1.4.2   | 2024-01-15 | Αλλαγή των headers HMAC Auth                                                                                                               |
-| 1.5.0   | 2024-02-22 | Προσθήκη Transmission Failure 2, Status Request, εμπλουτισμός POSTMAN                                                                      |
-| 1.5.1   | 2024-05-27 | Προσθήκη Transmission Failure 2, Ενναλακτικό Business Scenario                                                                             |
-| 1.5.2   | 2024-09-11 | Προσθήκη εντολών για εξαγωγή κλειδιών, ενημέρωση API, ενημέρωση API Postman Collection                                                     |
-| 1.5.3   | 2024-11-26 | Ενημέρωση των προδιαγραφών ΑΑΔΕ  (1.0.9), προσθήκη δειγμάτων B2B και B2C XML requests                                                      |    
-| 1.5.4   | 2024-11-27 | Προστέθηκαν οι υποστηριζόμενες μονάδες μέτρησης                                                                                            |
-| 1.5.5   | 2024-11-27 | Προσθήκη κεφαλίδας soft rejection resubmit                                                                                                 |
-| 1.5.6   | 2024-12-12 | Added business-id and location-id headers                                                                                                  |
+| Έκδοση | Ημερομηνία | Περιγραφή                                                                                                                                  |
+|--------|------------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| 1.0    | 2023-10-01 | Αρχική έκδοση                                                                                                                              |
+| 1.1    | 2023-11-15 | Προσθήκη crypto headers                                                                                                                    |
+| 1.2    | 2023-12-15 | Προσθήκη Ελληνικής έκδοσης ΑΑΔΕ/B2G                                                                                                        | 
+| 1.3    | 2023-12-22 | Προσθήκη endpoints, δείγματα payloads, response, postman collection                                                                        |
+| 1.4    | 2024-01-10 | Ενημέρωση των sample payloads with lineComments and itemCPV elements, HMAC οδηγός                                                          |
+| 1.4.1  | 2024-01-15 | Ενημέρωση του sample payload B2G με πεδία απαραίτητα για PEPPOL, counterpart.name, invoiceDetails.quantity, invoiceDetails.measurementUnit |
+| 1.4.2  | 2024-01-15 | Αλλαγή των headers HMAC Auth                                                                                                               |
+| 1.5.0  | 2024-02-22 | Προσθήκη Transmission Failure 2, Status Request, εμπλουτισμός POSTMAN                                                                      |
+| 1.5.1  | 2024-05-27 | Προσθήκη Transmission Failure 2, Ενναλακτικό Business Scenario                                                                             |
+| 1.5.2  | 2024-09-11 | Προσθήκη εντολών για εξαγωγή κλειδιών, ενημέρωση API, ενημέρωση API Postman Collection                                                     |
+| 1.5.3  | 2024-11-26 | Ενημέρωση των προδιαγραφών ΑΑΔΕ  (1.0.9), προσθήκη δειγμάτων B2B και B2C XML requests                                                      |    
+| 1.5.4  | 2024-11-27 | Προστέθηκαν οι υποστηριζόμενες μονάδες μέτρησης                                                                                            |
+| 1.5.5  | 2024-11-27 | Προσθήκη κεφαλίδας soft rejection resubmit                                                                                                 |
+| 1.5.6  | 2024-12-12 | Added business-id and location-id headers                                                                                                  |
+| 1.5.7  | 2025-01-21 | Updated the postman collection with location-id and business-id headers                                                                    |
 
 ## Εισαγωγή
 
@@ -159,6 +160,8 @@ signing-devices στην εφαρμογή, από όπου θα ληφθεί η 
 curl --location 'https://onesign-api.onesys.gr/signing-devices' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer eyJhbGciOiJUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc2YjM1ZDdlLWVkODQtNGI0ZS1hODhiLWQ2Y2RlOWRiY2Q3YiIsImZpcnN0TmFtZSI6Ik94aW51cyIsImxhc3ROYW1lIjoiSG9sZGluZ3MiLCJlbWFpbCI6InNwQG94aW51cy5ob2xkaW5ncyIsImFjY2Vzc1R5cGUiOiJqd3QiLCJpYXQiOjE3MDI4Nzg3MTB9.ZLZGFse5RJMFkgziYs-nH8qYTveztOzmhApbXN0poPA' \
+--header 'location-id: 9054faef-9055-45e8-96ab-df816d1a8aa9' \
+--header 'business-id: 5dd1d7db-5eea-43e8-8cc9-53e05f94a434' \
 --data '{
     "deviceName": "device 1",
     "deviceType": "virtual",
@@ -176,7 +179,8 @@ curl --location 'https://onesign-api.onesys.gr/signing-devices' \
 ```shell
 curl --location --request DELETE 'https://onesign-api.onesys.gr/signing-devices/:businessId/:deviceId' \
 --header 'Authorization: Bearer eyJhbGciiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImtqZG5nZTg0NTQwOTgiLCJmaXJzdE5hbWUiOiJSaWNreSIsImxhc3ROYW1lIjoiTWFydGluIiwiZW1haWwiOiJtLnNpZGRpcXVpQG94aW51cy5pbyIsImFwaUtleSI6ImhoaGpqamRkZGtrayIsInNlY3JldCI6InNlY3JldCIsImFjY2Vzc1R5cGUiOiJTMlMiLCJjcmVhdGVkQXQiOiIyMDIzLTEyLTE0VDA3OjA3OjE0LjgzMloiLCJ1cGRhdGVkQXQiOiIyMDIzLTEyLTE0VDA3OjA3OjE0LjgzMloiLCJpYXQiOjE3MDI1NDE3OTZ9.a3XfDBcXVJ5mZFkKR7u5Er_zT9L06SaIUzi9biYD6gU' \
---data ''
+--header 'location-id: 5dd1d7db-5eea-43e8-8cc9-53e05f94a434' \
+--header 'business-id: 9054faef-9055-45e8-96ab-df816d1a8aa9'
 ```
 
 ### Κεφαλίδες Αίτησης:
