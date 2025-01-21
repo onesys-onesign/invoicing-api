@@ -1,4 +1,4 @@
-# OneSys - ONESIGN API Documentation 1.5.6
+# OneSys - ONESIGN API Documentation 1.5.7
 
 ## Version History
 
@@ -18,6 +18,7 @@
 | 1.5.4   | 2024-11-27 | Added the supported measurement units                                                 |  
 | 1.5.5   | 2024-11-27 | Added soft rejection resubmit header                                                  |
 | 1.5.6   | 2024-12-12 | Added business-id and location-id headers                                             |
+| 1.5.7   | 2025-01-21 | Updated the postman collection with location-id and business-id headers               |
 
 ## Supported Schemas
 

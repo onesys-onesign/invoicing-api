@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "e371a73d-6285-4bfd-85a6-1b251ec0815e",
+		"_postman_id": "5dd1d7db-5eea-43e8-8cc9-53e05f94a434",
 		"name": "External: e-Invoicing (S2S)",
 		"description": "# API Authentication\n\nThis API uses two authentication mechanisms: JWT (JSON Web Tokens) and HMAC (Hash-based Message Authentication Code). Follow the instructions below to authenticate your requests in Postman.\n\n## JWT Authentication\n\nJWT tokens are provided by the core authentication system.\n\n1. Obtain a valid JWT token from the core authentication system.\n    \n2. In your Postman request, add a header:\n    \n    - Key: `Authorization`\n        \n    - Value: `Bearer token`\n        \n\nReplace with the actual JWT token you received.\n\n## HMAC Authentication\n\nHMAC requires a client API key and secret, which you can obtain from customer support.\n\n1. Contact customer support to receive your `client-api-key` and `secret`.\n    \n2. With the help of the `secret`, create the HMAC signature of the payload.\n    \n3. In your Postman request, add two headers:\n    \n    - Header 1:\n        \n        - Key: `client-api-key`\n            \n        - Value: client-api-key\n            \n    - Header 2:\n        \n        - Key: `client-signature`\n            \n        - Value: payload signature\n            \n\nReplace and with the actual values provided by customer support.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -25,6 +25,16 @@
 							},
 							{
 								"key": "client-signature",
+								"value": "",
+								"type": "text"
+							},
+							{
+								"key": "location-id",
+								"value": "",
+								"type": "text"
+							},
+							{
+								"key": "business-id",
 								"value": "",
 								"type": "text"
 							}
@@ -291,6 +301,16 @@
 							},
 							{
 								"key": "client-signature",
+								"value": "",
+								"type": "text"
+							},
+							{
+								"key": "location-id",
+								"value": "",
+								"type": "text"
+							},
+							{
+								"key": "business-id",
 								"value": "",
 								"type": "text"
 							}
@@ -607,6 +627,16 @@
 								"key": "client-signature",
 								"value": "",
 								"type": "text"
+							},
+							{
+								"key": "business-id",
+								"value": "",
+								"type": "text"
+							},
+							{
+								"key": "location-id",
+								"value": "",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -741,6 +771,16 @@
 							},
 							{
 								"key": "client-signature",
+								"value": "",
+								"type": "text"
+							},
+							{
+								"key": "business-id",
+								"value": "",
+								"type": "text"
+							},
+							{
+								"key": "location-id",
 								"value": "",
 								"type": "text"
 							}
