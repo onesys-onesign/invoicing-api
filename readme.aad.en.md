@@ -1,24 +1,25 @@
-# ONESIGN REST API Electronic Invoicing 1.5.7
+# ONESIGN REST API Electronic Invoicing 1.5.8
 
 ## Version History
 
-| Version  | Date       | Description                                                                                                                       |
-|----------|------------|-----------------------------------------------------------------------------------------------------------------------------------|
-| 1.0      | 2023-10-01 | Initial release                                                                                                                   |
-| 1.1      | 2023-11-15 | Addition of crypto headers                                                                                                        |
-| 1.2      | 2023-12-15 | Addition of Greek version AADE/B2G                                                                                                |
-| 1.3      | 2023-12-22 | Added endpoints, sample payloads, responses, postman collection                                                                   |
-| 1.4      | 2024-01-10 | Updated the sample payloads with lineComments and itemCPV elements, HMAC Guide                                                    |
-| 1.4.1    | 2024-01-15 | Updates Sample B2G payload with PEPPOL required fields, counterpart.name, invoiceDetails.quantity, invoiceDetails.measurementUnit |
-| 1.4.2    | 2024-01-16 | Updates HMAC headers                                                                                                              |
-| 1.5.0    | 2024-02-22 | Added Transmission Failure 2, Status Request, Updated POSTMAN                                                                     |
-| 1.5.1    | 2024-05-28 | Added self handling of Transmission Failure 2                                                                                     |
-| 1.5.2    | 2024-09-11 | Added commands to extract raw keys, and some API updates, updated postman collection                                              |
-| 1.5.3    | 2024-11-26 | Updated the AADE doc links, added sample B2B and B2C XML requests                                                                 |
-| 1.5.4    | 2024-11-27 | Added the supported measurement units                                                                                             |
-| 1.5.5    | 2024-11-27 | Added soft rejection resubmit header                                                                                              |
-| 1.5.6    | 2024-12-12 | Added business-id and location-id headers                                                                                         |
-| 1.5.7    | 2025-01-21 | Updated the postman collection with location-id and business-id headers                                                           |
+| Version | Date       | Description                                                                                                                       |
+|---------|------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| 1.0     | 2023-10-01 | Initial release                                                                                                                   |
+| 1.1     | 2023-11-15 | Addition of crypto headers                                                                                                        |
+| 1.2     | 2023-12-15 | Addition of Greek version AADE/B2G                                                                                                |
+| 1.3     | 2023-12-22 | Added endpoints, sample payloads, responses, postman collection                                                                   |
+| 1.4     | 2024-01-10 | Updated the sample payloads with lineComments and itemCPV elements, HMAC Guide                                                    |
+| 1.4.1   | 2024-01-15 | Updates Sample B2G payload with PEPPOL required fields, counterpart.name, invoiceDetails.quantity, invoiceDetails.measurementUnit |
+| 1.4.2   | 2024-01-16 | Updates HMAC headers                                                                                                              |
+| 1.5.0   | 2024-02-22 | Added Transmission Failure 2, Status Request, Updated POSTMAN                                                                     |
+| 1.5.1   | 2024-05-28 | Added self handling of Transmission Failure 2                                                                                     |
+| 1.5.2   | 2024-09-11 | Added commands to extract raw keys, and some API updates, updated postman collection                                              |
+| 1.5.3   | 2024-11-26 | Updated the AADE doc links, added sample B2B and B2C XML requests                                                                 |
+| 1.5.4   | 2024-11-27 | Added the supported measurement units                                                                                             |
+| 1.5.5   | 2024-11-27 | Added soft rejection resubmit header                                                                                              |
+| 1.5.6   | 2024-12-12 | Added business-id and location-id headers                                                                                         |
+| 1.5.7   | 2025-01-21 | Updated the postman collection with location-id and business-id headers                                                           |
+| 1.5.8   | 2025-01-22 | Corrected the "Fiscal Header SHA256 Hash" example                                                                                 |
 
 ## Introduction
 
@@ -303,10 +304,9 @@ its validity.
 ##### Fiscal Header SHA256 Hash
 - Description: SHA256 hash of all headers in the financial section (fiscal-header fields) concatenated into one field
 - separated by the "|" pipe character.
-  - e.g., "fd4bdc10-b0f3-4f3b-beb1-14fc4f42dc2b|987654321|123456789|1702140669|380|1000.00|240.00|EUR|EUR"
+  - e.g., "987654321|123456789|1702140669|380|1000.00|240.00|EUR"
 
 The order of appearance is the following:
-- Fiscal-Header-Invoice-ID
 - Fiscal-Header-Issuer-TaxID
 - Fiscal-Header-Recipient-TaxID
 - Fiscal-Header-TimeStamp-Epoch
@@ -314,9 +314,8 @@ The order of appearance is the following:
 - Fiscal-Header-Document-Value
 - Fiscal-Header-Document-Tax-Value
 - Fiscal-Header-Currency
-- Fiscal-Header-Tax-Currency
 
-- Example Value: "ba2a7576612c69a3dd18da20b3c47c598afabe1c1aec9fa98a1f888daecf5a5d"
+- Example Value: "4571ed839a19cb9eccfe66cefa1b3afa5b18e79e7f21817d8532a3aa6d051198"
 
 ##### Invoice Payload SHA256 Hash
 - Description: SHA256 hash of the entire payload of the call.
