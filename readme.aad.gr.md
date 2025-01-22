@@ -1,4 +1,4 @@
-# ONESIGN REST API Ηλεκτρονικής Τιμολόγησης 1.5.7
+# ONESIGN REST API Ηλεκτρονικής Τιμολόγησης 1.5.8
 
 ## Αριθμός έκδοσης
 
@@ -19,6 +19,7 @@
 | 1.5.5  | 2024-11-27 | Προσθήκη κεφαλίδας soft rejection resubmit                                                                                                 |
 | 1.5.6  | 2024-12-12 | Added business-id and location-id headers                                                                                                  |
 | 1.5.7  | 2025-01-21 | Updated the postman collection with location-id and business-id headers                                                                    |
+| 1.5.8  | 2025-01-22 | Corrected the "Fiscal Header SHA256 Hash" example                                                                                          |
 
 ## Εισαγωγή
 
@@ -290,10 +291,9 @@ To οικονομικό τμήμα του Header περιλαμβάνει τις
 ##### Fiscal Header SHA256 Hash
 - Περιγραφή: Hash SHA256 όλων των κεφαλίδων του Οικονομικού τμήματος των headers (fiscal-header fields) ενωμένα σε ένα 
 πεδίο διαχωρισμένο με τον χαρακτήρα "|" pipe.
-π.χ: "fd4bdc10-b0f3-4f3b-beb1-14fc4f42dc2b|987654321|123456789|1702140669|380|1000.00|240.00|EUR|EUR"
+π.χ: "987654321|123456789|1702140669|380|1000.00|240.00|EUR"
 
 Η σειρά εμφάνισης είναι η παρακάτω:
-- Fiscal-Header-Invoice-ID
 - Fiscal-Header-Issuer-TaxID
 - Fiscal-Header-Recipient-TaxID
 - Fiscal-Header-TimeStamp-Epoch
@@ -301,8 +301,7 @@ To οικονομικό τμήμα του Header περιλαμβάνει τις
 - Fiscal-Header-Document-Value
 - Fiscal-Header-Document-Tax-Value
 - Fiscal-Header-Currency
-- Fiscal-Header-Tax-Currency
-- Example Value: "ba2a7576612c69a3dd18da20b3c47c598afabe1c1aec9fa98a1f888daecf5a5d"
+- Example Value: "4571ed839a19cb9eccfe66cefa1b3afa5b18e79e7f21817d8532a3aa6d051198"
 
 - Ενδεικτική τιμή παραδείγματος: "ba2a7576612c69a3dd18da20b3c47c598afabe1c1aec9fa98a1f888daecf5a5d"
 
