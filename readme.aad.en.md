@@ -1,25 +1,26 @@
-# ONESIGN REST API Electronic Invoicing 1.5.8
+# ONESIGN REST API Electronic Invoicing 1.5.9
 
 ## Version History
 
-| Version | Date       | Description                                                                                                                       |
-|---------|------------|-----------------------------------------------------------------------------------------------------------------------------------|
-| 1.0     | 2023-10-01 | Initial release                                                                                                                   |
-| 1.1     | 2023-11-15 | Addition of crypto headers                                                                                                        |
-| 1.2     | 2023-12-15 | Addition of Greek version AADE/B2G                                                                                                |
-| 1.3     | 2023-12-22 | Added endpoints, sample payloads, responses, postman collection                                                                   |
-| 1.4     | 2024-01-10 | Updated the sample payloads with lineComments and itemCPV elements, HMAC Guide                                                    |
-| 1.4.1   | 2024-01-15 | Updates Sample B2G payload with PEPPOL required fields, counterpart.name, invoiceDetails.quantity, invoiceDetails.measurementUnit |
-| 1.4.2   | 2024-01-16 | Updates HMAC headers                                                                                                              |
-| 1.5.0   | 2024-02-22 | Added Transmission Failure 2, Status Request, Updated POSTMAN                                                                     |
-| 1.5.1   | 2024-05-28 | Added self handling of Transmission Failure 2                                                                                     |
-| 1.5.2   | 2024-09-11 | Added commands to extract raw keys, and some API updates, updated postman collection                                              |
-| 1.5.3   | 2024-11-26 | Updated the AADE doc links, added sample B2B and B2C XML requests                                                                 |
-| 1.5.4   | 2024-11-27 | Added the supported measurement units                                                                                             |
-| 1.5.5   | 2024-11-27 | Added soft rejection resubmit header                                                                                              |
-| 1.5.6   | 2024-12-12 | Added business-id and location-id headers                                                                                         |
-| 1.5.7   | 2025-01-21 | Updated the postman collection with location-id and business-id headers                                                           |
-| 1.5.8   | 2025-01-22 | Corrected the "Fiscal Header SHA256 Hash" example                                                                                 |
+| Version  | Date       | Description                                                                                                                       |
+|----------|------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| 1.0      | 2023-10-01 | Initial release                                                                                                                   |
+| 1.1      | 2023-11-15 | Addition of crypto headers                                                                                                        |
+| 1.2      | 2023-12-15 | Addition of Greek version AADE/B2G                                                                                                |
+| 1.3      | 2023-12-22 | Added endpoints, sample payloads, responses, postman collection                                                                   |
+| 1.4      | 2024-01-10 | Updated the sample payloads with lineComments and itemCPV elements, HMAC Guide                                                    |
+| 1.4.1    | 2024-01-15 | Updates Sample B2G payload with PEPPOL required fields, counterpart.name, invoiceDetails.quantity, invoiceDetails.measurementUnit |
+| 1.4.2    | 2024-01-16 | Updates HMAC headers                                                                                                              |
+| 1.5.0    | 2024-02-22 | Added Transmission Failure 2, Status Request, Updated POSTMAN                                                                     |
+| 1.5.1    | 2024-05-28 | Added self handling of Transmission Failure 2                                                                                     |
+| 1.5.2    | 2024-09-11 | Added commands to extract raw keys, and some API updates, updated postman collection                                              |
+| 1.5.3    | 2024-11-26 | Updated the AADE doc links, added sample B2B and B2C XML requests                                                                 |
+| 1.5.4    | 2024-11-27 | Added the supported measurement units                                                                                             |
+| 1.5.5    | 2024-11-27 | Added soft rejection resubmit header                                                                                              |
+| 1.5.6    | 2024-12-12 | Added business-id and location-id headers                                                                                         |
+| 1.5.7    | 2025-01-21 | Updated the postman collection with location-id and business-id headers                                                           |
+| 1.5.8    | 2025-01-22 | Corrected the "Fiscal Header SHA256 Hash" example                                                                                 |
+| 1.5.9    | 2025-03-21 | Corrected test environment URL                                                                                                    |
 
 ## Introduction
 
@@ -33,7 +34,7 @@ as well as cryptographic certification.
 The test environment for all API calls is:
 
 ```
-https://onesign-api.onesys.gr/
+https://staging-onesign-api.onesys.gr/
 ```
 
 ## Authentication
@@ -165,7 +166,7 @@ The application will in turn return a device specific signature that the device 
 Alternatively, it can be done using curl with the following command, replacing the necessary fields.
 
 ```shell
-curl --location 'https://onesign-api.onesys.gr/signing-devices' \
+curl --location 'https://staging-onesign-api.onesys.gr/signing-devices' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer eyJhbGciOiJUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc2YjM1ZDdlLWVkODQtNGI0ZS1hODhiLWQ2Y2RlOWRiY2Q3YiIsImZpcnN0TmFtZSI6Ik94aW51cyIsImxhc3ROYW1lIjoiSG9sZGluZ3MiLCJlbWFpbCI6InNwQG94aW51cy5ob2xkaW5ncyIsImFjY2Vzc1R5cGUiOiJqd3QiLCJpYXQiOjE3MDI4Nzg3MTB9.ZLZGFse5RJMFkgziYs-nH8qYTveztOzmhApbXN0poPA' \
 --header 'location-id: 9054faef-9055-45e8-96ab-df816d1a8aa9' \
@@ -185,7 +186,7 @@ curl --location 'https://onesign-api.onesys.gr/signing-devices' \
 If the signing device needs to be revoked from use, a delete request can be sent to disable the device from signing anymore invoices.
 
 ```shell
-curl --location --request DELETE 'https://onesign-api.onesys.gr/signing-devices/:businessId/:deviceId' \
+curl --location --request DELETE 'https://staging-onesign-api.onesys.gr/signing-devices/:businessId/:deviceId' \
 --header 'Authorization: Bearer eyJhbGciiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImtqZG5nZTg0NTQwOTgiLCJmaXJzdE5hbWUiOiJSaWNreSIsImxhc3ROYW1lIjoiTWFydGluIiwiZW1haWwiOiJtLnNpZGRpcXVpQG94aW51cy5pbyIsImFwaUtleSI6ImhoaGpqamRkZGtrayIsInNlY3JldCI6InNlY3JldCIsImFjY2Vzc1R5cGUiOiJTMlMiLCJjcmVhdGVkQXQiOiIyMDIzLTEyLTE0VDA3OjA3OjE0LjgzMloiLCJ1cGRhdGVkQXQiOiIyMDIzLTEyLTE0VDA3OjA3OjE0LjgzMloiLCJpYXQiOjE3MDI1NDE3OTZ9.a3XfDBcXVJ5mZFkKR7u5Er_zT9L06SaIUzi9biYD6gU' \
 --header 'location-id: 5dd1d7db-5eea-43e8-8cc9-53e05f94a434' \
 --header 'business-id: 9054faef-9055-45e8-96ab-df816d1a8aa9'
@@ -195,7 +196,7 @@ curl --location --request DELETE 'https://onesign-api.onesys.gr/signing-devices/
 A successfully submitted invoice can be retrieved with the Uid from the response of the successfully submitted invoice.
 
 ```shell
-curl --location 'https://onesign-api.onesys.gr/invoice/public/qrcode/:uid'
+curl --location 'https://staging-onesign-api.onesys.gr/invoice/public/qrcode/:uid'
 ```
 
 ### Request Headers:
@@ -564,7 +565,7 @@ The following is a sample response
 #### Document Status Request
 To query the status of the transmission failed document, you can use the following endpoint :
 ```http
-GET https://onesign-api.onesys.gr/pending-documents/:extRefId/status
+GET https://staging-onesign-api.onesys.gr/pending-documents/:extRefId/status
 ```
 
 You will receive the following response:

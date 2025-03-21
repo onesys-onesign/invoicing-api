@@ -1,4 +1,4 @@
-# ONESIGN REST API Ηλεκτρονικής Τιμολόγησης 1.5.8
+# ONESIGN REST API Ηλεκτρονικής Τιμολόγησης 1.5.9
 
 ## Αριθμός έκδοσης
 
@@ -20,6 +20,7 @@
 | 1.5.6  | 2024-12-12 | Added business-id and location-id headers                                                                                                  |
 | 1.5.7  | 2025-01-21 | Updated the postman collection with location-id and business-id headers                                                                    |
 | 1.5.8  | 2025-01-22 | Corrected the "Fiscal Header SHA256 Hash" example                                                                                          |
+| 1.5.9  | 2025-03-21 | Corrected test environment URL                                                                                                             |
 
 ## Εισαγωγή
 
@@ -33,7 +34,7 @@
 Το δοκιμαστικό περιβάλλον, για όλες τις κλήσεις του API είναι:
 
 ```
-https://onesign-api.onesys.gr/
+https://staging-onesign-api.onesys.gr/
 ```
 
 ## Αυθεντικοποίηση (Authentication)
@@ -158,7 +159,7 @@ signing-devices στην εφαρμογή, από όπου θα ληφθεί η 
 Εναλλακτικά, μπορεί να γίνει μέσω curl χρησιμοποιώντας την παρακάτω εντολή, αντικαθιστώντας τα απαραίτητα πεδία.
 
 ```shell
-curl --location 'https://onesign-api.onesys.gr/signing-devices' \
+curl --location 'https://staging-onesign-api.onesys.gr/signing-devices' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer eyJhbGciOiJUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc2YjM1ZDdlLWVkODQtNGI0ZS1hODhiLWQ2Y2RlOWRiY2Q3YiIsImZpcnN0TmFtZSI6Ik94aW51cyIsImxhc3ROYW1lIjoiSG9sZGluZ3MiLCJlbWFpbCI6InNwQG94aW51cy5ob2xkaW5ncyIsImFjY2Vzc1R5cGUiOiJqd3QiLCJpYXQiOjE3MDI4Nzg3MTB9.ZLZGFse5RJMFkgziYs-nH8qYTveztOzmhApbXN0poPA' \
 --header 'location-id: 9054faef-9055-45e8-96ab-df816d1a8aa9' \
@@ -178,7 +179,7 @@ curl --location 'https://onesign-api.onesys.gr/signing-devices' \
 Παραστατικό το οποίο έχει υποβληθεί επιτυχώς, μπορεί να γίνει λήφη, χρησιμοποιοώντας τον κωδικού UID ο οποίος περιλαμβάνεται στην απάντηση (response) κατά την υποβολή του.
 
 ```shell
-curl --location --request DELETE 'https://onesign-api.onesys.gr/signing-devices/:businessId/:deviceId' \
+curl --location --request DELETE 'https://staging-onesign-api.onesys.gr/signing-devices/:businessId/:deviceId' \
 --header 'Authorization: Bearer eyJhbGciiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImtqZG5nZTg0NTQwOTgiLCJmaXJzdE5hbWUiOiJSaWNreSIsImxhc3ROYW1lIjoiTWFydGluIiwiZW1haWwiOiJtLnNpZGRpcXVpQG94aW51cy5pbyIsImFwaUtleSI6ImhoaGpqamRkZGtrayIsInNlY3JldCI6InNlY3JldCIsImFjY2Vzc1R5cGUiOiJTMlMiLCJjcmVhdGVkQXQiOiIyMDIzLTEyLTE0VDA3OjA3OjE0LjgzMloiLCJ1cGRhdGVkQXQiOiIyMDIzLTEyLTE0VDA3OjA3OjE0LjgzMloiLCJpYXQiOjE3MDI1NDE3OTZ9.a3XfDBcXVJ5mZFkKR7u5Er_zT9L06SaIUzi9biYD6gU' \
 --header 'location-id: 5dd1d7db-5eea-43e8-8cc9-53e05f94a434' \
 --header 'business-id: 9054faef-9055-45e8-96ab-df816d1a8aa9'
@@ -548,7 +549,7 @@ element invoiceDetails.
 #### Ελεγχος Κατάστασης Παραστατικού (Status Request)
 Για να ελέγξετε το status υποβολής παραστατικού που έχει αδυναμία σύνδεσης, χρησιμοποιείτε το παρακάτω αίτημα:
 ```http
-GET https://onesign-api.onesys.gr/pending-documents/:extRefId/status
+GET https://staging-onesign-api.onesys.gr/pending-documents/:extRefId/status
 ```
 
 Σε περίπτωση επιτυχίας θα λάβετε το παρακάτω απαντητικό:
