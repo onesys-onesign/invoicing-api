@@ -35,4 +35,4 @@ The ONESIGN Invoicing API supports the following schemas for invoice payloads:
     - [Greek Version](readme.aad.en.md) - Language: English
     - [Ελληνική Έκδοση](readme.aad.gr.md) - Language: Ελληνικά
 
-Feel free to refer to the appropriate schema documentation for detailed information on the structure and usage of each schema.
+Feel free to refer to the appropriate schema documentation for detailed information on the structure and usage of each schema..
