@@ -21,6 +21,7 @@
 | 1.5.7    | 2025-01-21 | Updated the postman collection with location-id and business-id headers                                                           |
 | 1.5.8    | 2025-01-22 | Corrected the "Fiscal Header SHA256 Hash" example                                                                                 |
 | 1.5.9    | 2025-03-21 | Corrected test environment URL                                                                                                    |
+| 1.6.0    | 2025-10-20 | Added invoice cancellation api (delivery note)                                                                                    |
 
 ## Introduction
 
@@ -727,6 +728,118 @@ HTTP Status | Error Code       | Error No | Source | Description                
 | 200 OK      | TechnicalError   | 339     | Classification  | {msg} classification is forbidden for invoice row {lineNumber} because of its detailType value [Possible {msg} values: {‘incomeClassification’, ‘expensesClassification’}]               |
 | 200 OK      | TechnicalError   | 340     | Classification  | ClassifiacationPostMode field must not be contained in xml                                                                 |
 
+
+# Invoice Cancellation API
+
+## 2. Invoice Cancellation
+
+### Endpoint
+
+```
+DELETE /invoice/cancel/:invoiceId
+```
+
+### Description
+
+Cancel a previously submitted delivery note invoice (AADE document type 9.3). Only delivery notes can be cancelled through this endpoint.
+
+### Prerequisites
+
+- Invoice must have been successfully submitted and have a valid invoice mark (MARK)
+- Invoice must be of type 9.3 (Delivery Note)
+- Invoice must not have been previously cancelled
+
+### Request Headers
+
+| Name | Description | Example Value | Required |
+|------|-------------|---------------|----------|
+| Authorization | Bearer token for authentication | Bearer eyJhbGc... | Yes |
+
+### Request Parameters
+
+| Parameter | Type | Description | Required |
+|-----------|------|-------------|----------|
+| invoiceId | string | The ID of the invoice to cancel | Yes |
+
+### Example Request
+
+```shell
+curl --location --request DELETE 'https://staging-onesign-api.onesys.gr/cancel/fd4bdc10-b0f3-4f3b-beb1-14fc4f42dc2b' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+```
+
+### Response Structure
+
+#### Success Response
+
+```json
+{
+    "?xml": "",
+    "ResponseDoc": {
+        "response": {
+            "cancellationMark": "400001956307590",
+            "statusCode": "Success"
+        }
+    }
+}
+```
+
+#### Response Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| cancellationMark | string | Unique cancellation mark assigned by AADE |
+| statusCode | string | Status of the cancellation request ("Success" or error code) |
+
+### Error Responses
+
+| HTTP Status | Error Code | Description |
+|-------------|------------|-------------|
+| 400 | BadRequestException | Invoice already cancelled |
+| 400 | BadRequestException | Cannot cancel invoice without an invoice mark |
+| 400 | BadRequestException | Only invoices of type 9.3 can be cancelled |
+| 400 | BadRequestException | Failed to cancel invoice (with specific error message from AADE) |
+| 404 | NotFoundException | Invoice not found |
+
+### Error Examples
+
+#### Invoice Already Cancelled
+
+```json
+{
+    "statusCode": 400,
+    "message": "Invoice already cancelled",
+    "error": "Bad Request"
+}
+```
+
+#### Invalid Invoice Type
+
+```json
+{
+    "statusCode": 400,
+    "message": "Invoice with mark 400001924527016 is of type 1.1. Only invoices of type 9.3 can be cancelled using CancelDeliveryNote.",
+    "error": "Bad Request"
+}
+```
+
+#### Missing Invoice Mark
+
+```json
+{
+    "statusCode": 400,
+    "message": "Cannot cancel invoice without an invoice mark",
+    "error": "Bad Request"
+}
+```
+
+### Important Notes
+
+1. **Document Type Restriction**: Only delivery notes (type 9.3 - "Παραστατικό Διακίνησης") can be cancelled through this endpoint
+2. **Invoice Mark Required**: The invoice must have been successfully submitted to AADE and received an invoice mark
+3. **One-Time Operation**: An invoice can only be cancelled once. Subsequent cancellation attempts will return an error
+4. **Cancellation Mark**: Upon successful cancellation, AADE returns a unique cancellation mark which is stored with the invoice record
+5. **Timestamp**: The cancellation timestamp is automatically recorded when the cancellation is successful
 
 
 
