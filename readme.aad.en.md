@@ -842,6 +842,7 @@ curl --location --request DELETE 'https://staging-onesign-api.onesys.gr/cancel/f
 5. **Timestamp**: The cancellation timestamp is automatically recorded when the cancellation is successful
 
 
+
 [myDATA API Documentation_Providers_v1.0.9_official.pdf]: https://www.aade.gr/sites/default/files/2024-10/ENG_myDATA%20API%20Providers_v1%200%209_official.pdf
 [myDATA API Documentation_v1.0.9_official_ERP.pdf]: https://www.aade.gr/sites/default/files/2024-10/ENG_myDATA%20API%20Documentation%20v1.0.9_official_erp.pdf
 [EdDSA and Ed25519]: https://cryptobook.nakov.com/digital-signatures/eddsa-and-ed25519
