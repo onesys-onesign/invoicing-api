@@ -21,6 +21,7 @@
 | 1.5.7   | 2025-01-21 | Updated the postman collection with location-id and business-id headers              |
 | 1.5.8   | 2025-01-22 | Corrected the "Fiscal Header SHA256 Hash" example                                    |
 | 1.5.9   | 2025-03-21 | Corrected test environment URL                                                       |
+| 1.6.0   | 2025-10-20 | Added invoice cancellation api (delivery note)                                       |
 
 ## Supported Schemas
 
