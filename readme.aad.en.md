@@ -770,6 +770,8 @@ Cancel a previously submitted delivery note invoice (AADE document type 9.3). On
 | client-api-key | API key for HMAC authentication | 196123b9231d41044db8c261ff02c1a4f534e5089c54f5449b7c9487df2532501751523783 | Yes |
 | client-signature | HMAC signature of the nonce (for DELETE requests) | a3b71239e2f1a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1       | Yes |
 | nonce | Random string value used for signature generation | abc123def456                                                               | Yes |
+| location-id | Location id in UUID format | 5d677662-7c3a-42ab-a757-aa777bfcd2c0 | Yes |
+| business-id | Business id in UUID format | 4b0d382d-dc6a-4605-aadd-1313156915c4 | Yes |
 
 ### Request Parameters
 
