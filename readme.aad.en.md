@@ -81,8 +81,13 @@ For JSON content type, stringify the JSON before encryption.
 
 `client-signature:` Set this to the HMAC encrypted string of the request body using the secret.
 
+`nonce:` Set this to a random string. Required only for requests without body content eg. (DELETE/GET operations)
+
 > **Note:**
 > Do not send Authorization Bearer in header for HMAC Authentication
+> Use only `client-api-key`, `client-signature`, and `nonce` (when body is empty) headers.
+> For requests with body content (POST/PUT), omit the `nonce` header and use the request body for signature generation. 
+> For requests without body content (DELETE/GET), include the `nonce` header with a random string value and use this nonce value for signature generation instead of the request body.
 >
 
 Example
@@ -751,9 +756,20 @@ Cancel a previously submitted delivery note invoice (AADE document type 9.3). On
 
 ### Request Headers
 
+
+#### For JWT Authentication
+
 | Name | Description | Example Value | Required |
 |------|-------------|---------------|----------|
 | Authorization | Bearer token for authentication | Bearer eyJhbGc... | Yes |
+
+#### For HMAC Authentication
+
+| Name | Description | Example Value                                                              | Required |
+|------|-------------|----------------------------------------------------------------------------|----------|
+| client-api-key | API key for HMAC authentication | 196123b9231d41044db8c261ff02c1a4f534e5089c54f5449b7c9487df2532501751523783 | Yes |
+| client-signature | HMAC signature of the nonce (for DELETE requests) | a3b71239e2f1a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1       | Yes |
+| nonce | Random string value used for signature generation | abc123def456                                                               | Yes |
 
 ### Request Parameters
 
