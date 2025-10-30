@@ -1,4 +1,4 @@
-# ONESIGN REST API Electronic Invoicing 1.5.9
+# ONESIGN REST API Electronic Invoicing 1.6.0
 
 ## Version History
 
