@@ -17,10 +17,11 @@
 | 1.5.3  | 2024-11-26 | Ενημέρωση των προδιαγραφών ΑΑΔΕ  (1.0.9), προσθήκη δειγμάτων B2B και B2C XML requests                                                      |    
 | 1.5.4  | 2024-11-27 | Προστέθηκαν οι υποστηριζόμενες μονάδες μέτρησης                                                                                            |
 | 1.5.5  | 2024-11-27 | Προσθήκη κεφαλίδας soft rejection resubmit                                                                                                 |
-| 1.5.6  | 2024-12-12 | Added business-id and location-id headers                                                                                                  |
-| 1.5.7  | 2025-01-21 | Updated the postman collection with location-id and business-id headers                                                                    |
-| 1.5.8  | 2025-01-22 | Corrected the "Fiscal Header SHA256 Hash" example                                                                                          |
-| 1.5.9  | 2025-03-21 | Corrected test environment URL                                                                                                             |
+| 1.5.6  | 2024-12-12 | Προσθήκη business-id και location-id headers                                                                                               |
+| 1.5.7  | 2025-01-21 | Ενημέρωση του postman collection με location-id και business-id headers                                                                    |
+| 1.5.8  | 2025-01-22 | Διόρθωση του παραδείγματος "Fiscal Header SHA256 Hash"                                                                                     |
+| 1.5.9  | 2025-03-21 | Διόρθωση του URL δοκιμαστικού περιβάλλοντος                                                                                                |
+| 1.6.0  | 2025-10-20 | Προσθήκη invoice cancellation api (δελτίο αποστολής)                                                                                     |
 
 ## Εισαγωγή
 
@@ -211,8 +212,8 @@ curl --location --request DELETE 'https://staging-onesign-api.onesys.gr/signing-
 | Source-System                                          | Πηγαίο Σύστημα Παραστατικού                                                                     | "SRC-100"                                                                                                                          |
 | Document-Recipient-Email                               | Email Διεύθυνση Λήπτη Παραστατικού                                                              | info@example.com                                                                                                                   |
 | Soft-Rejection-Resubmit                                | Επαναϋποβολή παραστατικού B2G PEPPOL μετά από soft rejection                                    | true                                                                                                                               |
-| Business-Id                                            | Business id in UUID format                                                                      | "4b0d382d-dc6a-4605-aadd-1313156915c4"                                                                                             |
-| Location-Id                                            | Location id in UUID format                                                                      | "5d677662-7c3a-42ab-a757-aa777bfcd2c0"                                                                                             |
+| Business-Id                                            | Αναγνωριστικό επιχείρησης σε μορφή UUID                                                         | "4b0d382d-dc6a-4605-aadd-1313156915c4"                                                                                             |
+| Location-Id                                            | Αναγνωριστικό τοποθεσίας σε μορφή UUID                                                          | "5d677662-7c3a-42ab-a757-aa777bfcd2c0"                                                                                             |
 
 Όπως φαίνεται στον παραπάνω πίνακα, οι κεφαλίδες που απαιτούνται για την ασφαλή και επιτυχημένη υποβολή ενός 
 παραστατικού αποτελούνται από τρία ξεχωριστά μέρη:
@@ -328,24 +329,24 @@ To οικονομικό τμήμα του Header περιλαμβάνει τις
 - Ενδεικτική τιμή: "E473489D6964B4D1A76811BC3A634070D64FD15830254011B9B95790118B3CCCB3BC6F789A384F2EFF1DA300C85A543A3B64EB920680BD8A70347ACD89E0C342"
 
 ##### Business-Id
-- Description: Business Id of the business in UUID format
-- Example Value: UUID format
-- Mandatory: Yes
+- Περιγραφή: Αναγνωριστικό επιχείρησης σε μορφή UUID
+- Ενδεικτική Τιμή: Μορφή UUID
+- Υποχρεωτικό: ΝΑΙ
 
 ##### Location-Id
-- Description: Location Id of the location in UUID format
-- Example Value: UUID format
-- Mandatory: Yes
+- Περιγραφή: Αναγνωριστικό τοποθεσίας σε μορφή UUID
+- Ενδεικτική Τιμή: Μορφή UUID
+- Υποχρεωτικό: ΝΑΙ
 
 ##### Πηγαίο Σύστημα
 - Περιγραφή: Πηγαίο Σύστημα Παραστατικού
 - Ενδεικτική Τιμή: "SRC-100"
-- Απαραίτητο: ΟΧΙ
+- Υποχρεωτικό: ΟΧΙ
 
 ##### Document-Recipient-Email
 - Περιγραφή: Email Διεύθυνση Παραλήπτη
 - Ενδεικτική Τιμή: "info@example.com"
-- Απαραίτητο: ΟΧΙ
+- Υποχρεωτικό: ΟΧΙ
 
 ##### Soft-Rejection-Resubmit
 - Περιγραφή: Επαναυποβολή παραστατικού μετά από soft rejection
@@ -714,6 +715,131 @@ GET https://staging-onesign-api.onesys.gr/pending-documents/:extRefId/status
 | 200 OK      | TechnicalError   | 339     | Classification  | {msg} classification is forbidden for invoice row {lineNumber} because of its detailType value [Possible {msg} values: {‘incomeClassification’, ‘expensesClassification’}]               |
 | 200 OK      | TechnicalError   | 340     | Classification  | ClassifiacationPostMode field must not be contained in xml                                                                 |
 
+
+
+# API Ακύρωσης Τιμολογίου
+
+## 2. Ακύρωση Τιμολογίου
+
+### Endpoint
+
+```
+DELETE /invoice/cancel/:invoiceId
+```
+
+### Περιγραφή
+
+Ακύρωση ενός προηγουμένως υποβληθέντος τιμολογίου δελτίου αποστολής (τύπος εγγράφου ΑΑΔΕ 9.3). Μόνο σημειώματα δελτία αποστολής μπορούν να ακυρωθούν μέσω αυτού του endpoint.
+
+### Προαπαιτούμενα
+
+- Το τιμολόγιο πρέπει να έχει υποβληθεί επιτυχώς και να έχει έγκυρο μοναδικό αριθμό καταχώρισης (MARK)
+- Το τιμολόγιο πρέπει να είναι τύπου 9.3 (Δελτίο Αποστολής)
+- Το τιμολόγιο δεν πρέπει να έχει ακυρωθεί προηγουμένως
+
+### Headers Αιτήματος
+
+#### Για JWT Authentication
+
+| Όνομα | Περιγραφή | Ενδεικτική Τιμή | Απαραίτητο |
+|-------|-----------|----------------|------------|
+| Authorization | Bearer token για αυθεντικοποίηση | Bearer eyJhbGc... | Ναι |
+
+#### Για HMAC Authentication
+
+| Όνομα | Περιγραφή | Ενδεικτική Τιμή | Απαραίτητο |
+|-------|-----------|----------------|------------|
+| client-api-key | API key για HMAC αυθεντικοποίηση | 196123b9231d41044db8c261ff02c1a4f534e5089c54f5449b7c9487df2532501751523783 | Ναι |
+| client-signature | HMAC υπογραφή του nonce (για DELETE αιτήματα) | a3b71239e2f1a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1 | Ναι |
+| nonce | Τυχαία τιμή string που χρησιμοποιείται για τη δημιουργία υπογραφής | abc123def456 | Ναι |
+| location-id | Αναγνωριστικό τοποθεσίας σε μορφή UUID | 5d677662-7c3a-42ab-a757-aa777bfcd2c0 | Ναι |
+| business-id | Αναγνωριστικό επιχείρησης σε μορφή UUID | 4b0d382d-dc6a-4605-aadd-1313156915c4 | Ναι |
+
+### Παράμετροι Αιτήματος
+
+| Παράμετρος | Τύπος | Περιγραφή | Απαραίτητο |
+|------------|-------|-----------|------------|
+| invoiceId | string | Το ID του τιμολογίου προς ακύρωση | Ναι |
+
+### Παράδειγμα Αιτήματος
+
+```shell
+curl --location --request DELETE 'https://staging-onesign-api.onesys.gr/cancel/fd4bdc10-b0f3-4f3b-beb1-14fc4f42dc2b' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+```
+
+### Δομή Απάντησης
+
+#### Επιτυχημένη Απάντηση
+
+```json
+{
+    "?xml": "",
+    "ResponseDoc": {
+        "response": {
+            "cancellationMark": "400001956307590",
+            "statusCode": "Success"
+        }
+    }
+}
+```
+
+#### Πεδία Απάντησης
+
+| Πεδίο | Τύπος | Περιγραφή |
+|-------|-------|-----------|
+| cancellationMark | string | Μοναδικό σήμα ακύρωσης που εκχωρείται από την ΑΑΔΕ |
+| statusCode | string | Κατάσταση του αιτήματος ακύρωσης ("Success" ή κωδικός σφάλματος) |
+
+### Απαντήσεις Σφάλματος
+
+| HTTP Status | Κωδικός Σφάλματος | Περιγραφή |
+|-------------|-------------------|-----------|
+| 400 | BadRequestException | Το τιμολόγιο έχει ήδη ακυρωθεί |
+| 400 | BadRequestException | Δεν είναι δυνατή η ακύρωση τιμολογίου χωρίς μοναδικό αριθμό καταχώρισης |
+| 400 | BadRequestException | Μόνο τιμολόγια τύπου 9.3 μπορούν να ακυρωθούν |
+| 400 | BadRequestException | Αποτυχία ακύρωσης τιμολογίου (με συγκεκριμένο μήνυμα σφάλματος από την ΑΑΔΕ) |
+| 404 | NotFoundException | Το τιμολόγιο δεν βρέθηκε |
+
+### Παραδείγματα Σφαλμάτων
+
+#### Ήδη Ακυρωμένο Τιμολόγιο 
+
+```json
+{
+    "statusCode": 400,
+    "message": "Invoice already cancelled",
+    "error": "Bad Request"
+}
+```
+
+#### Μη Έγκυρος Τύπος Τιμολογίου
+
+```json
+{
+    "statusCode": 400,
+    "message": "Invoice with mark 400001924527016 is of type 1.1. Only invoices of type 9.3 can be cancelled using CancelDeliveryNote.",
+    "error": "Bad Request"
+}
+```
+
+#### Απουσία Μοναδικού Αριθμού Καταχώρισης
+
+```json
+{
+    "statusCode": 400,
+    "message": "Cannot cancel invoice without an invoice mark",
+    "error": "Bad Request"
+}
+```
+
+### Σημαντικές Σημειώσεις
+
+1. **Περιορισμός Τύπου Εγγράφου**: Μόνο δελτία αποστολής (τύπος 9.3 - "Δελτίο Αποστολής") μπορούν να ακυρωθούν μέσω αυτού του endpoint
+2. **Απαιτείται Μοναδικός Αριθμός Καταχώρισης**: Το τιμολόγιο πρέπει να έχει υποβληθεί επιτυχώς στην ΑΑΔΕ και να έχει λάβει μοναδικό αριθμό καταχώρισης
+3. **Λειτουργία Μίας Φοράς**: Ένα τιμολόγιο μπορεί να ακυρωθεί μόνο μία φορά. Επόμενες προσπάθειες ακύρωσης θα επιστρέψουν σφάλμα
+4. **Σήμα Ακύρωσης**: Με την επιτυχή ακύρωση, η ΑΑΔΕ επιστρέφει ένα μοναδικό σήμα ακύρωσης που αποθηκεύεται με την εγγραφή του τιμολογίου
+5. **Χρονική Σήμανση**: Η χρονική σήμανση ακύρωσης καταγράφεται αυτόματα όταν η ακύρωση είναι επιτυχής
 
 
 [myDATA API Documentation_Providers_v1.0.9_official.pdf]: https://www.aade.gr/sites/default/files/2024-10/ENG_myDATA%20API%20Providers_v1%200%209_official.pdf
