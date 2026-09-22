@@ -1,4 +1,4 @@
-# ONESIGN REST API Electronic Invoicing 1.6.0
+# ONESIGN REST API Electronic Invoicing 1.6.1
 
 ## Version History
 
@@ -22,6 +22,7 @@
 | 1.5.8    | 2025-01-22 | Corrected the "Fiscal Header SHA256 Hash" example                                                                                 |
 | 1.5.9    | 2025-03-21 | Corrected test environment URL                                                                                                    |
 | 1.6.0    | 2025-10-20 | Added invoice cancellation api (delivery note)                                                                                    |
+| 1.6.1    | 2026-09-22 | Documented custom (non-AADE) fields: customPeppol, customDelivery, customCounterpart                                             |
 
 ## Introduction
 
@@ -502,6 +503,79 @@ Regarding B2G where measurement unit is a mandatory field the following Measurem
 | 116           | "HUR"              | Hours                   |
 | 117           | "TNE"              | Tonne                   |
 | 118           | "M4"               | Monetary value          |
+
+
+#### Custom (Non-AADE) Fields
+
+In addition to the standard AADE schema, ONESIGN accepts a small set of proprietary, non-AADE fields in the invoice
+payload. These fields are **never forwarded to AADE** — they are stripped from the document before submission and
+are used only for PDF rendering and, in one case, PEPPOL due-date mapping.
+
+| Field                                     | Type                                                    | Purpose                                                                                                          | Forwarded to AADE?         |
+|--------------------------------------------|-----------------------------------------------------------|---------------------------------------------------------------------------------------------------------------|------------------------------|
+| `customPeppol.dueDate`                     | string (`YYYY-MM-DD`)                                    | Sets the due date on the PEPPOL (B2G) invoice and on the printed PDF.                                             | No — stripped before submission |
+| `customDelivery.vatNumber` / `.address`    | string / object (`street`, `number`, `postalCode`, `city`) | Delivery recipient VAT number and address, shown on the printed PDF only; used as a fallback when the invoice carries no other delivery-note data. | No — stripped before submission |
+| `customCounterpart.name`                   | string                                                   | Fallback display name for the counterpart on the printed PDF, used when `counterpart.name` is absent.            | No — stripped before submission |
+
+##### customPeppol
+
+```xml
+<invoice>
+    ...
+    <customPeppol>
+        <dueDate>2024-03-15</dueDate>
+    </customPeppol>
+</invoice>
+```
+
+Only takes effect when the document is submitted with `Settings-Is-Peppol-Required: true`. If omitted, no due date
+is set. If present, `dueDate` must be a valid `YYYY-MM-DD` date — an empty string or invalid format is rejected
+with a validation error.
+
+##### customDelivery
+
+```xml
+<invoice>
+    ...
+    <customDelivery>
+        <vatNumber>123456789</vatNumber>
+        <address>
+            <street>Some Street</street>
+            <number>12</number>
+            <postalCode>12345</postalCode>
+            <city>Athens</city>
+        </address>
+    </customDelivery>
+</invoice>
+```
+
+Used purely for display on the generated PDF. If the invoice already carries real AADE delivery-note data, that
+data takes precedence and `customDelivery` is ignored.
+
+##### customCounterpart
+
+```xml
+<invoice>
+    ...
+    <customCounterpart>
+        <name>Company Display Name</name>
+    </customCounterpart>
+</invoice>
+```
+
+###### Relationship with `counterpart.name`
+
+Per AADE rules (see Invoice Error 220 below), `counterpart.name` **must not** be sent when the counterpart's
+country is Greece — AADE rejects such submissions. Because of this, Greek B2B invoices — as well as B2C invoices,
+which have no `counterpart` element at all — have no name available from the AADE data to print on the PDF.
+`customCounterpart.name` fills that gap:
+
+- If `counterpart.name` was submitted and accepted by AADE, it is always used on the PDF.
+- Otherwise, `customCounterpart.name` (if provided) is used as the printed display name.
+- If neither is present, the PDF shows no counterpart name.
+
+> **Note:** `counterpart.name` is *required*, not forbidden, when `Settings-Is-Peppol-Required: true` (B2G) — the
+> two rules apply to different scenarios (Greek B2B vs. B2G) and are not in conflict for the same invoice.
 
 
 ### Response to Request
