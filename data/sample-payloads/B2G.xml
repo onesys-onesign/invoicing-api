@@ -209,6 +209,7 @@
             <ns31:contractReference>0</ns31:contractReference>
             <ns31:assignReference>1055.0000000000.0001</ns31:assignReference>
             <ns31:deliveryParty>Delivery Party</ns31:deliveryParty>
+            <ns31:buyerReference>Buyer Reference</ns31:buyerReference>
         </ns31:b2g-peppol>
         <ns31:invoiceSummary>
             <ns31:totalNetValue>293.58</ns31:totalNetValue>
