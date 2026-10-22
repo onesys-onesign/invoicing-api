@@ -1,4 +1,4 @@
-# ONESIGN REST API Ηλεκτρονικής Τιμολόγησης 1.6.1
+# ONESIGN REST API Ηλεκτρονικής Τιμολόγησης 1.6.2
 
 ## Αριθμός έκδοσης
 
@@ -23,6 +23,7 @@
 | 1.5.9  | 2025-03-21 | Διόρθωση του URL δοκιμαστικού περιβάλλοντος                                                                                                |
 | 1.6.0  | 2025-10-20 | Προσθήκη invoice cancellation api (δελτίο αποστολής)                                                                                     |
 | 1.6.1  | 2026-09-22 | Τεκμηρίωση custom (μη-ΑΑΔΕ) πεδίων: customPeppol, customDelivery, customCounterpart                                                       |
+| 1.6.2  | 2026-10-22 | Προσθήκη προαιρετικού πεδίου B2G buyerReference (BT-10), χρήση deliveryParty ως εναλλακτικής τιμής, ενημέρωση σφάλματος 755 |
 
 ## Εισαγωγή
 
@@ -383,7 +384,10 @@ To σώμα του αιτήματος (request body) θα πρέπει να πε
 | projectReference   | Αριθμός αναφοράς για την προμήθεια B2G | {ProjectReference}   | ΝΑΙ      | BT-11 PROJECT_REFERENCE_ID |
 | contractReference  | Αριθμός Σύμβασης (ΑΔΑΜ)                | {ContractReference}  | ΝΑΙ      | BT-12 CONTRACT_REFERENCE_ID |
 | assignReference    | Αριθμός Αναθέτουσας αρχής              | 1000.E00961.0001     | ΝΑΙ      | BT-46 PARTY_ID |
-| deliveryParty      | Περιοχή Παράδοσης Προϊόντων (αν αφορά προϊόντα) | ΓΕΝΙΚΗ ΔΙΕΥΘΥΝΣΗ | ΟΧΙ      | BT-70 PARTY_ID |
+| deliveryParty      | Περιοχή Παράδοσης Προϊόντων (αν αφορά προϊόντα) | ΓΕΝΙΚΗ ΔΙΕΥΘΥΝΣΗ | ΟΧΙ*     | BT-70 PARTY_ID |
+| buyerReference     | Αναθέτουσα αρχή / οργανωτική μονάδα του αγοραστή που παραλαμβάνει το τιμολόγιο | ΔΙΕΥΘΥΝΣΗ ΟΙΚΟΝΟΜΙΚΩΝ | ΟΧΙ* | BT-10 BUYER_REFERENCE |
+
+\* Πρέπει να συμπληρώνεται τουλάχιστον ένα από τα πεδία `buyerReference` ή `deliveryParty`, διαφορετικά το παραστατικό απορρίπτεται με σφάλμα 755.
 
 #### Project Reference
 Το πεδίο projectReference (BT-11) συμπληρώνεται ως εξής σύμφωνα με τις οδηγίες της ΓΓΠΣ.
@@ -407,6 +411,11 @@ To σώμα του αιτήματος (request body) θα πρέπει να πε
 #### Assign Reference
 Στο πεδίο assignReference (B5-46) συμπληρώνεται ο Αριθμός Αναθέτουσας αρχής, σύμφωνα με το μητρώο
 
+#### Buyer Reference
+Στο πεδίο buyerReference (BT-10) συμπληρώνεται η αναθέτουσα αρχή ή η οργανωτική μονάδα του αγοραστή που παραλαμβάνει
+ή επεξεργάζεται το τιμολόγιο. Δεν πρέπει να περιέχει στοιχεία του πωλητή. Εάν δεν συμπληρωθεί το buyerReference, για το
+BT-10 χρησιμοποιείται η τιμή του deliveryParty. Η τιμή αποστέλλεται ακριβώς όπως δόθηκε, χωρίς τροποποίηση.
+
 
 ```xml
 <invoice>
@@ -421,6 +430,7 @@ To σώμα του αιτήματος (request body) θα πρέπει να πε
         <contractReference>SSS/SSS</contractReference>
         <assignReference>1000.E00961.0001</assignReference>
         <deliveryParty>ΓΕΝΙΚΗ ΔΙΕΥΘΥΝΣΗ</deliveryParty>
+        <buyerReference>ΔΙΕΥΘΥΝΣΗ ΟΙΚΟΝΟΜΙΚΩΝ</buyerReference>
     </b2g-peppol>
 </invoice>
 ```
@@ -656,7 +666,7 @@ GET https://staging-onesign-api.onesys.gr/pending-documents/:extRefId/status
 | 200 OK      | ValidationError  | 752      | Παραστατικό-B2G  | Παραστατικό B2G χωρίς κωδικό Σύμβασης (Contract Reference) |
 | 200 OK      | ValidationError  | 753      | Παραστατικό-B2G  | Παραστατικό B2G χωρίς κωδικό Αναθέτουσας Αρχής (AssignReference) |
 | 200 OK      | ValidationError  | 754      | Παραστατικό-B2G  | Παραστατικό B2G χωρίς κωδικό CPV στην γραμμή {lineNumber} (itemCPV) |                                        
-| 200 OK      | ValidationError  | 755      | Παραστατικό-B2G  | Παραστατικό B2G χωρίς περιγραφή παράδοσης (DeliverParty) |                         
+| 200 OK      | ValidationError  | 755      | Παραστατικό-B2G  | Παραστατικό B2G χωρίς Buyer Reference (buyerReference ή deliveryParty) |                         
 | 200 OK      | ValidationError  | 761      | Παραστατικό-B2G  | Παραστατικό B2G με λάθος κωδικό ΑΔΑΜ (Project Reference)  |     
 | 200 OK      | ValidationError  | 752      | Παραστατικό-B2G  | Παραστατικό B2G με λάθος κωδικό Σύμβασης (Contract Reference) |
 | 200 OK      | ValidationError  | 753      | Παραστατικό-B2G  | Παραστατικό B2G με λάθος κωδικό Αναθέτουσας Αρχής (AssignReference) |

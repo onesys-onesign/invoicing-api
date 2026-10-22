@@ -1,4 +1,4 @@
-# ONESIGN REST API Electronic Invoicing 1.6.1
+# ONESIGN REST API Electronic Invoicing 1.6.2
 
 ## Version History
 
@@ -23,6 +23,7 @@
 | 1.5.9    | 2025-03-21 | Corrected test environment URL                                                                                                    |
 | 1.6.0    | 2025-10-20 | Added invoice cancellation api (delivery note)                                                                                    |
 | 1.6.1    | 2026-09-22 | Documented custom (non-AADE) fields: customPeppol, customDelivery, customCounterpart                                             |
+| 1.6.2    | 2026-10-22 | Added optional B2G buyerReference (BT-10), deliveryParty fallback, updated error 755                                             |
 
 ## Introduction
 
@@ -402,7 +403,10 @@ last element <b2g-peppol> within <invoice>
 | projectReference   | Reference for the project               | {ProjectReference}   | Yes      | BT-11 PROJECT_REFERENCE_ID |
 | contractReference  | Reference for the contract              | {ContractReference}  | Yes      | BT-12 CONTRACT_REFERENCE_ID |
 | assignReference    | ID of the party assigned the contract   | 1000.E00961.0001     | Yes      | BT-46 PARTY_ID |
-| deliveryParty      | Delivery Location                       | General Management   | No       | BT-70 PARTY_ID |
+| deliveryParty      | Delivery Location                       | General Management   | No*      | BT-70 PARTY_ID |
+| buyerReference     | Buyer's contracting authority / organisational unit receiving the invoice | Directorate of Finance | No* | BT-10 BUYER_REFERENCE |
+
+\* At least one of `buyerReference` or `deliveryParty` must be provided, otherwise the document is rejected with error 755.
 
 
 #### Project Reference
@@ -428,6 +432,12 @@ If the Contract is under €30,000, the ΑΔΑΜ of the Purchase Order is entere
 
 #### Assign Reference
 In the field assignReference (B5-46), the Assigning Authority Number is entered according to the registry.
+
+#### Buyer Reference
+The field buyerReference (BT-10) identifies the contracting authority or organisational unit of the buyer that receives
+or processes the invoice. It must not contain the seller's information. If buyerReference is not provided, the value of
+deliveryParty is used for BT-10. The value is transmitted exactly as provided, without modification.
+
 Below is a sample of the mentioned section embedded in the XML format of AADE.
 
 ```xml
@@ -443,6 +453,7 @@ Below is a sample of the mentioned section embedded in the XML format of AADE.
         <contractReference>SSS/SSS</contractReference>
         <assignReference>1000.E00961.0001</assignReference>
         <deliveryParty>ΓΕΝΙΚΗ ΔΙΕΥΘΥΝΣΗ</deliveryParty>
+        <buyerReference>ΔΙΕΥΘΥΝΣΗ ΟΙΚΟΝΟΜΙΚΩΝ</buyerReference>
     </b2g-peppol>
 </invoice>
 ```
@@ -675,7 +686,7 @@ If the document pertains to a B2G service, additional checks are performed, and 
 | 200 OK      | ValidationError  | 752      | Document-B2G   | B2G Document without contract code (Contract Reference)                                            |
 | 200 OK      | ValidationError  | 753      | Document-B2G   | B2G Document without assigning authority code (AssignReference)                                    |
 | 200 OK      | ValidationError  | 754      | Document-B2G   | B2G Document without CPV code on line {lineNumber} (itemCPV)                                       |
-| 200 OK      | ValidationError  | 755      | Document-B2G   | B2G Document without delivery description (DeliverParty)                                           |
+| 200 OK      | ValidationError  | 755      | Document-B2G   | B2G Document without Buyer Reference (buyerReference or deliveryParty)                             |
 | 200 OK      | ValidationError  | 761      | Document-B2G   | B2G Document with incorrect ADAM code (Project Reference)                                           |
 | 200 OK      | ValidationError  | 762      | Document-B2G   | B2G Document with incorrect contract code (Contract Reference)                                      |
 | 200 OK      | ValidationError  | 763      | Document-B2G   | B2G Document with incorrect assigning authority code (AssignReference)                              |
