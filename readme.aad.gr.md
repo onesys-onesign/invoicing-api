@@ -1,4 +1,4 @@
-# ONESIGN REST API Ηλεκτρονικής Τιμολόγησης 1.6.2
+# ONESIGN REST API Ηλεκτρονικής Τιμολόγησης 1.6.3
 
 ## Αριθμός έκδοσης
 
@@ -24,6 +24,7 @@
 | 1.6.0  | 2025-10-20 | Προσθήκη invoice cancellation api (δελτίο αποστολής)                                                                                     |
 | 1.6.1  | 2026-09-22 | Τεκμηρίωση custom (μη-ΑΑΔΕ) πεδίων: customPeppol, customDelivery, customCounterpart                                                       |
 | 1.6.2  | 2026-10-22 | Προσθήκη προαιρετικού πεδίου B2G buyerReference (BT-10), χρήση deliveryParty ως εναλλακτικής τιμής, ενημέρωση σφάλματος 755 |
+| 1.6.3  | 2026-11-02 | Προσθήκη καταχώρισης ως B2G ήδη εκδοθέντος B2B παραστατικού (κεφαλίδα B2G-Registration-Resubmit)                            |
 
 ## Εισαγωγή
 
@@ -214,6 +215,7 @@ curl --location --request DELETE 'https://staging-onesign-api.onesys.gr/signing-
 | Source-System                                          | Πηγαίο Σύστημα Παραστατικού                                                                     | "SRC-100"                                                                                                                          |
 | Document-Recipient-Email                               | Email Διεύθυνση Λήπτη Παραστατικού                                                              | info@example.com                                                                                                                   |
 | Soft-Rejection-Resubmit                                | Επαναϋποβολή παραστατικού B2G PEPPOL μετά από soft rejection                                    | true                                                                                                                               |
+| B2G-Registration-Resubmit                              | Καταχώριση εκδοθέντος B2B παραστατικού ως B2G (αποστολή στην ΚΕΔ μέσω PEPPOL, ίδιο ΜΑΡΚ)        | true                                                                                                                               |
 | Business-Id                                            | Αναγνωριστικό επιχείρησης σε μορφή UUID                                                         | "4b0d382d-dc6a-4605-aadd-1313156915c4"                                                                                             |
 | Location-Id                                            | Αναγνωριστικό τοποθεσίας σε μορφή UUID                                                          | "5d677662-7c3a-42ab-a757-aa777bfcd2c0"                                                                                             |
 
@@ -352,6 +354,11 @@ To οικονομικό τμήμα του Header περιλαμβάνει τις
 
 ##### Soft-Rejection-Resubmit
 - Περιγραφή: Επαναυποβολή παραστατικού μετά από soft rejection
+- Ενδεικτική τιμή: true
+- Υποχρεωτικό: ΟΧΙ
+
+##### B2G-Registration-Resubmit
+- Περιγραφή: Καταχώριση παραστατικού που έχει ήδη εκδοθεί ως B2B ως παραστατικό B2G και αποστολή του στην ΚΕΔ, με το ίδιο ΜΑΡΚ. Δείτε [Καταχώριση ως B2G ήδη εκδοθέντος B2B παραστατικού](#καταχώριση-ως-b2g-ήδη-εκδοθέντος-b2b-παραστατικού)
 - Ενδεικτική τιμή: true
 - Υποχρεωτικό: ΟΧΙ
 
@@ -672,6 +679,139 @@ GET https://staging-onesign-api.onesys.gr/pending-documents/:extRefId/status
 | 200 OK      | ValidationError  | 753      | Παραστατικό-B2G  | Παραστατικό B2G με λάθος κωδικό Αναθέτουσας Αρχής (AssignReference) |
 | 200 OK      | ValidationError  | 754      | Παραστατικό-B2G  | Παραστατικό B2G με λάθος κωδικό CPV στην γραμμή {lineNumber} (itemCPV) |                                        
 
+
+### Καταχώριση ως B2G ήδη εκδοθέντος B2B παραστατικού
+
+Ένα παραστατικό που έχει εκδοθεί στην ΑΑΔΕ ως B2B (διαθέτει ΜΑΡΚ) μπορεί αργότερα να καταχωριστεί ως B2G και να
+αποσταλεί στον δημόσιο φορέα μέσω της ΚΕΔ στο δίκτυο PEPPOL. Δεν γίνεται νέα υποβολή στην ΑΑΔΕ: το παραστατικό PEPPOL
+φέρει το αρχικό ΜΑΡΚ και τον αρχικό κωδικό αυθεντικοποίησης.
+
+#### Πότε χρησιμοποιείται
+
+| Κατάσταση παραστατικού                                                  | Τι αποστέλλεται                                                   |
+|-------------------------------------------------------------------------|-------------------------------------------------------------------|
+| Εκδόθηκε ως B2B και έγινε δεκτό από την ΑΑΔΕ (έχει ΜΑΡΚ), πρέπει να σταλεί στην ΚΕΔ | Καταχώριση B2G (`B2G-Registration-Resubmit: true`)    |
+| Δεν έχει εκδοθεί ακόμη ή η έκδοση B2B απέτυχε (χωρίς ΜΑΡΚ)               | Κανονική υποβολή B2G (`Settings-Is-Peppol-Required: true`)        |
+| Εκδόθηκε ως B2G (απευθείας ή με καταχώριση) και απορρίφθηκε (soft rejection) | `Soft-Rejection-Resubmit: true` για διόρθωση των πεδίων B2G  |
+| Ακυρωμένο                                                               | Δεν καταχωρίζεται· εκδίδεται νέο παραστατικό                      |
+
+#### Αίτηση
+
+`POST /invoice/issue` με την ίδια αυθεντικοποίηση και τις ίδιες κεφαλίδες με μια κανονική υποβολή, και:
+
+| Κεφαλίδα                        | Τιμή                                                                                           |
+|---------------------------------|------------------------------------------------------------------------------------------------|
+| B2G-Registration-Resubmit       | `true`                                                                                         |
+| Fiscal-Header-Invoice-ID        | Το αναγνωριστικό του αρχικού B2B παραστατικού                                                  |
+| Settings-Is-Peppol-Required     | `true`                                                                                         |
+| Crypto headers                  | Υπολογίζονται για το payload της καταχώρισης (νέο hash payload και νέα υπογραφή)                |
+
+Οι κεφαλίδες αξίας και φόρου παραστατικού παραμένουν ίδιες, αφού τα ποσά δεν μπορούν να αλλάξουν.
+
+#### Κανόνες payload
+
+Αποστέλλεται ακριβώς το XML της ΑΑΔΕ που εκδόθηκε ως B2B, με την προσθήκη των στοιχείων B2G. Κανένα στοιχείο που
+υπάρχει ήδη στο XML δεν επιτρέπεται να αλλάξει ή να αφαιρεθεί.
+
+- **Πρέπει να προστεθούν:**
+  - το block `<b2g-peppol>` με `projectReference`, `contractReference`, `assignReference`, και `buyerReference`
+    ή/και `deliveryParty` (δείτε [Buyer Reference](#buyer-reference))
+  - το `counterpart.name` (δεν επιτρέπεται σε B2B παραστατικό προς Έλληνα λήπτη)
+  - το `itemCPV` σε κάθε γραμμή (δεν επιτρέπεται σε B2B παραστατικά)
+- **Προστίθενται μόνο αν έλειπαν από το B2B παραστατικό:** `counterpart.address`, και ανά γραμμή `quantity`,
+  `measurementUnit` και `lineComments`.
+- **Πρέπει να μείνουν ίδια:** όλα τα υπόλοιπα, όπως σειρά, αριθμός, ημερομηνίες, τύπος παραστατικού, ποσά, ΦΠΑ,
+  χαρακτηρισμοί εσόδων, τρόποι πληρωμής, καθώς και υπάρχουσα διεύθυνση ή σχόλια γραμμών. Τα προθέματα namespace (π.χ.
+  `ns31:`) αγνοούνται στη σύγκριση.
+
+Μετά την καταχώριση, το παραστατικό πρέπει να περιέχει όλα τα πεδία ενός κανονικού παραστατικού B2G. Ισχύουν οι ίδιοι
+έλεγχοι B2G και ο έλεγχος των κωδικών ΑΔΑΜ, σύμβασης και αναθέτουσας αρχής από την ΚΕΔ.
+
+Παράδειγμα: οι προσθήκες σε ένα B2B παραστατικό για την καταχώρισή του (όλα τα υπόλοιπα μένουν ίδια):
+
+```xml
+<counterpart>
+    <vatNumber>996797093</vatNumber>
+    <country>GR</country>
+    <branch>0</branch>
+    <name>Public Body Test</name>                            <!-- προσθήκη -->
+    <address>...</address>
+</counterpart>
+...
+<invoiceDetails>
+    ...
+    <vatAmount>24.00</vatAmount>
+    <itemCPV>71314000-2</itemCPV>                            <!-- προσθήκη -->
+    <lineComments>Service item 1</lineComments>
+    ...
+</invoiceDetails>
+<b2g-peppol>                                                 <!-- προσθήκη -->
+    <projectReference>1|2003ΣΕ05500005</projectReference>
+    <contractReference>0</contractReference>
+    <assignReference>1055.0000000000.0001</assignReference>
+    <deliveryParty>Delivery Party</deliveryParty>
+</b2g-peppol>
+<invoiceSummary>
+```
+
+#### Απόκριση
+
+Σε επιτυχία (`HTTP 201`):
+
+```xml
+<ResponseDoc>
+    <response>
+        <index>1</index>
+        <statusCode>Success</statusCode>
+    </response>
+</ResponseDoc>
+```
+
+Το ΜΑΡΚ, το UID, ο κωδικός αυθεντικοποίησης και το QR URL δεν αλλάζουν· χρησιμοποιούνται οι τιμές της αρχικής
+απόκρισης B2B.
+
+Τα σφάλματα επιστρέφονται ως JSON με το HTTP status, για παράδειγμα:
+
+```json
+{
+  "statusCode": 400,
+  "timestamp": "2026-11-02T08:48:53.446Z",
+  "path": "/invoice/issue",
+  "message": "counterpart name is required for B2G registration",
+  "details": "counterpart name is required for B2G registration"
+}
+```
+
+| HTTP Status | Μήνυμα                                                                                                     | Σημασία / ενέργεια                                                                                      |
+|-------------|------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
+| 404         | B2G registration document not found                                                                        | Άγνωστο αναγνωριστικό ή η έκδοση B2B απέτυχε. Υποβάλλεται ως κανονικό παραστατικό B2G                   |
+| 400         | Invoice is already B2G — use the soft-reject flow to correct existing fields instead                       | Έχει ήδη καταχωριστεί ή εκδοθεί ως B2G                                                                  |
+| 400         | Invoice has no AADE MARK yet                                                                               | Η έκδοση B2B δεν έχει ολοκληρωθεί (π.χ. μη διαθεσιμότητα ΑΑΔΕ). Νέα προσπάθεια όταν αποκτήσει ΜΑΡΚ      |
+| 400         | Invoice is cancelled and cannot be registered as B2G                                                       | Εκδίδεται νέο παραστατικό                                                                               |
+| 400         | Invoice processing                                                                                         | Άλλη αίτηση για το ίδιο αναγνωριστικό τα τελευταία 2 λεπτά. Νέα προσπάθεια μετά από 2 λεπτά             |
+| 400         | No changes found with the original AADE XML                                                               | Δεν προστέθηκαν τα στοιχεία B2G                                                                         |
+| 400         | Only the addition of a full b2g-peppol block (and of missing B2G fields: ...) is allowed for B2G registration | Άλλαξε τιμή εκτός των επιτρεπόμενων προσθηκών. Το `details` περιέχει τα πεδία στο `modifiedFields`   |
+| 400         | counterpart name is required for B2G registration                                                          | Προσθήκη του `counterpart.name`                                                                         |
+| 400         | Σφάλματα πεδίων B2G, όπως στην κανονική υποβολή B2G (751, 752, 753, 755, itemCPV, quantity, measurementUnit, lineComments) | Προσθήκη της τιμής που λείπει                                 |
+| 400         | Σφάλμα ελέγχου ΚΕΔ (π.χ. `checkKEDContractingAuthority error: GEN_NO_RECORDS_FOUND`)                       | Διόρθωση του κωδικού ΑΔΑΜ, σύμβασης ή αναθέτουσας αρχής                                                 |
+| 400         | Invoice Failed Peppol XML Validation                                                                       | Το `details` περιέχει τους κανόνες PEPPOL που απέτυχαν                                                  |
+| 400         | The correlated invoice must be registered as B2G first                                                     | Δείτε τα πιστωτικά παρακάτω                                                                             |
+
+Μια καταχώριση που απορρίπτεται δεν αλλάζει τίποτα: το παραστατικό μένει B2B και δεν αποστέλλεται τίποτα στην ΚΕΔ.
+
+#### Πιστωτικά
+
+- Πιστωτικό χωρίς συσχετιζόμενο παραστατικό (5.2) καταχωρίζεται όπως ένα τιμολόγιο.
+- Πιστωτικό συσχετιζόμενο με τιμολόγιο (5.1) καταχωρίζεται μόνο αφού το τιμολόγιο έχει καταχωριστεί (ή εκδοθεί) ως
+  B2G. Η αναφορά χρέωσης (billing reference) του PEPPOL δείχνει τότε στο παραστατικό PEPPOL του τιμολογίου.
+
+#### Μετά την καταχώριση
+
+- Το παραστατικό είναι B2G: οι αποκρίσεις της ΚΕΔ φτάνουν όπως για κάθε παραστατικό B2G, και ένα soft rejection
+  διορθώνεται με `Soft-Rejection-Resubmit`.
+- Δεύτερη καταχώριση του ίδιου παραστατικού απορρίπτεται.
+- Αναμονή 2 λεπτών μετά την αρχική υποβολή, ή μετά από απορριφθείσα καταχώριση, πριν σταλεί καταχώριση για το ίδιο
+  αναγνωριστικό.
 
 ### Μηνύματα Λάθους (ΑΑΔΕ)
 
