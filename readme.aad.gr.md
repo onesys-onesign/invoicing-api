@@ -703,7 +703,7 @@ GET https://staging-onesign-api.onesys.gr/pending-documents/:extRefId/status
 |---------------------------------|------------------------------------------------------------------------------------------------|
 | B2G-Registration-Resubmit       | `true`                                                                                         |
 | Fiscal-Header-Invoice-ID        | Το αναγνωριστικό του αρχικού B2B παραστατικού                                                  |
-| Settings-Is-Peppol-Required     | `true`                                                                                         |
+| Settings-Is-Peppol-Required     | Αποστέλλεται ως συνήθως (`true` ή `false`)· η τιμή δεν επηρεάζει την καταχώριση                 |
 | Crypto headers                  | Υπολογίζονται για το payload της καταχώρισης (νέο hash payload και νέα υπογραφή)                |
 
 Οι κεφαλίδες αξίας και φόρου παραστατικού παραμένουν ίδιες, αφού τα ποσά δεν μπορούν να αλλάξουν.

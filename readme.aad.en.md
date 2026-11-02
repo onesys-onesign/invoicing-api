@@ -722,7 +722,7 @@ code.
 |---------------------------------|------------------------------------------------------------------------------------------------|
 | B2G-Registration-Resubmit       | `true`                                                                                         |
 | Fiscal-Header-Invoice-ID        | The ID of the original B2B invoice                                                             |
-| Settings-Is-Peppol-Required     | `true`                                                                                         |
+| Settings-Is-Peppol-Required     | Sent as usual (`true` or `false`); the value does not affect the registration                  |
 | Crypto headers                  | Calculated for the registration payload (new payload hash and signature)                       |
 
 The document value and tax value headers stay the same, because the amounts cannot change.
