@@ -1,4 +1,4 @@
-# ONESIGN REST API Electronic Invoicing 1.6.2
+# ONESIGN REST API Electronic Invoicing 1.6.3
 
 ## Version History
 
@@ -24,6 +24,7 @@
 | 1.6.0    | 2025-10-20 | Added invoice cancellation api (delivery note)                                                                                    |
 | 1.6.1    | 2026-09-22 | Documented custom (non-AADE) fields: customPeppol, customDelivery, customCounterpart                                             |
 | 1.6.2    | 2026-10-22 | Added optional B2G buyerReference (BT-10), deliveryParty fallback, updated error 755                                             |
+| 1.6.3    | 2026-11-02 | Added B2G registration of an issued B2B invoice (B2G-Registration-Resubmit header)                                               |
 
 ## Introduction
 
@@ -233,6 +234,7 @@ Following is the list of supported headers that are analysed in detail.
 | Source-System                                          | Source System of the document                                                                 | "SRC-100"                                                                                                                          |
 | Document-Recipient-Email                               | Email Address of Document Recipient                                                           | info@example.com                                                                                                                   |
 | Soft-Rejection-Resubmit                                | Resubmission of B2G PEPPOL document after soft rejection                                      | true                                                                                                                               |
+| B2G-Registration-Resubmit                              | Registration of an issued B2B invoice as B2G (sent to KED via PEPPOL, same MARK)              | true                                                                                                                               |
 | Business-Id                                            | Business id in UUID format                                                                    | "4b0d382d-dc6a-4605-aadd-1313156915c4"                                                                                             |
 | Location-Id                                            | Location id in UUID format                                                                    | "5d677662-7c3a-42ab-a757-aa777bfcd2c0"                                                                                             |
 
@@ -370,6 +372,11 @@ The order of appearance is the following:
 
 ##### Soft-Rejection-Resubmit
 - Description: Resubmit the document after soft rejection
+- Example Value: true
+- Mandatory: NO
+
+##### B2G-Registration-Resubmit
+- Description: Register an invoice that was already issued as B2B as a B2G invoice and send it to KED, keeping its MARK. See [B2G Registration of an Issued B2B Invoice](#b2g-registration-of-an-issued-b2b-invoice)
 - Example Value: true
 - Mandatory: NO
 
@@ -691,6 +698,137 @@ If the document pertains to a B2G service, additional checks are performed, and 
 | 200 OK      | ValidationError  | 762      | Document-B2G   | B2G Document with incorrect contract code (Contract Reference)                                      |
 | 200 OK      | ValidationError  | 763      | Document-B2G   | B2G Document with incorrect assigning authority code (AssignReference)                              |
 | 200 OK      | ValidationError  | 764      | Document-B2G   | B2G Document with incorrect CPV code on line {lineNumber} (itemCPV)                                 |
+
+### B2G Registration of an Issued B2B Invoice
+
+An invoice that was issued to AADE as B2B (it has a MARK) can later be registered as B2G and sent to the public body
+through KED over PEPPOL. AADE is not called again: the PEPPOL document carries the original MARK and authentication
+code.
+
+#### When to use it
+
+| Invoice state                                                     | What to send                                                    |
+|-------------------------------------------------------------------|-----------------------------------------------------------------|
+| Issued as B2B and accepted by AADE (has a MARK), must go to KED   | B2G registration (`B2G-Registration-Resubmit: true`)            |
+| Not issued yet, or the B2B issue failed (no MARK)                 | Normal B2G submission (`Settings-Is-Peppol-Required: true`)     |
+| Issued as B2G (directly or by registration) and soft-rejected     | `Soft-Rejection-Resubmit: true` to correct the B2G fields       |
+| Cancelled                                                         | Cannot be registered; issue a new invoice                       |
+
+#### Request
+
+`POST /invoice/issue` with the same authentication and headers as a normal submission, and:
+
+| Header                          | Value                                                                                          |
+|---------------------------------|------------------------------------------------------------------------------------------------|
+| B2G-Registration-Resubmit       | `true`                                                                                         |
+| Fiscal-Header-Invoice-ID        | The ID of the original B2B invoice                                                             |
+| Settings-Is-Peppol-Required     | `true`                                                                                         |
+| Crypto headers                  | Calculated for the registration payload (new payload hash and signature)                       |
+
+The document value and tax value headers stay the same, because the amounts cannot change.
+
+#### Payload rules
+
+Send the exact AADE XML that was issued as B2B, with the B2G data added. Nothing that was already in the XML may be
+changed or removed.
+
+- **Must be added:**
+  - the `<b2g-peppol>` block with `projectReference`, `contractReference`, `assignReference`, and `buyerReference`
+    and/or `deliveryParty` (see [Buyer Reference](#buyer-reference))
+  - `counterpart.name` (it is not allowed on a B2B invoice to a Greek counterpart)
+  - `itemCPV` on every line (it is not allowed on B2B invoices)
+- **Added only if the B2B invoice did not have them:** `counterpart.address`, and per line `quantity`,
+  `measurementUnit` and `lineComments`.
+- **Must stay identical:** everything else, including series, number, dates, invoice type, amounts, VAT, income
+  classifications, payment methods, and any existing address or line comments. Namespace prefixes (e.g. `ns31:`) are
+  ignored in the comparison.
+
+After registration the invoice must contain every field of a normal B2G invoice. The same B2G checks and the KED
+validation of the project, contract and assigning authority codes apply.
+
+Example: the additions to a B2B invoice for its registration (everything else is unchanged):
+
+```xml
+<counterpart>
+    <vatNumber>996797093</vatNumber>
+    <country>GR</country>
+    <branch>0</branch>
+    <name>Public Body Test</name>                            <!-- added -->
+    <address>...</address>
+</counterpart>
+...
+<invoiceDetails>
+    ...
+    <vatAmount>24.00</vatAmount>
+    <itemCPV>71314000-2</itemCPV>                            <!-- added -->
+    <lineComments>Service item 1</lineComments>
+    ...
+</invoiceDetails>
+<b2g-peppol>                                                 <!-- added -->
+    <projectReference>1|2003ΣΕ05500005</projectReference>
+    <contractReference>0</contractReference>
+    <assignReference>1055.0000000000.0001</assignReference>
+    <deliveryParty>Delivery Party</deliveryParty>
+</b2g-peppol>
+<invoiceSummary>
+```
+
+#### Response
+
+On success (`HTTP 201`):
+
+```xml
+<ResponseDoc>
+    <response>
+        <index>1</index>
+        <statusCode>Success</statusCode>
+    </response>
+</ResponseDoc>
+```
+
+The MARK, UID, authentication code and QR URL do not change; keep the values from the original B2B response.
+
+Errors are returned as JSON with the HTTP status, for example:
+
+```json
+{
+  "statusCode": 400,
+  "timestamp": "2026-11-02T08:48:53.446Z",
+  "path": "/invoice/issue",
+  "message": "counterpart name is required for 'Settings-Is-Peppol-Required' header as 'true'",
+  "details": "counterpart name is required for 'Settings-Is-Peppol-Required' header as 'true'"
+}
+```
+
+| HTTP Status | Message                                                                                                    | Meaning / action                                                                                       |
+|-------------|------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
+| 404         | B2G registration document not found                                                                        | Unknown invoice ID, or the B2B issue failed. Submit the invoice as a normal B2G invoice                |
+| 400         | Invoice is already B2G — use the soft-reject flow to correct existing fields instead                       | Already registered or issued as B2G                                                                    |
+| 400         | Invoice has no AADE MARK yet                                                                               | The B2B issue has not completed (e.g. AADE was unreachable). Retry once it has a MARK                  |
+| 400         | Invoice is cancelled and cannot be registered as B2G                                                       | Issue a new invoice                                                                                    |
+| 400         | Invoice processing                                                                                         | Another request for the same invoice ID in the last 2 minutes. Retry after 2 minutes                   |
+| 400         | No changes found with the original AADE XML                                                               | The B2G data was not added                                                                             |
+| 400         | Only the addition of a full b2g-peppol block (and of missing B2G fields: ...) is allowed for B2G registration | A value other than the allowed additions changed. `details` lists the fields in `modifiedFields`    |
+| 400         | B2G field errors, as for a normal B2G submission (counterpart name, 751, 752, 753, 755, itemCPV, quantity, measurementUnit, lineComments) | Add the missing value                                       |
+| 400         | KED validation error (e.g. `checkKEDContractingAuthority error: GEN_NO_RECORDS_FOUND`)                     | Correct the project, contract or assigning authority code                                              |
+| 400         | Invoice Failed Peppol XML Validation                                                                       | `details` lists the failed PEPPOL rules                                                                |
+| 400         | The correlated invoice must be registered as B2G first                                                     | See credit notes below                                                                                 |
+
+A rejected registration changes nothing: the invoice stays B2B and nothing is sent to KED.
+
+#### Credit notes
+
+- A credit note without a correlated invoice (5.2) is registered like an invoice.
+- A credit note correlated to an invoice (5.1) can be registered only after that invoice was registered (or issued) as
+  B2G. Its PEPPOL billing reference then points to the invoice's PEPPOL document.
+
+#### After registration
+
+- The invoice is B2G: KED responses arrive as for any B2G invoice, and a soft rejection is corrected with
+  `Soft-Rejection-Resubmit`.
+- A second registration of the same invoice is rejected.
+- Wait 2 minutes after the original submission, or after a rejected registration, before sending a registration for
+  the same invoice ID.
 
 In case of submission failure, the following errors are returned by the application
 
