@@ -777,8 +777,8 @@ GET https://staging-onesign-api.onesys.gr/pending-documents/:extRefId/status
   "statusCode": 400,
   "timestamp": "2026-11-02T08:48:53.446Z",
   "path": "/invoice/issue",
-  "message": "counterpart name is required for 'Settings-Is-Peppol-Required' header as 'true'",
-  "details": "counterpart name is required for 'Settings-Is-Peppol-Required' header as 'true'"
+  "message": "counterpart name is required for B2G registration",
+  "details": "counterpart name is required for B2G registration"
 }
 ```
 
